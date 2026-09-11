@@ -1,0 +1,1762 @@
+/* =========================================================
+   DECISION TREE OVERVIEW
+   ========================================================= */
+
+.decision-tree-overview {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 24px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   LEFT SIDE — TREE VISUAL
+   ========================================================= */
+
+.decision-tree-visual {
+    position: relative;
+    width: 46%;
+    min-width: 0;
+    min-height: 300px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(56, 189, 248, .12);
+    border-radius: 18px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(56, 189, 248, .045),
+            transparent 65%
+        );
+
+    overflow: hidden;
+
+    cursor: pointer;
+    outline: none;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HOLOGRAM GRID
+   ========================================================= */
+
+.decision-tree-visual::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(56, 189, 248, .035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(56, 189, 248, .035) 1px,
+            transparent 1px
+        );
+
+    background-size: 28px 28px;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   TREE HOLOGRAM //to adjust position
+   ========================================================= */
+
+.decision-tree-hologram {
+    position: absolute;
+
+    left: 65%;
+    top: 25%;
+
+    width: 100%;
+    height: 72%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transform: translate(-50%, -50%);
+
+    cursor: pointer;
+    outline: none;
+
+    box-sizing: border-box;
+
+    z-index: 2;
+}
+
+
+
+
+
+/* =========================================================
+   OVERVIEW SVG
+   ========================================================= */
+
+.dt-tree-svg {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    max-width: 320px;
+    max-height: 220px;
+
+    overflow: visible;
+
+    position: relative;
+    z-index: 2;
+}
+
+
+.dt-branches,
+.dt-nodes {
+    overflow: visible;
+}
+
+
+/* =========================================================
+   OVERVIEW BRANCHES
+   ========================================================= */
+
+.dt-branch {
+    stroke: #334155;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    opacity: .65;
+
+    transition:
+        stroke .35s ease,
+        opacity .35s ease,
+        filter .35s ease,
+        stroke-width .35s ease;
+}
+
+
+.dt-branch.active {
+    stroke: #22D3EE;
+    opacity: 1;
+    stroke-width: 2;
+}
+
+
+/* =========================================================
+   OVERVIEW NODES
+   ========================================================= */
+
+.dt-node {
+    fill: #334155;
+    stroke: #64748B;
+    stroke-width: 1;
+    opacity: .7;
+
+    transition:
+        fill .35s ease,
+        stroke .35s ease,
+        opacity .35s ease,
+        filter .35s ease;
+}
+
+
+.dt-root {
+    fill: #A855F7;
+    stroke: #D8B4FE;
+    stroke-width: 1.2;
+    opacity: 1;
+}
+
+
+.dt-question {
+    fill: #60A5FA;
+    stroke: #BFDBFE;
+    opacity: .95;
+
+ 
+}
+
+
+.dt-node--leaf {
+    fill: #334155;
+    stroke: #64748B;
+    opacity: .75;
+}
+
+
+.dt-node.active {
+    fill: #22D3EE;
+    stroke: #67E8F9;
+    opacity: 1;
+
+}
+
+
+.dt-root.active {
+    fill: #A855F7;
+    stroke: #E9D5FF;
+
+
+}
+
+
+.dt-question.active {
+    fill: #60A5FA;
+    stroke: #DBEAFE;
+
+ 
+}
+
+
+.dt-node.dt-result {
+    fill: #FACC15;
+    stroke: #FEF08A;
+    opacity: 1;
+
+
+}
+
+
+/* =========================================================
+   OVERVIEW HOVER
+   ========================================================= */
+
+.decision-tree-hologram:focus-visible,
+.decision-tree-visual:focus-visible {
+    outline: 1px solid #22D3EE;
+    outline-offset: 4px;
+    border-radius: 16px;
+}
+
+
+/* =========================================================
+   CLICK NOTE
+   ========================================================= */
+
+.decision-tree-click-note {
+    position: absolute;
+
+    left: 50%;
+    bottom: 18px;
+
+    transform: translateX(-50%);
+
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    color: #7DD3FC;
+
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .35px;
+
+    text-align: center;
+
+    opacity: .9;
+
+    user-select: none;
+
+    text-shadow:
+        0 0 7px rgba(56, 189, 248, .45);
+
+    pointer-events: none;
+
+    z-index: 5;
+}
+
+
+.decision-tree-click-icon {
+    color: #22D3EE;
+
+    font-size: 10px;
+
+    text-shadow:
+        0 0 6px rgba(34, 211, 238, .8);
+}
+
+
+/* =========================================================
+   RIGHT SIDE — SECURITY ASSESSMENT
+   ========================================================= */
+
+.decision-explanation {
+    width: 51%;
+
+    min-width: 0;
+    min-height: 300px;
+
+    padding: 18px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(56, 189, 248, .20);
+    border-radius: 18px;
+
+    background: rgba(15, 23, 42, .72);
+
+    backdrop-filter: blur(16px);
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, .20),
+        0 0 25px rgba(56, 189, 248, .05);
+
+    overflow-y: auto;
+}
+
+
+/* =========================================================
+   ASSESSMENT HEADER
+   ========================================================= */
+
+.decision-assessment-header {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    margin-bottom: 15px;
+}
+
+
+.decision-assessment-icon {
+    flex-shrink: 0;
+
+    color: #38BDF8;
+
+    font-size: 19px;
+
+    text-shadow:
+        0 0 8px rgba(56, 189, 248, .6);
+}
+
+
+.decision-assessment-header h3 {
+    color: #F8FAFC;
+
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: .3px;
+
+    margin: 0;
+}
+
+
+.decision-assessment-header p {
+    color: #94A3B8;
+
+    font-size: 11px;
+
+    margin: 3px 0 0;
+}
+
+
+/* =========================================================
+   INFO BOX
+   ========================================================= */
+
+.decision-info-box {
+    background: rgba(30, 41, 59, .48);
+
+    border: 1px solid rgba(148, 163, 184, .12);
+
+    border-radius: 12px;
+
+    padding: 12px 14px;
+
+    margin-bottom: 9px;
+
+    box-sizing: border-box;
+
+    backdrop-filter: blur(8px);
+
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        transform .25s ease;
+}
+
+
+.decision-info-box:hover {
+    background: rgba(30, 41, 59, .62);
+
+    border-color: rgba(56, 189, 248, .22);
+
+    transform: translateX(-2px);
+}
+
+
+.decision-info-title {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    margin-bottom: 6px;
+}
+
+
+.decision-info-title span {
+    color: #22D3EE;
+
+    font-size: 10px;
+
+    text-shadow:
+        0 0 7px rgba(34, 211, 238, .6);
+}
+
+
+.decision-info-box h4 {
+    color: #7DD3FC;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .2px;
+
+    margin: 0;
+}
+
+
+.decision-info-box p {
+    color: #CBD5E1;
+
+    font-size: 11px;
+    line-height: 1.55;
+
+    margin: 0;
+}
+
+
+.hidden-password {
+    color: #22D3EE;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    text-shadow:
+        0 0 6px rgba(34, 211, 238, .5);
+}
+
+
+/* =========================================================
+   DECISION TRAVERSAL MODAL
+   ========================================================= */
+
+.decision-traversal-card {
+    position: fixed !important;
+
+    inset: 0 !important;
+
+    width: 100vw !important;
+    height: 100vh !important;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    box-sizing: border-box;
+
+    background: rgba(2, 6, 23, .82);
+
+    backdrop-filter: blur(10px);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    z-index: 99999 !important;
+
+    transition:
+        opacity .25s ease,
+        visibility .25s ease;
+}
+
+
+.decision-traversal-card.active,
+.decision-traversal-card.show {
+    display: flex !important;
+
+    visibility: visible !important;
+
+    opacity: 1 !important;
+
+    pointer-events: auto !important;
+}
+
+
+.decision-traversal-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(56, 189, 248, .06),
+            transparent 65%
+        );
+
+    pointer-events: auto;
+
+    z-index: 0;
+}
+
+
+.decision-traversal-panel {
+    position: relative;
+
+    width: min(1180px, 94vw);
+    height: min(760px, 90vh);
+
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15, 23, 42, .98),
+            rgba(8, 15, 30, .98)
+        );
+
+    border: 1px solid rgba(56, 189, 248, .24);
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 30px 90px rgba(0, 0, 0, .65),
+        0 0 45px rgba(56, 189, 248, .08);
+
+    overflow: hidden;
+
+    z-index: 1;
+
+    animation:
+        decisionTraversalPanelIn .25s ease-out;
+}
+
+
+@keyframes decisionTraversalPanelIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* =========================================================
+   MODAL HEADER
+   ========================================================= */
+
+.decision-traversal-header {
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 22px 26px 18px;
+
+    border-bottom: 1px solid rgba(148, 163, 184, .10);
+}
+
+
+.decision-traversal-eyebrow {
+    display: block;
+
+    color: #22D3EE;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 5px;
+
+    text-shadow:
+        0 0 8px rgba(34, 211, 238, .5);
+}
+
+
+.decision-traversal-header h2 {
+    color: #F8FAFC;
+
+    font-size: 21px;
+    font-weight: 700;
+
+    margin: 0;
+}
+
+
+#decisionTraversalSubtitle {
+    color: #94A3B8;
+
+    font-size: 11px;
+
+    margin: 5px 0 0;
+}
+
+
+.decision-traversal-close {
+    flex-shrink: 0;
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    color: #CBD5E1;
+
+    background: rgba(30, 41, 59, .65);
+
+    border: 1px solid rgba(148, 163, 184, .16);
+
+    border-radius: 9px;
+
+    font-size: 23px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        color .2s ease,
+        background .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
+}
+
+
+.decision-traversal-close:hover {
+    color: #F8FAFC;
+
+    background: rgba(56, 189, 248, .12);
+
+    border-color: rgba(56, 189, 248, .35);
+
+    transform: scale(1.04);
+}
+
+
+/* =========================================================
+   MODAL CONTENT
+   ========================================================= */
+
+.decision-traversal-content {
+    flex: 1;
+
+    min-height: 0;
+
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) 310px;
+
+    gap: 18px;
+
+    padding: 18px 22px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   TREE DETAIL WRAPPER
+   ========================================================= */
+
+.decision-tree-detail-wrapper {
+    position: relative;
+
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(56, 189, 248, .045),
+            transparent 68%
+        );
+
+    border: 1px solid rgba(56, 189, 248, .12);
+
+    border-radius: 16px;
+
+    overflow: hidden;
+}
+
+
+.decision-tree-detail-wrapper::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(56, 189, 248, .025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(56, 189, 248, .025) 1px,
+            transparent 1px
+        );
+
+    background-size: 30px 30px;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   DETAIL TREE
+   ========================================================= */
+
+#decisionTreeDetail {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    overflow: auto;
+
+    box-sizing: border-box;
+
+    z-index: 2;
+}
+
+
+.decision-tree-detail {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    min-height: 0;
+
+    overflow: auto;
+
+    box-sizing: border-box;
+}
+
+
+.decision-tree-detail-wrapper
+#decisionTreeDetail {
+    scrollbar-width: thin;
+
+    scrollbar-color:
+        rgba(56, 189, 248, .35)
+        transparent;
+}
+
+
+.decision-tree-detail-wrapper
+#decisionTreeDetail::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+
+.decision-tree-detail-wrapper
+#decisionTreeDetail::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.decision-tree-detail-wrapper
+#decisionTreeDetail::-webkit-scrollbar-thumb {
+    background: rgba(56, 189, 248, .30);
+
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   DETAIL SVG
+   ========================================================= */
+
+.decision-tree-detail-svg {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 600px;
+    min-height: 420px;
+
+    overflow: visible;
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+
+#decisionTreeDetailBranches {
+    overflow: visible;
+}
+
+
+#decisionTreeDetailBranches line {
+    stroke: #334155;
+
+    stroke-width: 2;
+
+    stroke-linecap: round;
+
+    opacity: .75;
+
+    pointer-events: stroke;
+
+    cursor: pointer;
+
+    transition:
+        stroke .25s ease,
+        stroke-width .25s ease,
+        opacity .25s ease,
+        filter .25s ease;
+}
+
+
+#decisionTreeDetailBranches line:hover {
+    stroke: #38BDF8;
+
+    stroke-width: 3;
+
+    opacity: 1;
+
+    filter:
+        drop-shadow(0 0 5px #38BDF8);
+}
+
+
+#decisionTreeDetailBranches line.active {
+    stroke: #22D3EE;
+
+    stroke-width: 3;
+
+    opacity: 1;
+
+    filter:
+        drop-shadow(0 0 4px #22D3EE)
+        drop-shadow(0 0 10px rgba(34, 211, 238, .7));
+}
+
+
+/* =========================================================
+   DETAIL NODES CONTAINER
+   ========================================================= */
+
+.decision-tree-detail-nodes {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 600px;
+    min-height: 420px;
+
+    z-index: 3;
+
+    pointer-events: none;
+}
+
+
+.decision-tree-detail-nodes > * {
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   GENERATED DECISION NODES
+   ========================================================= */
+
+.decision-node-container {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: max-content;
+
+    box-sizing: border-box;
+}
+
+
+.decision-shape {
+    position: relative;
+
+    min-width: 120px;
+    max-width: 180px;
+
+    min-height: 48px;
+
+    padding: 10px 16px;
+
+    color: #DBEAFE;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(37, 99, 235, .38),
+            rgba(30, 64, 175, .20)
+        );
+
+    border: 1px solid rgba(96, 165, 250, .55);
+
+    border-radius: 12px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 10px rgba(96, 165, 250, .12);
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease,
+        transform .2s ease;
+}
+
+
+.decision-shape:hover {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(37, 99, 235, .55),
+            rgba(30, 64, 175, .30)
+        );
+
+    border-color: #93C5FD;
+
+    box-shadow:
+        0 0 8px rgba(96, 165, 250, .35),
+        0 0 20px rgba(96, 165, 250, .15);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   GENERATED BRANCHES
+   ========================================================= */
+
+.decision-children {
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: center;
+
+    gap: 28px;
+
+    margin-top: 26px;
+}
+
+
+.decision-branch {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    min-width: 80px;
+}
+
+
+.decision-line {
+    position: absolute;
+
+    top: -26px;
+
+    width: 2px;
+    height: 26px;
+
+    padding: 0;
+
+    background: #334155;
+
+    border: 0;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+
+.decision-line:hover {
+    background: #38BDF8;
+
+    box-shadow:
+        0 0 8px rgba(56, 189, 248, .65);
+}
+
+
+.decision-branch-label {
+    position: relative;
+
+    padding: 4px 10px;
+
+    color: #94A3B8;
+
+    background: rgba(30, 41, 59, .75);
+
+    border: 1px solid rgba(148, 163, 184, .14);
+
+    border-radius: 7px;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: .4px;
+
+    cursor: pointer;
+
+    transition:
+        color .2s ease,
+        background .2s ease,
+        border-color .2s ease;
+}
+
+
+.decision-branch-label:hover {
+    color: #7DD3FC;
+
+    background: rgba(56, 189, 248, .10);
+
+    border-color: rgba(56, 189, 248, .35);
+}
+
+
+.decision-branch-label[data-taken="true"] {
+    color: #22D3EE;
+
+    border-color: rgba(34, 211, 238, .30);
+
+    background: rgba(34, 211, 238, .08);
+
+    text-shadow:
+        0 0 6px rgba(34, 211, 238, .45);
+}
+
+
+/* =========================================================
+   RESULT NODE
+   ========================================================= */
+
+.decision-result-shape {
+    min-width: 120px;
+
+    padding: 12px 18px;
+
+    color: #FEF08A;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(202, 138, 4, .32),
+            rgba(120, 53, 15, .18)
+        );
+
+    border: 1px solid rgba(250, 204, 21, .55);
+
+    border-radius: 50px;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 12px rgba(250, 204, 21, .10);
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease,
+        transform .2s ease;
+}
+
+
+.decision-result-shape:hover {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(202, 138, 4, .48),
+            rgba(120, 53, 15, .28)
+        );
+
+    border-color: #FEF08A;
+
+    box-shadow:
+        0 0 8px rgba(250, 204, 21, .4),
+        0 0 20px rgba(250, 204, 21, .15);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   GENERIC NODE
+   ========================================================= */
+
+.decision-generic-node {
+    padding: 9px 14px;
+
+    color: #CBD5E1;
+
+    background: rgba(51, 65, 85, .75);
+
+    border: 1px solid rgba(148, 163, 184, .25);
+
+    border-radius: 9px;
+
+    font-size: 10px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   EXPLANATION PANEL
+   ========================================================= */
+
+.decision-tree-explanation {
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    background: rgba(15, 23, 42, .72);
+
+    border: 1px solid rgba(56, 189, 248, .15);
+
+    border-radius: 16px;
+
+    overflow-y: auto;
+
+    scrollbar-width: thin;
+
+    scrollbar-color:
+        rgba(56, 189, 248, .30)
+        transparent;
+}
+
+
+.decision-tree-explanation::-webkit-scrollbar {
+    width: 5px;
+}
+
+
+.decision-tree-explanation::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.decision-tree-explanation::-webkit-scrollbar-thumb {
+    background: rgba(56, 189, 248, .30);
+
+    border-radius: 10px;
+}
+
+
+.decision-tree-explanation-empty {
+    margin: auto;
+
+    text-align: center;
+
+    max-width: 230px;
+}
+
+
+.decision-tree-explanation-icon {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 13px;
+
+    color: #22D3EE;
+
+    border: 1px solid rgba(34, 211, 238, .30);
+
+    border-radius: 50%;
+
+    background: rgba(34, 211, 238, .06);
+
+    font-size: 17px;
+
+    text-shadow:
+        0 0 8px rgba(34, 211, 238, .5);
+}
+
+
+.decision-tree-explanation-empty h3 {
+    color: #E2E8F0;
+
+    font-size: 14px;
+
+    margin: 0 0 7px;
+}
+
+
+.decision-tree-explanation-empty p {
+    color: #64748B;
+
+    font-size: 10px;
+
+    line-height: 1.55;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   EXPLANATION CONTENT
+   ========================================================= */
+
+.decision-tree-explanation-content {
+    color: #CBD5E1;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+
+.decision-tree-explanation-content[hidden] {
+    display: none !important;
+}
+
+
+.decision-tree-explanation-type {
+    display: inline-block;
+
+    padding: 4px 8px;
+
+    margin-bottom: 9px;
+
+    color: #22D3EE;
+
+    background: rgba(34, 211, 238, .07);
+
+    border: 1px solid rgba(34, 211, 238, .18);
+
+    border-radius: 5px;
+
+    font-size: 8px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+
+#decisionTreeExplanationTitle {
+    color: #F8FAFC;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    margin: 0 0 10px;
+}
+
+
+#decisionTreeExplanationText {
+    color: #CBD5E1;
+
+    font-size: 11px;
+    line-height: 1.65;
+
+    margin: 0;
+}
+
+
+.decision-tree-explanation-value {
+    margin-top: 14px;
+
+    padding: 10px 12px;
+
+    color: #7DD3FC;
+
+    background: rgba(30, 41, 59, .60);
+
+    border: 1px solid rgba(148, 163, 184, .12);
+
+    border-radius: 9px;
+
+    font-size: 10px;
+}
+
+
+.decision-tree-explanation-value[hidden] {
+    display: none !important;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.decision-traversal-footer {
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 13px 22px;
+
+    border-top: 1px solid rgba(148, 163, 184, .10);
+}
+
+
+.decision-tree-legend {
+    display: flex;
+
+    align-items: center;
+
+    gap: 17px;
+}
+
+
+.decision-tree-legend-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: #64748B;
+
+    font-size: 9px;
+}
+
+
+.decision-tree-legend-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+}
+
+
+.decision-tree-legend-dot.decision {
+    background: #60A5FA;
+
+    box-shadow:
+        0 0 6px rgba(96, 165, 250, .55);
+}
+
+
+.decision-tree-legend-dot.result {
+    background: #FACC15;
+
+    box-shadow:
+        0 0 6px rgba(250, 204, 21, .55);
+}
+
+
+.decision-tree-legend-line {
+    width: 18px;
+    height: 2px;
+
+    background: #475569;
+
+    border-radius: 2px;
+}
+
+
+.decision-traversal-done {
+    padding: 8px 17px;
+
+    color: #CBD5E1;
+
+    background: rgba(30, 41, 59, .70);
+
+    border: 1px solid rgba(148, 163, 184, .18);
+
+    border-radius: 8px;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        color .2s ease,
+        background .2s ease,
+        border-color .2s ease;
+}
+
+
+.decision-traversal-done:hover {
+    color: #F8FAFC;
+
+    background: rgba(56, 189, 248, .10);
+
+    border-color: rgba(56, 189, 248, .35);
+}
+
+
+/* =========================================================
+   IMPORTANT MODAL OVERRIDES
+   ========================================================= */
+
+#decisionTraversalCard {
+    position: fixed !important;
+
+    inset: 0 !important;
+
+    visibility: hidden;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    display: none;
+
+    z-index: 99999 !important;
+}
+
+
+#decisionTraversalCard.active,
+#decisionTraversalCard.show {
+    display: flex !important;
+
+    visibility: visible !important;
+
+    opacity: 1 !important;
+
+    pointer-events: auto !important;
+}
+
+
+#decisionTraversalCard .decision-traversal-panel {
+    position: relative !important;
+
+    z-index: 100000 !important;
+
+    visibility: visible !important;
+
+    opacity: 1 !important;
+}
+
+
+#decisionTraversalCard .decision-traversal-overlay {
+    position: absolute !important;
+
+    inset: 0 !important;
+
+    z-index: 0 !important;
+}
+
+
+#decisionTraversalCard
+.decision-tree-detail-wrapper {
+    position: relative !important;
+
+    z-index: 2 !important;
+}
+
+
+#decisionTraversalCard
+.decision-tree-detail-nodes {
+    position: relative !important;
+
+    z-index: 3 !important;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .decision-traversal-content {
+        grid-template-columns: minmax(0, 1fr) 260px;
+    }
+}
+
+
+@media (max-width: 900px) {
+
+    .decision-tree-overview {
+        flex-direction: column;
+
+        gap: 18px;
+    }
+
+    .decision-tree-visual {
+        width: 100%;
+
+        min-height: 280px;
+    }
+
+    .decision-explanation {
+        width: 100%;
+
+        min-height: auto;
+    }
+
+    .dt-tree-svg {
+        width: 80%;
+
+        max-width: 300px;
+
+        max-height: 210px;
+    }
+
+    .decision-traversal-content {
+        grid-template-columns: 1fr;
+
+        overflow-y: auto;
+    }
+
+    .decision-tree-detail-wrapper {
+        min-height: 400px;
+    }
+
+    .decision-tree-explanation {
+        min-height: 180px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .decision-tree-visual {
+        min-height: 240px;
+    }
+
+    .decision-tree-hologram {
+        width: 90%;
+
+        height: 70%;
+    }
+
+    .dt-tree-svg {
+        width: 85%;
+
+        max-width: 260px;
+    }
+
+    .decision-tree-click-note {
+        font-size: 10px;
+
+        bottom: 12px;
+    }
+
+    .decision-explanation {
+        padding: 14px;
+    }
+
+    .decision-traversal-card {
+        padding: 10px;
+    }
+
+    .decision-traversal-panel {
+        width: 100%;
+        height: 96vh;
+
+        border-radius: 16px;
+    }
+
+    .decision-traversal-header {
+        padding: 16px;
+    }
+
+    .decision-traversal-header h2 {
+        font-size: 17px;
+    }
+
+    #decisionTraversalSubtitle {
+        font-size: 10px;
+    }
+
+    .decision-traversal-content {
+        padding: 10px;
+
+        gap: 10px;
+    }
+
+    .decision-tree-detail-wrapper {
+        min-height: 330px;
+    }
+
+    .decision-tree-explanation {
+        padding: 14px;
+    }
+
+    .decision-traversal-footer {
+        padding: 10px 14px;
+    }
+
+    .decision-tree-legend {
+        gap: 9px;
+    }
+
+    .decision-tree-legend-item {
+        font-size: 8px;
+    }
+}
+
+/* =========================================================
+   HOLOGRAM ANIMATION
+   ========================================================= */
+
+/* Moving hologram scan line */
+.decision-tree-visual::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    top: -20%;
+
+    width: 100%;
+    height: 1px;
+
+    background: rgba(56, 189, 248, 0.18);
+
+    pointer-events: none;
+
+    z-index: 4;
+
+    animation: hologramScan 5s linear infinite;
+}
+
+
+/* Subtle movement for the tree itself */
+.decision-tree-hologram {
+    animation: hologramFloat 4s ease-in-out infinite;
+}
+
+
+/* Slowly moving grid */
+.decision-tree-visual::before {
+    animation: hologramGrid 12s linear infinite;
+}
+
+
+/* =========================================================
+   SCAN ANIMATION
+   ========================================================= */
+
+@keyframes hologramScan {
+    0% {
+        top: -10%;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 0.35;
+    }
+
+    90% {
+        opacity: 0.7;
+    }
+
+    100% {
+        top: 110%;
+        opacity: 0;
+    }
+}
+
+
+/* =========================================================
+   FLOATING TREE
+   ========================================================= */
+
+@keyframes hologramFloat {
+    0%,
+    100% {
+        transform: translate(-50%, -50%) translateY(0);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) translateY(-5px);
+    }
+}
+
+
+/* =========================================================
+   MOVING GRID
+   ========================================================= */
+
+@keyframes hologramGrid {
+    0% {
+        background-position: 0 0, 0 0;
+    }
+
+    100% {
+        background-position: 28px 28px, 28px 28px;
+    }
+}
