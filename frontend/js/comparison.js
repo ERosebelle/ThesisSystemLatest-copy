@@ -86,11 +86,11 @@ function showComparisonSummary() {
 
     // Clicked button drops highlight (dark outline), unclicked gets highlight (blue fill)
     if (summaryButton) {
-        summaryButton.classList.remove("highlighted");
+        summaryButton.classList.add("active");
     }
 
     if (detailedButton) {
-        detailedButton.classList.add("highlighted");
+        detailedButton.classList.remove("active");
     }
 }
 
@@ -116,11 +116,11 @@ function showComparisonDetailed() {
 
     // Clicked button drops highlight (dark outline), unclicked gets highlight (blue fill)
     if (summaryButton) {
-        summaryButton.classList.add("highlighted");
+        summaryButton.classList.remove("active");
     }
 
     if (detailedButton) {
-        detailedButton.classList.remove("highlighted");
+        detailedButton.classList.add("active");
     }
 }
 
