@@ -646,13 +646,10 @@ const RECOMMENDATION_LABEL_TEMPLATES = {
             : "";
 
         return pickVariant([
-            `'${password}' contains a recognizable word that automated guessing tools usually check first.${stackedNote} ` +
             `A passphrase like "${passphrase}" - made from unrelated words - creates a much less predictable password.`,
            
-            `Dictionary-based guessing software checks common words, and '${password}' contains one.${stackedNote} ` +
             `Consider replacing it with something like "${passphrase}" - combining unrelated words creates a stronger structure.`,
-           
-            `The main part of '${password}' matches a word found in common password lists.${stackedNote} ` +
+        
             `Consider a multi-word passphrase such as "${passphrase}" - using unrelated words creates a longer and harder-to-guess password.`
         ]);
     },
@@ -666,13 +663,10 @@ const RECOMMENDATION_LABEL_TEMPLATES = {
         const whatWasFound = found.length > 0 ? found.join(", ") : "a common modification pattern";
 
         return pickVariant([
-            `'${password}' contains ${whatWasFound}. Automated guessing tools check these exact tricks after looking for whole words. ` +
             `Consider changing the arrangement of your numbers, symbols, and letters instead of placing them only at the beginning or end.`,
-           
-            `We noticed ${whatWasFound} in '${password}'. These are predictable changes that automated password-guessing tools test automatically. ` +
+
             `Try mixing numbers and symbols into different parts of the password instead of putting them only at the ends.`,
            
-            `The pattern in '${password}' (${whatWasFound}) is a common modification that password-cracking tools test right away. ` +
             `Consider creating a completely random combination rather than just adding extra characters to a basic word.`
         ]);
     },
@@ -690,13 +684,10 @@ const RECOMMENDATION_LABEL_TEMPLATES = {
             : "";
 
         return pickVariant([
-            `'${password}' uses ${f.character_class_count} type${f.character_class_count === 1 ? "" : "s"} of characters.${missingNote} ` +
             `Consider using at least ${target} types (uppercase, lowercase, numbers, and symbols) to create more variety and make it harder to guess.`,
            
-            `Character variety in '${password}' is limited to ${f.character_class_count} type${f.character_class_count === 1 ? "" : "s"}.${missingNote} ` +
             `Adding the missing character types creates many more possibilities, making automated guessing much harder.`,
            
-            `With only ${f.character_class_count} character type${f.character_class_count === 1 ? "" : "s"} in use, '${password}' has limited variety.${missingNote} ` +
             `Consider combining at least ${target} types to create a more varied and less predictable password.`
         ]);
     },
@@ -709,13 +700,10 @@ const RECOMMENDATION_LABEL_TEMPLATES = {
             : ` It already meets the ${target}-character recommendation, but extra length still makes it exponentially stronger.`;
 
         return pickVariant([
-            `'${password}' is ${f.length} character${f.length === 1 ? "" : "s"} long.${remainingNote} ` +
             `Adding more characters increases the time and effort required for automated tools to guess it.`,
            
-            `At ${f.length} character${f.length === 1 ? "" : "s"}, '${password}' has room to grow.${remainingNote} ` +
             `Consider making it longer to increase the number of possible combinations.`,
            
-            `'${password}' currently has ${f.length} character${f.length === 1 ? "" : "s"}.${remainingNote} ` +
             `Consider extending it by adding an extra random word or phrase, avoiding simple or obvious additions.`
         ]);
     }
@@ -746,23 +734,39 @@ function suggestPassphrase() {
 
 function getStrategies(vulnerabilityType, extractedFeatures, password, treeRoot, classificationRationale, recommendationResult) {
     let tips = [];
+    
+    let attackVectorText = "";
+    if (vulnerabilityType === "DICTIONARY") {
+        attackVectorText = 
+            `This password relies on recognizable natural language vocabulary (detected word(s): ${extractedFeatures._matched_dictionary_word || "dictionary root"}). ` +
+            `Attackers utilize pre-compiled dictionaries and breach databases containing millions of known words. ` +
+            `Because human-memorized words occupy a tiny fraction of total mathematical possibilities, automated dictionary attacks can test millions of combinations per second, easily compromising this password structure regardless of minor capitalization changes.`;
+    } else if (vulnerabilityType === "RULE-BASED") {
+        attackVectorText = 
+            `This password exhibits predictable structural modifications such as appending digits, capitalization tweaks, or character replacements (leetspeak). ` +
+            `Modern password cracking tools use specialized rule engines (e.g., Hashcat rule files) that automatically apply thousands of common human mutation patterns to dictionary words. ` +
+            `Patterns like adding numbers to the end, swapping 'e' for '3', or capitalizing the first letter are among the very first permutations tested by automated cracking software.`;
+    } else if (vulnerabilityType === "BRUTE-FORCE") {
+        attackVectorText = 
+            `No obvious dictionary words or rule-based patterns were detected. Security against brute-force attacks depends entirely on mathematical search space volume (entropy). ` +
+            `With a length of ${extractedFeatures.length} characters and ${extractedFeatures.character_class_count} character type(s) active, ` +
+            `${extractedFeatures.length < 12 ? "the total search space remains relatively small, meaning high-speed offline brute-force attacks using modern GPUs could calculate and test all possible permutations in a short timeframe." : "the large combination pool significantly increases the computational time and resources required for an attacker to exhaustively guess every possibility."}`;
+    }
+
     let technicalBreakdown = {
         vulnerability_explanation: classificationRationale || "",
-        attack_vector: "",
+        attack_vector: attackVectorText,
         remediation: ""
     };
 
     const currentPassword = password;
 
     if (vulnerabilityType === "DICTIONARY") {
-        technicalBreakdown.attack_vector = `Automated tools try common words first during dictionary guessing, and '${currentPassword}' contains a recognizable word found in standard password lists.`;
-        technicalBreakdown.remediation = `Consider replacing it with a passphrase made from a few unrelated words.`;
+        technicalBreakdown.remediation = `Consider replacing it with a passphrase made from a few unrelated words to break up single-word guessing patterns.`;
     } else if (vulnerabilityType === "RULE-BASED") {
-        technicalBreakdown.attack_vector = `'${currentPassword}' contains a familiar word with a predictable modification, such as numbers, symbols, or capitalization. Automated cracking tools test these exact patterns automatically.`;
         technicalBreakdown.remediation = `Consider changing the predictable pattern by mixing symbols and numbers into different parts of the password, rather than placing them only at the start or end.`;
     } else if (vulnerabilityType === "BRUTE-FORCE") {
-        technicalBreakdown.attack_vector = `'${currentPassword}' does not match a recognizable word or common pattern. Automated tools must test combinations of characters to guess it.`;
-        technicalBreakdown.remediation = `Consider making it longer and using different types of characters to create a less predictable structure.`;
+        technicalBreakdown.remediation = `Consider making it longer and using different types of characters to expand the overall combination pool.`;
     }
 
     tips.push("Consider enabling Multi-Factor Authentication (MFA) to add an extra verification step if someone discovers your password.");
@@ -916,33 +920,40 @@ function explainClassification(extractedFeatures, vulnerabilityType) {
     let classification_rationale;
 
     if (vulnerabilityType === "DICTIONARY") {
+        const wordFound = extractedFeatures._matched_dictionary_word ? `("${extractedFeatures._matched_dictionary_word}")` : "";
         const ruleNote = extractedFeatures.rule_pattern_present
-            ? "and although natural character doublets were detected, the password consists entirely of standard dictionary word(s) without artificial rule-based modifications."
-            : "and no common rule-based patterns, such as leetspeak, numbers at the beginning or end, sequences, or repeated characters, were detected.";
+            ? "Although additional character modifications were detected, the underlying core password is heavily reliant on dictionary vocabulary."
+            : "No significant obfuscation or rule-based transformations were applied to mask the dictionary root.";
 
         classification_rationale =
-            `Classified as DICTIONARY because the system detected a recognizable dictionary word ` +
-            `(dictionary_present = 1) ${ruleNote} ` +
-            `Although the password is (${extractedFeatures.length}) character(s) long, it uses (${extractedFeatures.character_class_count}) type(s) of characters. ` +
-            `The trained model gives primary weight to the presence of a dictionary word, which led to the DICTIONARY classification.`;
+            `The machine learning model classified this password as DICTIONARY due to the strong presence of clear, recognizable vocabulary ${wordFound}. ` +
+            `Specifically, dictionary_present is flagged as active (1). ${ruleNote} ` +
+            `With a length of ${extractedFeatures.length} character(s) and only ${extractedFeatures.character_class_count} character class(es) utilized, ` +
+            `the structure presents a low search complexity. Automated cracking tools prioritizing natural language dictionaries and wordlists can rapidly identify and isolate this pattern.`;
     } else if (vulnerabilityType === "RULE-BASED") {
         const patternsFound = [];
-        if (extractedFeatures.has_leetspeak) patternsFound.push("leetspeak substitution");
+        if (extractedFeatures.has_leetspeak) patternsFound.push("leetspeak character substitution");
+        if (extractedFeatures.numeric_prefix) patternsFound.push("numeric prefix");
         if (extractedFeatures.numeric_suffix) patternsFound.push("numeric suffix");
-        if (extractedFeatures.has_sequence) patternsFound.push("sequential characters");
-        if (extractedFeatures.has_repetition) patternsFound.push("repeated characters");
+        if (extractedFeatures.numeric_infix) patternsFound.push("numeric infix");
+        if (extractedFeatures.has_sequence) patternsFound.push("sequential character patterns");
+        if (extractedFeatures.has_repetition) patternsFound.push("repeated character blocks");
 
         classification_rationale =
-            `Classified as RULE-BASED because the system detected a dictionary word (dictionary_present = 1) ` +
-            `together with predictable adjustments (rule_pattern_present = 1)` +
-            `${patternsFound.length > 0 ? `, specifically: ${patternsFound.join(", ")}` : ""}. ` +
-            `This means the password is based on a recognizable word with common changes that password-cracking tools may also try, which led to the RULE-BASED classification.`;
+            `The machine learning model classified this password as RULE-BASED because it combines base dictionary words or simple terms with predictable transformations. ` +
+            `The feature evaluator detected specific modification rules, including: ${patternsFound.length > 0 ? patternsFound.join(", ") : "standard password rules"}. ` +
+            `Although these modifications alter the raw string, rule-based mask attacks and password mutation engines (such as Hashcat or John the Ripper) specifically target these exact conversion patterns, rendering the obfuscation ineffective against automated tools.`;
     } else if (vulnerabilityType === "BRUTE-FORCE") {
+        const classesUsed = [];
+        if (extractedFeatures.has_lowercase) classesUsed.push("lowercase letters");
+        if (extractedFeatures.has_uppercase) classesUsed.push("uppercase letters");
+        if (extractedFeatures.has_digit) classesUsed.push("digits");
+        if (extractedFeatures.has_symbol) classesUsed.push("symbols");
+
         classification_rationale =
-            `Classified as BRUTE-FORCE because the system did not detect a recognizable dictionary word (dictionary_present = 0). ` +
-            `Instead, the password's classification is mainly associated with its length and combination of character types. ` +
-            `The password is ${extractedFeatures.length} characters long and uses ${extractedFeatures.character_class_count} character type${extractedFeatures.character_class_count === 1 ? "" : "es"}, ` +
-            `which means the system evaluates its characteristics mainly in relation to the number of possible combinations that may need to be considered during brute-force guessing.`;
+            `The machine learning model classified this password as BRUTE-FORCE because no recognizable dictionary words were detected (dictionary_present = 0). ` +
+            `Instead, the security evaluation relies entirely on its length (${extractedFeatures.length} characters) and character space diversity (${extractedFeatures.character_class_count} class(es) used: ${classesUsed.length > 0 ? classesUsed.join(", ") : "none"}). ` +
+            `Because there are no word-based shortcuts for attackers to exploit, an adversary would be forced to exhaustively test random combinations across the available character set.`;
     } else {
         classification_rationale = `Classification result: ${vulnerabilityType}.`;
     }
