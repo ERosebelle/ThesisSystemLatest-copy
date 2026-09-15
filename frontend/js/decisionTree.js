@@ -99,55 +99,63 @@ const DecisionTree = (() => {
     }
 
     function updateExplanation(data) {
-    const explanation = document.getElementById("decisionExplanation");
-    const attackVector = document.getElementById("attackVector");
-    const remediation = document.getElementById("remediation");
+        const explanation = document.getElementById("decisionExplanation");
+        const attackVector = document.getElementById("attackVector");
+        const remediation = document.getElementById("remediation");
 
-    if (!explanation) return;
+        if (!explanation) return;
 
-    const assessment = data.security_assessment || {};
+        const assessment = data.security_assessment || {};
 
-    // 1. Unang iche-check kung may explicit na custom DT explanation mula sa backend
-    let vulnerabilityExplanation = data.decision_tree_explanation;
+        // 1. Unang iche-check kung may explicit na custom DT explanation mula sa backend
+        let vulnerabilityExplanation = data.decision_tree_explanation;
 
-    // 2. Kung wala, mag-generate ng hiwalay at Decision-Tree-specific narrative
-    if (!vulnerabilityExplanation) {
-        vulnerabilityExplanation = generateTreeSpecificExplanation(data);
+        // 2. Kung wala, mag-generate ng hiwalay at Decision-Tree-specific narrative
+        if (!vulnerabilityExplanation) {
+            vulnerabilityExplanation = generateTreeSpecificExplanation(data);
+        }
+
+        explanation.innerHTML = censorPassword(vulnerabilityExplanation, data.password);
+
+        if (attackVector) {
+            attackVector.innerHTML = censorPassword(assessment.attack_vector || "No attack characteristics identified.", data.password);
+        }
+
+        if (remediation) {
+            // Fallback to strategy tip text if security_assessment.remediation is not explicitly provided
+            const remediationText = assessment.remediation || (Array.isArray(data.strategies) && data.strategies.length > 0 ? data.strategies.join(" ") : "No specific remediation required.");
+            remediation.innerHTML = censorPassword(remediationText, data.password);
+        }
+
+        activatePasswordReveal();
     }
 
-    explanation.innerHTML = censorPassword(vulnerabilityExplanation, data.password);
+    // Bagong helper function para sa Decision Tree-specific logic
+    function generateTreeSpecificExplanation(data) {
+        const type = data.vulnerability;
+        const length = data.features?.length || data.length || 0;
+        const hasDict = data.features?.dictionary_present === 1;
 
-    if (attackVector) {
-        attackVector.innerHTML = censorPassword(assessment.attack_vector || "", data.password);
+        if (type === "DICTIONARY") {
+            return `The Decision Tree navigated through root condition nodes and evaluated <strong>dictionary_present = ${hasDict ? 1 : 0}</strong>.
+            Because the password matched a known word entry without significant rule modifications, the path terminated directly at the
+            <strong>DICTIONARY</strong>
+            leaf node.`;
+        }
+
+        if (type === "RULE-BASED") {
+            return `The model evaluated the feature conditions step-by-step and detected structural modifications
+            (such as leetspeak substitutions, numeric suffixes, or character repetitions).
+            The decision path branched past pure dictionary detection and resolved into the <strong>RULE-BASED</strong> classification node.`;
+        }
+
+        if (type === "BRUTE-FORCE") {
+            return `The traversal bypassed dictionary matching nodes due to low word connection,
+            evaluated length (${length} characters) and character space, and concluded at the <strong>BRUTE-FORCE</strong> leaf node.`;
+        }
+
+        return "The Decision Tree evaluated the feature vector and traversed the nodes to reach this classification.";
     }
-
-    if (remediation) {
-        remediation.innerHTML = censorPassword(assessment.remediation || "", data.password);
-    }
-
-    activatePasswordReveal();
-}
-
-// Bagong helper function para sa Decision Tree-specific logic
-function generateTreeSpecificExplanation(data) {
-    const type = data.vulnerability;
-    const length = data.features?.length || data.length || 0;
-    const hasDict = data.features?.dictionary_present === 1;
-
-    if (type === "DICTIONARY") {
-        return `The Decision Tree navigated through root condition nodes and evaluated <strong>dictionary_present = ${hasDict ? 1 : 0}</strong>. Because the password matched a known word entry without significant rule modifications, the path terminated directly at the <strong>DICTIONARY</strong> leaf node.`;
-    } 
-    
-    if (type === "RULE-BASED") {
-        return `The model evaluated the feature conditions step-by-step and detected structural modifications (such as leetspeak substitutions, numeric suffixes, or character repetitions). The decision path branched past pure dictionary detection and resolved into the <strong>RULE-BASED</strong> classification node.`;
-    } 
-    
-    if (type === "BRUTE-FORCE") {
-        return `The traversal bypassed dictionary matching nodes due to low word correlation, evaluated length (${length} characters) and character space, and concluded at the <strong>BRUTE-FORCE</strong> leaf node.`;
-    }
-
-    return "The Decision Tree evaluated the feature vector and traversed the nodes to reach this classification.";
-}
 
     function renderDecisionTree(tree) {
         const nodeContainer =
@@ -656,7 +664,7 @@ function generateTreeSpecificExplanation(data) {
                 highlightResult(
                     data.vulnerability,
                     pathIds[
-                        pathIds.length - 1
+                    pathIds.length - 1
                     ]
                 );
             },

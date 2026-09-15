@@ -4,7 +4,7 @@
 
 .decision-tree-overview {
     width: 100%;
-    min-height: 100%;
+    height: 430px;
     display: flex;
     align-items: stretch;
     justify-content: space-between;
@@ -100,9 +100,6 @@
 }
 
 
-
-
-
 /* =========================================================
    OVERVIEW SVG
    ========================================================= */
@@ -184,8 +181,6 @@
     fill: #60A5FA;
     stroke: #BFDBFE;
     opacity: .95;
-
- 
 }
 
 
@@ -200,23 +195,18 @@
     fill: #22D3EE;
     stroke: #67E8F9;
     opacity: 1;
-
 }
 
 
 .dt-root.active {
     fill: #A855F7;
     stroke: #E9D5FF;
-
-
 }
 
 
 .dt-question.active {
     fill: #60A5FA;
     stroke: #DBEAFE;
-
- 
 }
 
 
@@ -224,8 +214,6 @@
     fill: #FACC15;
     stroke: #FEF08A;
     opacity: 1;
-
-
 }
 
 
@@ -300,7 +288,7 @@
     width: 51%;
 
     min-width: 0;
-    min-height: 300px;
+    height: 100%;
 
     padding: 18px;
 
@@ -318,6 +306,33 @@
         0 0 25px rgba(56, 189, 248, .05);
 
     overflow-y: auto;
+
+    /* Firefox Custom Scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(56, 189, 248, .35) transparent;
+}
+
+
+/* =========================================================
+   SECURITY ASSESSMENT SCROLLBAR (Chrome / Safari / Edge)
+   ========================================================= */
+
+.decision-explanation::-webkit-scrollbar {
+    width: 5px;
+}
+
+.decision-explanation::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 12px 0;
+}
+
+.decision-explanation::-webkit-scrollbar-thumb {
+    background: rgba(56, 189, 248, .30);
+    border-radius: 10px;
+}
+
+.decision-explanation::-webkit-scrollbar-thumb:hover {
+    background: rgba(56, 189, 248, .60);
 }
 
 
@@ -1364,6 +1379,7 @@
     display: flex;
 
     align-items: center;
+
     justify-content: space-between;
 
     gap: 20px;
@@ -1547,6 +1563,7 @@
 
     .decision-tree-overview {
         flex-direction: column;
+        height: auto;
 
         gap: 18px;
     }
@@ -1561,6 +1578,8 @@
         width: 100%;
 
         min-height: auto;
+        height: auto;
+        max-height: 350px;
     }
 
     .dt-tree-svg {
@@ -1664,6 +1683,7 @@
         font-size: 8px;
     }
 }
+
 
 /* =========================================================
    HOLOGRAM ANIMATION

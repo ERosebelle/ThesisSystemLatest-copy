@@ -11,6 +11,7 @@ function renderClassification(data) {
     const risk = document.getElementById("riskLevel");
     const score = document.getElementById("securityScore");
     const summary = document.getElementById("summaryText");
+    const message = document.getElementById("classificationMessage");
 
     if (vulnerability) {
         vulnerability.textContent = data.vulnerability || "-";
@@ -37,6 +38,16 @@ function renderClassification(data) {
             <p>${getClassificationSummary(data)}</p>
             ${getRiskExplanationHTML(data)}
         `;
+    }
+
+    if (message) {
+        // Show message ONLY if a comparison password exists in storage
+        if (localStorage.getItem("comparisonPassword")) {
+            message.textContent = "Password comparison results show key similarities, differences, and security risks.";
+            message.style.display = "block";
+        } else {
+            message.style.display = "none";
+        }
     }
 }
 
@@ -120,7 +131,8 @@ function getRiskExplanationHTML(data) {
 
     return `
         <div class="risk-explanation">
-    <p class="risk-explanation-label"><strong>Why this risk level?</strong></p>            <p>${riskAssessment.summary}</p>
+    <p class="risk-explanation-label"><strong>Why this risk level?</strong></p>
+    <p>${riskAssessment.summary}</p>
         </div>
     `;
 }
