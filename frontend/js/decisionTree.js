@@ -101,7 +101,7 @@ const DecisionTree = (() => {
     function updateExplanation(data) {
         const explanation = document.getElementById("decisionExplanation");
         const attackVector = document.getElementById("attackVector");
-        const remediation = document.getElementById("remediation");
+        const structuralInsights = document.getElementById("structuralInsights");
 
         if (!explanation) return;
 
@@ -121,10 +121,21 @@ const DecisionTree = (() => {
             attackVector.innerHTML = censorPassword(assessment.attack_vector || "No attack characteristics identified.", data.password);
         }
 
-        if (remediation) {
-            // Fallback to strategy tip text if security_assessment.remediation is not explicitly provided
-            const remediationText = assessment.remediation || (Array.isArray(data.strategies) && data.strategies.length > 0 ? data.strategies.join(" ") : "No specific remediation required.");
-            remediation.innerHTML = censorPassword(remediationText, data.password);
+        if (structuralInsights) {
+            const length = data.features?.length || data.length || 0;
+            const classCount = data.features?.character_class_count || 1;
+
+            let structuralText = `This password spans ${length} characters and utilizes ${classCount} character class(es). `;
+            if (data.features?.has_leetspeak) {
+                structuralText += `The structural evaluation mapped character substitutions where symbols or numbers replaced standard alphabetic letters. `;
+            }
+            if (data.features?.dictionary_present) {
+                structuralText += `Its core architecture originates from a recognized dictionary root, reducing overall structural complexity.`;
+            } else {
+                structuralText += `The absence of a dictionary root directs the structural evaluation entirely toward length and character space metrics.`;
+            }
+
+            structuralInsights.innerHTML = censorPassword(structuralText, data.password);
         }
 
         activatePasswordReveal();

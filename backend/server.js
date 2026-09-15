@@ -736,21 +736,23 @@ function getStrategies(vulnerabilityType, extractedFeatures, password, treeRoot,
     let tips = [];
     
     let attackVectorText = "";
+
     if (vulnerabilityType === "DICTIONARY") {
-        attackVectorText = 
-            `This password relies on recognizable natural language vocabulary (detected word(s): ${extractedFeatures._matched_dictionary_word || "dictionary root"}). ` +
-            `Attackers utilize pre-compiled dictionaries and breach databases containing millions of known words. ` +
-            `Because human-memorized words occupy a tiny fraction of total mathematical possibilities, automated dictionary attacks can test millions of combinations per second, easily compromising this password structure regardless of minor capitalization changes.`;
+        const word = extractedFeatures._matched_dictionary_word ? ` ("${extractedFeatures._matched_dictionary_word}")` : "";
+        attackVectorText = `Your password is built around a common dictionary word${word}. Automated tools easily test millions of these exact dictionary combinations per second.`;
     } else if (vulnerabilityType === "RULE-BASED") {
-        attackVectorText = 
-            `This password exhibits predictable structural modifications such as appending digits, capitalization tweaks, or character replacements (leetspeak). ` +
-            `Modern password cracking tools use specialized rule engines (e.g., Hashcat rule files) that automatically apply thousands of common human mutation patterns to dictionary words. ` +
-            `Patterns like adding numbers to the end, swapping 'e' for '3', or capitalizing the first letter are among the very first permutations tested by automated cracking software.`;
+        const mods = [];
+        if (extractedFeatures.has_leetspeak) mods.push("substituted letters with symbols/numbers (like '@' or '0')");
+        if (extractedFeatures.numeric_suffix) mods.push("added a numeric suffix");
+        if (extractedFeatures.numeric_prefix) mods.push("added a numeric prefix");
+        if (extractedFeatures.numeric_infix) mods.push("included numbers in the middle");
+        
+        const modStr = mods.length > 0 ? ` Specifically, you ${mods.join(", and ")}.` : "";
+        attackVectorText = `Your password applies predictable tweaks to a base word.${modStr} Crackers use mutation engines to instantly test these exact transformation patterns.`;
     } else if (vulnerabilityType === "BRUTE-FORCE") {
-        attackVectorText = 
-            `No obvious dictionary words or rule-based patterns were detected. Security against brute-force attacks depends entirely on mathematical search space volume (entropy). ` +
-            `With a length of ${extractedFeatures.length} characters and ${extractedFeatures.character_class_count} character type(s) active, ` +
-            `${extractedFeatures.length < 12 ? "the total search space remains relatively small, meaning high-speed offline brute-force attacks using modern GPUs could calculate and test all possible permutations in a short timeframe." : "the large combination pool significantly increases the computational time and resources required for an attacker to exhaustively guess every possibility."}`;
+        attackVectorText = `Your password contains no dictionary words and relies on random characters. However, its short length makes high-speed GPU guessing effective.`;
+    } else {
+        attackVectorText = `Standard vulnerability characteristics apply.`;
     }
 
     let technicalBreakdown = {
@@ -920,40 +922,11 @@ function explainClassification(extractedFeatures, vulnerabilityType) {
     let classification_rationale;
 
     if (vulnerabilityType === "DICTIONARY") {
-        const wordFound = extractedFeatures._matched_dictionary_word ? `("${extractedFeatures._matched_dictionary_word}")` : "";
-        const ruleNote = extractedFeatures.rule_pattern_present
-            ? "Although additional character modifications were detected, the underlying core password is heavily reliant on dictionary vocabulary."
-            : "No significant obfuscation or rule-based transformations were applied to mask the dictionary root.";
-
-        classification_rationale =
-            `The machine learning model classified this password as DICTIONARY due to the strong presence of clear, recognizable vocabulary ${wordFound}. ` +
-            `Specifically, dictionary_present is flagged as active (1). ${ruleNote} ` +
-            `With a length of ${extractedFeatures.length} character(s) and only ${extractedFeatures.character_class_count} character class(es) utilized, ` +
-            `the structure presents a low search complexity. Automated cracking tools prioritizing natural language dictionaries and wordlists can rapidly identify and isolate this pattern.`;
+        classification_rationale = `The model classified this password as DICTIONARY because it relies heavily on recognizable vocabulary, making it vulnerable to automated wordlist attacks.`;
     } else if (vulnerabilityType === "RULE-BASED") {
-        const patternsFound = [];
-        if (extractedFeatures.has_leetspeak) patternsFound.push("leetspeak character substitution");
-        if (extractedFeatures.numeric_prefix) patternsFound.push("numeric prefix");
-        if (extractedFeatures.numeric_suffix) patternsFound.push("numeric suffix");
-        if (extractedFeatures.numeric_infix) patternsFound.push("numeric infix");
-        if (extractedFeatures.has_sequence) patternsFound.push("sequential character patterns");
-        if (extractedFeatures.has_repetition) patternsFound.push("repeated character blocks");
-
-        classification_rationale =
-            `The machine learning model classified this password as RULE-BASED because it combines base dictionary words or simple terms with predictable transformations. ` +
-            `The feature evaluator detected specific modification rules, including: ${patternsFound.length > 0 ? patternsFound.join(", ") : "standard password rules"}. ` +
-            `Although these modifications alter the raw string, rule-based mask attacks and password mutation engines (such as Hashcat or John the Ripper) specifically target these exact conversion patterns, rendering the obfuscation ineffective against automated tools.`;
+        classification_rationale = `The model detected structural text changes like leetspeak substitutions, bypassing pure dictionary lookup and triggering the Rule-Based node.`;
     } else if (vulnerabilityType === "BRUTE-FORCE") {
-        const classesUsed = [];
-        if (extractedFeatures.has_lowercase) classesUsed.push("lowercase letters");
-        if (extractedFeatures.has_uppercase) classesUsed.push("uppercase letters");
-        if (extractedFeatures.has_digit) classesUsed.push("digits");
-        if (extractedFeatures.has_symbol) classesUsed.push("symbols");
-
-        classification_rationale =
-            `The machine learning model classified this password as BRUTE-FORCE because no recognizable dictionary words were detected (dictionary_present = 0). ` +
-            `Instead, the security evaluation relies entirely on its length (${extractedFeatures.length} characters) and character space diversity (${extractedFeatures.character_class_count} class(es) used: ${classesUsed.length > 0 ? classesUsed.join(", ") : "none"}). ` +
-            `Because there are no word-based shortcuts for attackers to exploit, an adversary would be forced to exhaustively test random combinations across the available character set.`;
+        classification_rationale = `The model classified this password as BRUTE-FORCE because it contains no dictionary words, leaving security entirely dependent on length and character variety.`;
     } else {
         classification_rationale = `Classification result: ${vulnerabilityType}.`;
     }
