@@ -318,14 +318,20 @@ function findRecommendationImage(text) {
     }
 
 
-    if (
-        normalizedText.includes("predictable") ||
-        normalizedText.includes("pattern") ||
-        normalizedText.includes("patterns") ||
-        normalizedText.includes("sequence")
-    ) {
-        return "Avoid Predictable Patterns";
-    }
+if (
+    normalizedText.includes("predictable") ||
+    normalizedText.includes("pattern") ||
+    normalizedText.includes("patterns") ||
+    normalizedText.includes("sequence") ||
+    normalizedText.includes("simple or obvious") ||
+    normalizedText.includes("obvious additions") ||
+    normalizedText.includes("random word") ||
+    normalizedText.includes("random phrase") ||
+    normalizedText.includes("unrelated words") ||
+    normalizedText.includes("stronger structure")
+) {
+    return "Avoid Predictable Patterns";
+}
 
 
     if (
