@@ -384,7 +384,7 @@ async function loadComparisonFromBackend() {
 
         if (!previousData) {
             const previousResponse = await fetch(
-                "http://localhost:3000/analyze",
+                "https://thesisystemlatest.onrender.com/analyze",
                 {
                     method: "POST",
                     headers: {
