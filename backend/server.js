@@ -10,6 +10,7 @@ app.use(cors({
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
+app.options('*', cors());
 app.use(express.json());
 app.get('/', (req, res) => {
     res.send('Password Vulnerability Backend is running successfully!');
