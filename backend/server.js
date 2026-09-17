@@ -5,8 +5,15 @@ const csv = require('csv-parser');
 const { DecisionTreeClassifier } = require("ml-cart");
 const path = require('path');
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
+app.get('/', (req, res) => {
+    res.send('Password Vulnerability Backend is running successfully!');
+});
 
 // ===== LOAD ML MODEL =====
 const model = JSON.parse(fs.readFileSync(path.join(__dirname, "model.json")));
