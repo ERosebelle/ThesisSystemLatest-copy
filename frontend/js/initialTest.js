@@ -420,4 +420,4 @@ window.addEventListener("pageshow", event => {
 
 });
 
-window.addEventListener("unload", function () { });
+//window.addEventListener("unload", function () { });
