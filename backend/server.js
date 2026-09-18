@@ -1,20 +1,45 @@
 const express = require('express');
-const cors = require('cors');
+/* The `cors` package require was removed - CORS is now handled by the manual
+middleware below, so the server no longer depends on that package loading
+successfully at startup. It can stay in package.json harmlessly. */
 const fs = require('fs');
 const csv = require('csv-parser');
 const { DecisionTreeClassifier } = require("ml-cart");
 const path = require('path');
 const app = express();
 
-app.use(cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+/* ===== CORS (manual, dependency-free) =====
+Previously this used the `cors` package. It was replaced with manual
+headers because the preflight (OPTIONS /analyze) was failing in production
+with "No 'Access-Control-Allow-Origin' header is present", while GET /
+worked fine - meaning the server was awake and reachable, but the
+preflight response specifically was coming back without CORS headers.
+
+This version sets the headers on EVERY response and answers the OPTIONS
+preflight itself with a 204, before any other middleware or route can
+interfere. It behaves identically on Express 4 and Express 5 (no
+path-pattern syntax involved), and removes the cors package as a variable
+entirely. */
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Max-Age', '86400');
+
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(204);
+    }
+
+    next();
+});
+
 app.use(express.json());
 
+/* The "cors-v2" marker below exists so the deployed build can be verified
+at a glance: open the root URL and if the marker is missing, the old code
+is still live and the deploy did not take effect. */
 app.get('/', (req, res) => {
-    res.send('Password Vulnerability Backend is running successfully!');
+    res.send('Password Vulnerability Backend is running successfully! [cors-v2]');
 });
 
 // ===== LOAD ML MODEL =====
@@ -442,6 +467,26 @@ app.post('/analyze', (req, res) => {
         security_assessment: technicalBreakdown,
         strategies: tips,
         dataset_count: trainingDataset.length
+    });
+});
+
+/* Global error handler. The /analyze route is fully synchronous, so Express
+catches anything it throws and routes it here. Without this, a thrown error
+produces a bare crash/500 whose response can reach the browser WITHOUT the
+CORS headers set above - which shows up in the console as a misleading
+"No 'Access-Control-Allow-Origin' header" error rather than the real fault.
+The headers are re-asserted here so a genuine backend error is reported as
+a backend error. */
+app.use((err, req, res, next) => {
+    console.error("❌ Unhandled error on", req.method, req.path, "-", err && err.message);
+
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+    res.status(500).json({
+        error: "Internal server error during analysis.",
+        detail: err && err.message ? err.message : "Unknown error"
     });
 });
 
