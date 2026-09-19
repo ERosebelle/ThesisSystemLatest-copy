@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const inputPath = path.join(__dirname, 'dataset.csv');
+const inputPath = path.join(__dirname, 'classification_dataset.csv');
 const outputPath = path.join(__dirname, 'recommendation_dataset.csv');
 
 function parseCsv(text) {

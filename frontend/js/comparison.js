@@ -353,7 +353,7 @@ async function loadComparisonFromBackend() {
 
     try {
         const response = await fetch(
-            "https://thesisystemlatest.onrender.com/analyze",
+            "http://localhost:3000/analyze",
             {
                 method: "POST",
                 headers: {
@@ -384,7 +384,7 @@ async function loadComparisonFromBackend() {
 
         if (!previousData) {
             const previousResponse = await fetch(
-                "https://thesisystemlatest.onrender.com/analyze",
+                "http://localhost:3000/analyze",
                 {
                     method: "POST",
                     headers: {
@@ -433,13 +433,13 @@ function updateComparisonStatus(comparison) {
 
     if (comparisonStatus === "CURRENT_PREFERRED") {
         status.textContent =
-            "Your current password has stronger security characteristics than your previous password.";
+            "Your current password has favorable security characteristics than your previous password.";
         return;
     }
 
     if (comparisonStatus === "PREVIOUS_PREFERRED") {
         status.textContent =
-            "Your previous password has stronger security characteristics than your current password.";
+            "Your previous password has faborable security characteristics than your current password.";
         return;
     }
 

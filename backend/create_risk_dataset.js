@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const inputPath = path.join(__dirname, 'dataset.csv');
+const inputPath = path.join(__dirname, 'classification_dataset.csv');
 const outputPath = path.join(__dirname, 'risk_dataset.csv');
 
 function parseCsv(text) {
@@ -10,18 +10,17 @@ function parseCsv(text) {
     return lines.slice(1).map(line => {
         const values = line.split(',');
         const row = {};
-        header.forEach((col, i) => { row[col] = values[i].trim(); });
+        header.forEach((col, i) => { row[col] = values[i] ? values[i].trim() : ''; });
         return row;
     });
 }
 
-// 1. BINAGO: Idinagdag ang has_leetspeak penalty at inayos ang score weights
 function calculateSecurityScore(f) {
     let score = 0;
     score += f.length * 2;
-    score += f.character_class_count * 8; // Taasan mula 5 papuntang 8
+    score += f.character_class_count * 8;
     if (f.dictionary_present) score -= 20;
-    if (f.has_leetspeak) score -= 5;        // Bawasan ang penalty mula 15 papuntang 5
+    if (f.has_leetspeak) score -= 5;
     if (f.rule_pattern_present) score -= 15;
     if (f.has_sequence) score -= 10;
     if (f.has_repetition) score -= 10;
@@ -29,23 +28,21 @@ function calculateSecurityScore(f) {
 }
 
 function assignRiskLabel(score, f) {
-    // 1. CRITICAL: Kapag length <= 8, O kapag pure dictionary word na walang numero/simbolo
-    if (f.length <= 8 || f.character_class_count === 1) {
+    // CRITICAL: Kapag score < 8 o kaya ay masyadong mahina/maikli ang password
+    if (score < 8 || f.length <= 8 || f.character_class_count === 1) {
         return "CRITICAL";
     }
     if (f.dictionary_present === 1 && (f.character_class_count <= 2 || f.rule_pattern_present === 0)) {
         return "CRITICAL";
     }
 
-    // 2. HIGH: Kapag may dictionary word ngunit may kasamang rules/leetspeak/numbers
     if (f.dictionary_present === 1) {
         return "HIGH";
     }
 
-    // 3. Score-based Fallback
-    if (score < 10) {
+    if (score < 15) {
         return "CRITICAL";
-    } else if (score < 25) {
+    } else if (score < 30) {
         return "HIGH";
     } else {
         return "MODERATE";
@@ -75,7 +72,6 @@ parsedRows.forEach((row) => {
     };
 
     const score = calculateSecurityScore(features);
-    // 3. BINAGO: Ipinasa ang 'features' object sa assignRiskLabel
     const riskLabel = assignRiskLabel(score, features);
 
     rows.push({
@@ -106,4 +102,4 @@ rows.forEach(r => {
 });
 
 fs.writeFileSync(outputPath, out);
-console.log(`✅ risk_dataset.csv updated with ${rows.length} rows.`);
+console.log(`✅ risk_dataset.csv updated with score threshold (< 8 as CRITICAL).`);

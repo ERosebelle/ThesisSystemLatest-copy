@@ -5,31 +5,22 @@ const { DecisionTreeClassifier } = require("ml-cart");
 const X = [];
 const y = [];
 
-// Map string labels to numeric targets
 const labelMap = {
   "DICTIONARY": 0,
   "RULE-BASED": 1,
   "BRUTE-FORCE": 2
 };
 
-// Target dataset file
-const datasetFile = "dataset.csv";
+const datasetFile = "classification_dataset.csv";
 
 fs.createReadStream(datasetFile)
   .pipe(csv())
   .on("data", (row) => {
-
-    if (!row.label) {
-      return;
-    }
+    if (!row.label) return;
 
     const cleanedLabel = row.label.trim();
+    if (labelMap[cleanedLabel] === undefined) return;
 
-    if (labelMap[cleanedLabel] === undefined) {
-      return;
-    }
-
-    // 🌟 FULL 12 FEATURES ARRAY MATCHING THE NEW CSV STRUCTURE
     X.push([
       Number(row.f_length),
       Number(row.f_char_class_count),
@@ -51,14 +42,10 @@ fs.createReadStream(datasetFile)
   })
   .on("end", () => {
     if (X.length === 0 || y.length === 0) {
-      console.error(`❌ Error: Walang valid na data na nakuha mula sa ${datasetFile}!`);
+      console.error(`❌ Error: Walang valid na data sa ${datasetFile}!`);
       return;
     }
 
-    console.log(`✅ Training samples successfully loaded: ${X.length}`);
-    console.log("Numeric labels sample:", y.slice(0, 10));
-
-    // Train CART Decision Tree Model
     const classifier = new DecisionTreeClassifier({
       gainFunction: "gini",
       maxDepth: 10,
@@ -67,11 +54,11 @@ fs.createReadStream(datasetFile)
 
     classifier.train(X, y);
 
-    // Save exported model configuration to model.json
+    // I-save bilang classification_model.json
     fs.writeFileSync(
-      "model.json",
+      "classification_model.json",
       JSON.stringify(classifier.toJSON())
     );
 
-    console.log("🚀 Model trained successfully with all 12 features saved to model.json!");
+    console.log("🚀 classification_model.json trained and saved successfully!");
   });

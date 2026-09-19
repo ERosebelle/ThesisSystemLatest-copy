@@ -2,7 +2,7 @@ async function analyzePassword(password, previousPassword) {
 
     const response =
         await fetch(
-            "https://thesisystemlatest.onrender.com/analyze",
+            "http://localhost:3000/analyze",
             {
                 method: "POST",
                 headers: {

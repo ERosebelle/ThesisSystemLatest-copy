@@ -338,7 +338,7 @@ if (compareButton && passwordInput) {
             try {
                 const previousPassword = localStorage.getItem("analyzedPassword");
 
-                const response = await fetch("https://thesisystemlatest.onrender.com/analyze",
+                const response = await fetch("http://localhost:3000/analyze",
                     {
                         method: "POST",
                         headers: {
@@ -470,4 +470,4 @@ window.addEventListener(
 Without this, the browser can repaint a cached snapshot of this
 page before the checks above run, causing a brief flash of stale
 content before the redirect happens.*/
-//window.addEventListener("unload", function () { });
+window.addEventListener("unload", function () { });

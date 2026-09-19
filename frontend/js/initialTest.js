@@ -312,7 +312,7 @@ if (scanButton && passwordInput) {
 
         try {
 
-            const response = await fetch("https://thesisystemlatest.onrender.com/analyze", {
+            const response = await fetch("http://localhost:3000/analyze", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -420,4 +420,4 @@ window.addEventListener("pageshow", event => {
 
 });
 
-//window.addEventListener("unload", function () { });
+window.addEventListener("unload", function () { });
