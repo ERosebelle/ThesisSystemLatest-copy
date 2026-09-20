@@ -155,7 +155,7 @@ function initializeComparisonTabs() {
     }
 }
 
-function getVulnerability(data) {
+function getComparisonVulnerability(data) {
     if (!data) {
         return "UNKNOWN";
     }
@@ -169,7 +169,7 @@ function getVulnerability(data) {
     );
 }
 
-function getRisk(data) {
+function getComparisonRisk(data) {
     if (!data) {
         return "UNKNOWN";
     }
@@ -184,7 +184,7 @@ function getRisk(data) {
     );
 }
 
-function getExplanation(data) {
+function getComparisonExplanation(data) {
     if (!data) {
         return "No explanation available.";
     }
@@ -208,7 +208,7 @@ function updateCurrentComparison(data) {
 
     if (currentVulnerability) {
         currentVulnerability.textContent =
-            getVulnerability(data);
+            getComparisonVulnerability(data);
     }
 
     if (currentRisk) {
@@ -216,7 +216,7 @@ function updateCurrentComparison(data) {
             "comparison-risk";
 
         const riskClass =
-            getRiskClass(getRisk(data));
+            getComparisonRiskClass(getComparisonRisk(data));
 
         if (riskClass) {
             currentRisk.classList.add(
@@ -225,13 +225,13 @@ function updateCurrentComparison(data) {
         }
 
         currentRisk.textContent =
-            formatRisk(getRisk(data));
+            formatComparisonRisk(getComparisonRisk(data));
     }
 
     if (currentExplanation) {
         currentExplanation.innerHTML = `
             <p>${escapeComparisonHTML(
-                getExplanation(data)
+                getComparisonExplanation(data)
             )}</p>
         `;
     }
@@ -246,7 +246,7 @@ function updatePreviousComparison(data) {
 
     if (previousVulnerability) {
         previousVulnerability.textContent =
-            getVulnerability(data);
+            getComparisonVulnerability(data);
     }
 
     if (previousRisk) {
@@ -254,7 +254,7 @@ function updatePreviousComparison(data) {
             "comparison-risk";
 
         const riskClass =
-            getRiskClass(getRisk(data));
+            getComparisonRiskClass(getComparisonRisk(data));
 
         if (riskClass) {
             previousRisk.classList.add(
@@ -263,13 +263,13 @@ function updatePreviousComparison(data) {
         }
 
         previousRisk.textContent =
-            formatRisk(getRisk(data));
+            formatComparisonRisk(getComparisonRisk(data));
     }
 
     if (previousExplanation) {
         previousExplanation.innerHTML = `
             <p>${escapeComparisonHTML(
-                getExplanation(data)
+                getComparisonExplanation(data)
             )}</p>
         `;
     }
@@ -452,7 +452,7 @@ function updateComparisonStatus(comparison) {
     status.textContent = comparison.message || "Comparison completed.";
 }
 
-function formatRisk(risk) {
+function formatComparisonRisk(risk) {
     if (!risk) {
         return "UNKNOWN RISK";
     }
@@ -466,7 +466,7 @@ function formatRisk(risk) {
     return `${normalized} RISK`;
 }
 
-function getRiskClass(risk) {
+function getComparisonRiskClass(risk) {
     if (!risk) {
         return "risk-unknown";
     }

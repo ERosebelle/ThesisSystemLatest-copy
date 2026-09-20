@@ -280,6 +280,80 @@ function updateTutorial() {
 
     }
 
+
+    /*
+     * =====================================================
+     * VIDEO FIX
+     * =====================================================
+     */
+
+    const activeStep =
+        tutorialSteps[currentStep];
+
+    if (activeStep) {
+
+        const videos =
+            activeStep.querySelectorAll(
+                "video"
+            );
+
+        videos.forEach(
+            video => {
+
+                video.pause();
+
+                video.load();
+
+                const playVideo =
+                    () => {
+
+                        const playPromise =
+                            video.play();
+
+                        if (
+                            playPromise &&
+                            typeof playPromise.catch === "function"
+                        ) {
+
+                            playPromise.catch(
+                                error => {
+
+                                    console.warn(
+                                        "Tutorial video autoplay was blocked:",
+                                        error
+                                    );
+
+                                }
+                            );
+
+                        }
+
+                    };
+
+
+                if (
+                    video.readyState >= 2
+                ) {
+
+                    playVideo();
+
+                } else {
+
+                    video.addEventListener(
+                        "loadeddata",
+                        playVideo,
+                        {
+                            once: true
+                        }
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
 }
 
 
@@ -307,13 +381,11 @@ async function showTutorial(
 
     currentStep = 0;
 
-    updateTutorial();
 
-
-    if (tutorialConfirmOverlay) {
-        tutorialConfirmOverlay.hidden = true;
-    }
-
+    /*
+     * Show tutorial first so the browser
+     * can properly initialize the video.
+     */
 
     tutorialOverlay.hidden = false;
 
@@ -321,6 +393,14 @@ async function showTutorial(
 
     document.body.style.overflow =
         "hidden";
+
+
+    updateTutorial();
+
+
+    if (tutorialConfirmOverlay) {
+        tutorialConfirmOverlay.hidden = true;
+    }
 
 }
 
@@ -338,6 +418,31 @@ function hideTutorial() {
     if (tutorialConfirmOverlay) {
         tutorialConfirmOverlay.hidden = true;
     }
+
+
+    /*
+     * Stop tutorial videos when closing.
+     */
+
+    tutorialSteps.forEach(
+        step => {
+
+            const videos =
+                step.querySelectorAll(
+                    "video"
+                );
+
+            videos.forEach(
+                video => {
+
+                    video.pause();
+
+                }
+            );
+
+        }
+    );
+
 
     document.body.style.overflow = "";
 

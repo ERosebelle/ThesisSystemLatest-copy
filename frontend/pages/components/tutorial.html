@@ -1,8 +1,19 @@
 <div class="tutorial-overlay" id="tutorialOverlay" hidden>
 
-    <div class="tutorial-card" id="tutorialCard" role="dialog" aria-modal="true" aria-labelledby="tutorialTitle">
+    <div
+        class="tutorial-card"
+        id="tutorialCard"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="tutorialTitle"
+    >
 
-        <button class="tutorial-close" id="tutorialClose" type="button" aria-label="Close Tutorial">
+        <button
+            class="tutorial-close"
+            id="tutorialClose"
+            type="button"
+            aria-label="Close Tutorial"
+        >
             ✕
         </button>
 
@@ -17,11 +28,12 @@
             </h2>
 
             <p>
-               This guide helps you understand the results of your 
-               password analysis and explains what each section means.
+                This guide helps you understand the results of your
+                password analysis and explains what each section means.
             </p>
 
         </header>
+
 
         <div class="tutorial-body">
 
@@ -33,7 +45,10 @@
 
                 <div class="tutorial-media">
 
-                    <img src="../assets/images/tut1.png" alt="Result Summary tutorial">
+                    <img
+                        src="../assets/images/tut1.png"
+                        alt="Result Summary tutorial"
+                    >
 
                 </div>
 
@@ -52,12 +67,24 @@
             </section>
 
 
+            <!-- =====================================================
+                 2. DECISION TREE
+                 ===================================================== -->
+
             <section class="tutorial-step" hidden>
 
                 <div class="tutorial-media">
-                    <!-- Replaced the <img> tag and placeholder with a proper <video> element -->
-                    <video src="../assets/Video/tut2.mp4" autoplay loop muted playsinline>
+
+                    <video
+                        src="../assets/Video/tut2.mp4"
+                        autoplay
+                        loop
+                        muted
+                        playsinline
+                        preload="auto"
+                    >
                     </video>
+
                 </div>
 
                 <div class="tutorial-content">
@@ -77,14 +104,17 @@
 
 
             <!-- =====================================================
-                3. RECOMMENDATIONS
+                 3. RECOMMENDATIONS
                  ===================================================== -->
 
             <section class="tutorial-step" hidden>
 
                 <div class="tutorial-media">
 
-                    <img src="../assets/images/tut3.png" alt="Recommendations tutorial">
+                    <img
+                        src="../assets/images/tut3.png"
+                        alt="Recommendations tutorial"
+                    >
 
                 </div>
 
@@ -110,7 +140,10 @@
 
                 <div class="tutorial-media">
 
-                    <img src="../assets/images/tut4.png" alt="Feature Vector tutorial">
+                    <img
+                        src="../assets/images/tut4.png"
+                        alt="Feature Vector tutorial"
+                    >
 
                 </div>
 
@@ -137,7 +170,14 @@
 
                 <div class="tutorial-media">
 
-                    <video src="../assets/Video/tut5.mp4" autoplay loop muted playsinline>
+                    <video
+                        src="../assets/Video/tut5.mp4"
+                        autoplay
+                        loop
+                        muted
+                        playsinline
+                        preload="auto"
+                    >
                     </video>
 
                 </div>
@@ -165,7 +205,10 @@
 
                 <div class="tutorial-media">
 
-                    <img src="../assets/images/tut6.png" alt="Reset tutorial">
+                    <img
+                        src="../assets/images/tut6.png"
+                        alt="Reset tutorial"
+                    >
 
                 </div>
 
@@ -192,7 +235,10 @@
 
                 <div class="tutorial-media">
 
-                    <img src="../assets/images/tut7.png" alt="Compare Password tutorial">
+                    <img
+                        src="../assets/images/tut7.png"
+                        alt="Compare Password tutorial"
+                    >
 
                 </div>
 
@@ -218,7 +264,10 @@
 
                 <div class="tutorial-media">
 
-                    <img src="../assets/images/tut8.png" alt="Tutorial button guide">
+                    <img
+                        src="../assets/images/tut8.png"
+                        alt="Tutorial button guide"
+                    >
 
                 </div>
 
@@ -244,11 +293,20 @@
 
         <footer class="tutorial-footer">
 
-            <button class="tutorial-prev" id="tutorialPrev" type="button">
+            <button
+                class="tutorial-prev"
+                id="tutorialPrev"
+                type="button"
+            >
                 Previous
             </button>
 
-            <div class="tutorial-progress" id="tutorialProgress">
+
+            <div
+                class="tutorial-progress"
+                id="tutorialProgress"
+            >
+
                 <span class="active"></span>
                 <span></span>
                 <span></span>
@@ -257,9 +315,15 @@
                 <span></span>
                 <span></span>
                 <span></span>
+
             </div>
 
-            <button class="tutorial-next" id="tutorialNext" type="button">
+
+            <button
+                class="tutorial-next"
+                id="tutorialNext"
+                type="button"
+            >
                 Next
             </button>
 
@@ -274,9 +338,18 @@
      TUTORIAL CONFIRMATION
      ============================================================= -->
 
-<div class="tutorial-confirm-overlay" id="tutorialConfirmOverlay" hidden>
+<div
+    class="tutorial-confirm-overlay"
+    id="tutorialConfirmOverlay"
+    hidden
+>
 
-    <div class="tutorial-confirm-card" role="dialog" aria-modal="true" aria-labelledby="tutorialConfirmTitle">
+    <div
+        class="tutorial-confirm-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="tutorialConfirmTitle"
+    >
 
         <h3 id="tutorialConfirmTitle">
             Skip Tutorial?
@@ -289,11 +362,17 @@
 
         <div class="tutorial-confirm-actions">
 
-            <button id="tutorialStay" type="button">
+            <button
+                id="tutorialStay"
+                type="button"
+            >
                 No
             </button>
 
-            <button id="tutorialSkip" type="button">
+            <button
+                id="tutorialSkip"
+                type="button"
+            >
                 Yes
             </button>
 

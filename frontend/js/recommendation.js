@@ -6,6 +6,7 @@ const recommendationImages = {
     "Increase Password Length": "../assets/images/Increase Password Length.jpg",
     "MFA + Password Manager": "../assets/images/MFA + Password Manager.jpg",
     "Similar Password Guesses": "../assets/images/Similar Password Guesses.jpg",
+    "Change Password Every 6 Months": "../assets/images/ChangePassword.jpg",
     "Current Password Is Stronger Than Previous": "../assets/images/Current Password Is Stronger Than Previous.jpg"
 };
 
@@ -60,13 +61,45 @@ function updateRecommendation(data, censoredPassword) {
     imageContainer.innerHTML = "";
     contentContainer.innerHTML = "";
 
-    const strategies = Array.isArray(data.strategies)
-        ? data.strategies
+    let strategies = Array.isArray(data.strategies)
+        ? [...data.strategies]
         : [];
 
+    /*
+     * =====================================================
+     * SEPARATE MFA FROM OTHER RECOMMENDATIONS
+     * MFA MUST ALWAYS BE LAST
+     * =====================================================
+     */
+
+    const mfaStrategies = [];
+    const otherStrategies = [];
+
+    strategies.forEach((tip) => {
+
+        const normalizedTip =
+            String(tip || "").toLowerCase();
+
+        if (
+            normalizedTip.includes("mfa") ||
+            normalizedTip.includes("multi-factor") ||
+            normalizedTip.includes("multi factor") ||
+            normalizedTip.includes("password manager")
+        ) {
+            mfaStrategies.push(tip);
+        } else {
+            otherStrategies.push(tip);
+        }
+    });
+
     console.log(
-        "RECOMMENDATION: Strategies received:",
-        strategies
+        "RECOMMENDATION: Normal strategies:",
+        otherStrategies
+    );
+
+    console.log(
+        "RECOMMENDATION: MFA strategies:",
+        mfaStrategies
     );
 
     console.log(
@@ -74,191 +107,102 @@ function updateRecommendation(data, censoredPassword) {
         data.password_comparison
     );
 
-    if (strategies.length === 0) {
+
+    /*
+     * =====================================================
+     * RENDER NORMAL RECOMMENDATIONS FIRST
+     * =====================================================
+     */
+
+    if (otherStrategies.length === 0) {
 
         console.log(
-            "RECOMMENDATION: No strategies available"
+            "RECOMMENDATION: No normal strategies available"
         );
-
-        contentContainer.innerHTML =
-            "<p>No recommendations available.</p>";
 
     } else {
 
-        strategies.forEach((tip, index) => {
+        otherStrategies.forEach((tip, index) => {
 
             console.log(
                 `RECOMMENDATION: Processing strategy ${index + 1}:`,
                 tip
             );
 
-            const mediaName =
-                findRecommendationImage(tip);
-
-            console.log(
-                `RECOMMENDATION: Matched media for strategy ${index + 1}:`,
-                mediaName
-            );
-
-            const item =
-                document.createElement("div");
-
-            item.className =
-                "recommendation-item";
-
-            const imageWrapper =
-                document.createElement("div");
-
-            imageWrapper.className =
-                "recommendation-image-wrapper";
-
-
-            /*
-             * =====================================================
-             * ADD CHARACTER VARIETY = VIDEO
-             * =====================================================
-             */
-
-            if (
-                mediaName &&
-                recommendationVideos[mediaName]
-            ) {
-
-                const video =
-                    document.createElement("video");
-
-                video.className =
-                    "recommendation-image recommendation-video";
-
-                video.src =
-                    recommendationVideos[mediaName];
-
-                video.alt =
-                    mediaName;
-
-                video.autoplay = true;
-                video.loop = true;
-                video.muted = true;
-                video.playsInline = true;
-                video.preload = "auto";
-
-                video.addEventListener(
-                    "loadeddata",
-                    () => {
-                        console.log(
-                            `RECOMMENDATION VIDEO LOADED: ${recommendationVideos[mediaName]}`
-                        );
-                    }
-                );
-
-                video.addEventListener(
-                    "error",
-                    () => {
-                        console.error(
-                            `RECOMMENDATION VIDEO FAILED: ${video.src}`
-                        );
-                    }
-                );
-
-                imageWrapper.appendChild(video);
-
-            }
-
-            /*
-             * =====================================================
-             * ALL OTHER RECOMMENDATIONS = IMAGE
-             * =====================================================
-             */
-
-            else if (
-                mediaName &&
-                recommendationImages[mediaName]
-            ) {
-
-                const image =
-                    document.createElement("img");
-
-                image.className =
-                    "recommendation-image";
-
-                image.src =
-                    recommendationImages[mediaName];
-
-                image.alt =
-                    mediaName;
-
-                image.loading =
-                    "lazy";
-
-                image.addEventListener(
-                    "load",
-                    () => {
-                        console.log(
-                            `RECOMMENDATION IMAGE LOADED: ${mediaName}`
-                        );
-                    }
-                );
-
-                image.addEventListener(
-                    "error",
-                    () => {
-                        console.error(
-                            `RECOMMENDATION IMAGE FAILED: ${image.src}`
-                        );
-                    }
-                );
-
-                imageWrapper.appendChild(image);
-
-            }
-
-            else {
-
-                console.warn(
-                    "RECOMMENDATION: No matching media found for:",
-                    tip
-                );
-
-            }
-
-
-            const text =
-                document.createElement("div");
-
-            text.className =
-                "recommendation-text";
-
-            text.innerHTML =
-                censorPassword(
-                    tip,
-                    censoredPassword
-                );
-
-
-            item.appendChild(
-                imageWrapper
-            );
-
-            item.appendChild(
-                text
-            );
-
-            contentContainer.appendChild(
-                item
-            );
-
-            console.log(
-                `RECOMMENDATION: Strategy ${index + 1} rendered`
+            renderRecommendationItem(
+                tip,
+                censoredPassword,
+                contentContainer
             );
 
         });
+
     }
 
+
+    /*
+     * =====================================================
+     * RENDER COMPARISON BEFORE MFA
+     * =====================================================
+     */
 
     renderComparison(
         data.password_comparison,
         contentContainer
     );
+
+
+    /*
+     * =====================================================
+     * RENDER MFA LAST
+     * =====================================================
+     */
+
+    if (mfaStrategies.length > 0) {
+
+        console.log(
+            "RECOMMENDATION: Rendering MFA recommendation LAST"
+        );
+
+        mfaStrategies.forEach((tip, index) => {
+
+            console.log(
+                `RECOMMENDATION: Processing MFA strategy ${index + 1}:`,
+                tip
+            );
+
+            renderRecommendationItem(
+                tip,
+                censoredPassword,
+                contentContainer
+            );
+
+        });
+
+    }
+
+
+    /*
+     * =====================================================
+     * NO RECOMMENDATIONS AT ALL
+     * =====================================================
+     */
+
+    if (
+        otherStrategies.length === 0 &&
+        mfaStrategies.length === 0 &&
+        !(
+            data.password_comparison &&
+            data.password_comparison.status ===
+            "CURRENT_PREFERRED"
+        )
+    ) {
+
+        contentContainer.innerHTML =
+            "<p>No recommendations available.</p>";
+
+    }
+
 
     activatePasswordReveal();
 
@@ -269,6 +213,193 @@ function updateRecommendation(data, censoredPassword) {
 
     console.log(
         "===== RECOMMENDATION DEBUG END ====="
+    );
+}
+
+
+/*
+ * ============================================================
+ * RENDER RECOMMENDATION ITEM
+ * ============================================================
+ */
+
+function renderRecommendationItem(
+    tip,
+    censoredPassword,
+    contentContainer
+) {
+
+    const mediaName =
+        findRecommendationImage(tip);
+
+    console.log(
+        "RECOMMENDATION: Matched media:",
+        mediaName
+    );
+
+    const item =
+        document.createElement("div");
+
+    item.className =
+        "recommendation-item";
+
+    const imageWrapper =
+        document.createElement("div");
+
+    imageWrapper.className =
+        "recommendation-image-wrapper";
+
+
+    /*
+     * =====================================================
+     * ADD CHARACTER VARIETY = VIDEO
+     * =====================================================
+     */
+
+    if (
+        mediaName &&
+        recommendationVideos[mediaName]
+    ) {
+
+        const video =
+            document.createElement("video");
+
+        video.className =
+            "recommendation-image recommendation-video";
+
+        video.src =
+            recommendationVideos[mediaName];
+
+        video.alt =
+            mediaName;
+
+        video.autoplay = true;
+        video.loop = true;
+        video.muted = true;
+        video.playsInline = true;
+        video.preload = "auto";
+
+        video.addEventListener(
+            "loadeddata",
+            () => {
+
+                console.log(
+                    `RECOMMENDATION VIDEO LOADED: ${recommendationVideos[mediaName]}`
+                );
+
+            }
+        );
+
+        video.addEventListener(
+            "error",
+            () => {
+
+                console.error(
+                    `RECOMMENDATION VIDEO FAILED: ${video.src}`
+                );
+
+            }
+        );
+
+        imageWrapper.appendChild(
+            video
+        );
+
+    }
+
+
+    /*
+     * =====================================================
+     * ALL OTHER RECOMMENDATIONS = IMAGE
+     * =====================================================
+     */
+
+    else if (
+        mediaName &&
+        recommendationImages[mediaName]
+    ) {
+
+        const image =
+            document.createElement("img");
+
+        image.className =
+            "recommendation-image";
+
+        image.src =
+            recommendationImages[mediaName];
+
+        image.alt =
+            mediaName;
+
+        image.loading =
+            "lazy";
+
+        image.addEventListener(
+            "load",
+            () => {
+
+                console.log(
+                    `RECOMMENDATION IMAGE LOADED: ${mediaName}`
+                );
+
+            }
+        );
+
+        image.addEventListener(
+            "error",
+            () => {
+
+                console.error(
+                    `RECOMMENDATION IMAGE FAILED: ${image.src}`
+                );
+
+            }
+        );
+
+        imageWrapper.appendChild(
+            image
+        );
+
+    }
+
+    else {
+
+        console.warn(
+            "RECOMMENDATION: No matching media found for:",
+            tip
+        );
+
+    }
+
+
+    const text =
+        document.createElement("div");
+
+    text.className =
+        "recommendation-text";
+
+    text.innerHTML =
+        censorPassword(
+            tip,
+            censoredPassword
+        );
+
+
+    item.appendChild(
+        imageWrapper
+    );
+
+    item.appendChild(
+        text
+    );
+
+    contentContainer.appendChild(
+        item
+    );
+
+    console.log(
+        "RECOMMENDATION: Strategy rendered:",
+        tip
     );
 }
 
@@ -318,20 +449,20 @@ function findRecommendationImage(text) {
     }
 
 
-if (
-    normalizedText.includes("predictable") ||
-    normalizedText.includes("pattern") ||
-    normalizedText.includes("patterns") ||
-    normalizedText.includes("sequence") ||
-    normalizedText.includes("simple or obvious") ||
-    normalizedText.includes("obvious additions") ||
-    normalizedText.includes("random word") ||
-    normalizedText.includes("random phrase") ||
-    normalizedText.includes("unrelated words") ||
-    normalizedText.includes("stronger structure")
-) {
-    return "Avoid Predictable Patterns";
-}
+    if (
+        normalizedText.includes("predictable") ||
+        normalizedText.includes("pattern") ||
+        normalizedText.includes("patterns") ||
+        normalizedText.includes("sequence") ||
+        normalizedText.includes("simple or obvious") ||
+        normalizedText.includes("obvious additions") ||
+        normalizedText.includes("random word") ||
+        normalizedText.includes("random phrase") ||
+        normalizedText.includes("unrelated words") ||
+        normalizedText.includes("stronger structure")
+    ) {
+        return "Avoid Predictable Patterns";
+    }
 
 
     if (
@@ -340,6 +471,15 @@ if (
         normalizedText.includes("guesses")
     ) {
         return "Similar Password Guesses";
+    }
+
+
+    if (
+        normalizedText.includes("6 months") ||
+        normalizedText.includes("six months") ||
+        normalizedText.includes("change your password every")
+    ) {
+        return "Change Password Every 6 Months";
     }
 
 

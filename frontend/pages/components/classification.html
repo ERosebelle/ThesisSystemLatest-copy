@@ -2,47 +2,289 @@
 
     <div class="summary-card classification-card">
 
-        <div class="card-label">VULNERABILITY</div>
+        <!-- =====================================================
+             VULNERABILITY
+             ===================================================== -->
 
-        <div id="VulnerabilityFound" class="classification-value">
+        <div class="info-label-row">
+
+            <div class="card-label">
+                VULNERABILITY
+            </div>
+
+            <button
+                type="button"
+                class="info-toggle"
+                id="vulnerabilityInfoToggle"
+                aria-label="About vulnerability"
+                aria-expanded="false"
+            >
+                ?
+            </button>
+
+            <!-- FULL VULNERABILITY INFO CARD -->
+            <div
+                class="info-card"
+                id="vulnerabilityInfoCard"
+                hidden
+            >
+
+                <!-- CLOSE BUTTON -->
+                <button
+                    type="button"
+                    class="info-card-close"
+                    aria-label="Close information"
+                    title="Close"
+                >
+                    ×
+                </button>
+
+                <div class="info-card-title">
+                    VULNERABILITY
+                </div>
+
+                <div
+                    class="info-card-content"
+                    id="vulnerabilityInfoText"
+                >
+                    <strong>Brute Force</strong> - An attack that systematically tries many possible character combinations until the correct password is found.
+                    <br><br>
+
+                    <strong>Dictionary</strong> - An attack that tries passwords from a predefined list of common words, passwords, and phrases.
+                    <br><br>
+
+                    <strong>Rule-Based</strong> - An attack that applies common password patterns and modifications to dictionary words or known passwords.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="VulnerabilityFound"
+            class="classification-value"
+        >
             Loading...
         </div>
+
 
         <div class="risk-divider"></div>
 
-        <div class="card-label">RISK LEVEL</div>
 
-        <div id="riskLevel" class="risk-value">
+        <!-- =====================================================
+             RISK LEVEL
+             ===================================================== -->
+
+        <div class="info-label-row">
+
+            <div class="card-label">
+                RISK LEVEL
+            </div>
+
+            <button
+                type="button"
+                class="info-toggle"
+                id="riskInfoToggle"
+                aria-label="About risk level"
+                aria-expanded="false"
+            >
+                ?
+            </button>
+
+            <!-- FULL RISK INFO CARD -->
+            <div
+                class="info-card"
+                id="riskInfoCard"
+                hidden
+            >
+
+                <!-- CLOSE BUTTON -->
+                <button
+                    type="button"
+                    class="info-card-close"
+                    aria-label="Close information"
+                    title="Close"
+                >
+                    ×
+                </button>
+
+                <div class="info-card-title">
+                    RISK LEVEL
+                </div>
+
+                <div
+                    class="info-card-content"
+                    id="riskInfoText"
+                >
+                    <strong>Moderate Risk</strong> - The password has some weaknesses that could make it vulnerable to common cracking techniques.
+                    <br><br>
+
+                    <strong>High Risk</strong> - The password has significant weaknesses that make it more susceptible to password-cracking attacks.
+                    <br><br>
+
+                    <strong>Critical Risk</strong> - The password has severe weaknesses and may be quickly compromised using common cracking techniques.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="riskLevel"
+            class="risk-value"
+        >
             Loading...
         </div>
 
-        <!-- Tested Password Feature -->
+
+        <!-- =====================================================
+             TESTED PASSWORD
+             ===================================================== -->
+
         <div class="password-preview-container">
-            <div class="card-label password-label">TESTED PASSWORD</div>
-            <div class="password-box" id="testedPassword" title="Click to show/hide">******</div>
+
+            <div class="card-label password-label">
+                TESTED PASSWORD
+            </div>
+
+            <div class="password-control">
+
+                <div
+                    class="password-box"
+                    id="testedPassword"
+                    title="Password is hidden"
+                    aria-label="Tested password"
+                >
+                    ******
+                </div>
+
+                <button
+                    type="button"
+                    class="password-toggle"
+                    id="passwordToggle"
+                    aria-label="Show password"
+                    title="Show password"
+                >
+
+                    <svg
+                        class="eye-icon"
+                        id="eyeIcon"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <!-- OPEN EYE -->
+                        <g class="eye-open">
+
+                            <path
+                                d="M2.5 12
+                                   C4.8 8.2 8.2 6 12 6
+                                   C15.8 6 19.2 8.2 21.5 12
+                                   C19.2 15.8 15.8 18 12 18
+                                   C8.2 18 4.8 15.8 2.5 12Z"
+                            ></path>
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="3"
+                            ></circle>
+
+                        </g>
+
+
+                        <!-- CLOSED / HIDDEN EYE -->
+                        <g class="eye-closed">
+
+                            <path
+                                d="M3 3L21 21"
+                            ></path>
+
+                            <path
+                                d="M10.6 10.6
+                                   C10.25 10.95 10.05 11.45 10.05 12
+                                   C10.05 13.1 10.9 13.95 12 13.95
+                                   C12.55 13.95 13.05 13.75 13.4 13.4"
+                            ></path>
+
+                            <path
+                                d="M9.2 5.3
+                                   C10.1 5.05 11.05 4.9 12 4.9
+                                   C17.7 4.9 21.5 12 21.5 12
+                                   C20.65 13.55 19.55 15.05 18.2 16.2"
+                            ></path>
+
+                            <path
+                                d="M6.15 7.05
+                                   C4.4 8.4 3.15 10.35 2.5 12
+                                   C2.5 12 6.05 19.1 12 19.1
+                                   C13.45 19.1 14.8 18.75 16 18.2"
+                            ></path>
+
+                        </g>
+
+                    </svg>
+
+                </button>
+
+            </div>
+
         </div>
 
+
         <div class="security-score">
-            <span>Security Score</span>
-            <strong id="securityScore">--</strong>
+
+            <span>
+                Security Score
+            </span>
+
+            <strong id="securityScore">
+                --
+            </strong>
+
         </div>
 
     </div>
 
+
+    <!-- =========================================================
+         SUMMARY RESULTS
+         ========================================================= -->
+
     <div class="summary-card explanation-card">
 
-        <div class="card-label">SUMMARY RESULTS</div>
+        <div class="card-label">
+            SUMMARY RESULTS
+        </div>
 
         <h2 id="summaryTitle">
             Explanation
         </h2>
 
-        <div id="summaryText" class="summary-text">
-            <p>Waiting for password analysis...</p>
+        <div
+            id="summaryText"
+            class="summary-text"
+        >
+            <p>
+                Waiting for password analysis...
+            </p>
         </div>
+
     </div>
+
 </div>
 
-<div class="classification-message" id="classificationMessage">
-    Password comparison results show key similarities, differences, and security risks.
+
+<!-- =============================================================
+     COMPARISON MESSAGE
+     ============================================================= -->
+
+<div
+    class="classification-message"
+    id="classificationMessage"
+>
+    Password comparison results show key similarities,
+    differences, and security risks.
 </div>

@@ -6,10 +6,10 @@
         <div class="feature-vector-header">
             <p class="feature-vector-description">
                 The following structural characteristics were extracted from your
-                password and transformed into a feature vector. These values are
-                used as the input variables for the Decision Tree (CART) model to
-                determine which password attack strategy your password is most
-                vulnerable to.
+                password and transformed into a feature vector. These values
+                are used as the input variables for the Decision Tree (CART)
+                model to determine which password attack strategy your password
+                is most vulnerable to.
             </p>
 
             <div class="feature-vector-divider"></div>
@@ -18,10 +18,29 @@
         <!-- TABLES -->
         <div class="feature-table-container">
 
-            <!-- PASSWORD CHARACTERISTICS -->
+            <!-- =====================================================
+                 PASSWORD CHARACTERISTICS
+            ====================================================== -->
             <div class="feature-table-card">
 
-                <h3>Password Characteristics</h3>
+                <!-- CARD HEADER -->
+                <div class="feature-info-label-row">
+
+                    <h3>Password Characteristics</h3>
+
+                    <button
+                        type="button"
+                        class="feature-info-toggle"
+                        id="characteristicsInfoToggle"
+                        aria-label="About password characteristics"
+                        aria-expanded="false"
+                    >
+                        ?
+                    </button>
+
+                </div>
+
+                <!-- PASSWORD CHARACTERISTICS TABLE -->
                 <table class="feature-table">
 
                     <thead>
@@ -70,14 +89,159 @@
 
                     </tbody>
                 </table>
+
+
+                <!-- =================================================
+                     PASSWORD CHARACTERISTICS INFO CARD
+                ================================================== -->
+                <div
+                    class="feature-info-card"
+                    id="characteristicsInfoCard"
+                    hidden
+                >
+
+                    <button
+                        type="button"
+                        class="feature-info-card-close"
+                        aria-label="Close information"
+                        title="Close"
+                    >
+                        ×
+                    </button>
+
+                    <div class="feature-info-card-title">
+                        PASSWORD CHARACTERISTICS
+                    </div>
+
+                    <div class="feature-info-card-content">
+
+                        <table class="feature-info-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>Explanation</th>
+                                    <th>Password Sample</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td>Password Length</td>
+                                    <td>
+                                        Measures the total number of characters
+                                        in the password.
+                                    </td>
+                                    <td>
+                                        <code>Hello123!</code>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Character Classes</td>
+                                    <td>
+                                        Counts the different types of characters
+                                        used in the password.
+                                    </td>
+                                    <td>
+                                        <code>Hello123!</code>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Lowercase Letters</td>
+                                    <td>
+                                        Indicates whether the password contains
+                                        lowercase letters.
+                                    </td>
+                                    <td>
+                                        <code>hello</code>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Uppercase Letters</td>
+                                    <td>
+                                        Indicates whether the password contains
+                                        uppercase letters.
+                                    </td>
+                                    <td>
+                                        <code>HELLO</code>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Numbers</td>
+                                    <td>
+                                        Indicates whether the password contains
+                                        numeric characters.
+                                    </td>
+                                    <td>
+                                        <code>Hello123</code>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Symbols</td>
+                                    <td>
+                                        Indicates whether the password contains
+                                        special characters or symbols.
+                                    </td>
+                                    <td>
+                                        <code>Hello!</code>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Dictionary Word</td>
+                                    <td>
+                                        Indicates whether the password contains
+                                        a recognizable word commonly found in a
+                                        password dictionary.
+                                    </td>
+                                    <td>
+                                        <code>password</code>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
             </div>
 
-            <!-- VULNERABILITY PATTERNS -->
+
+            <!-- =====================================================
+                 VULNERABILITY PATTERN DETECTION
+            ====================================================== -->
             <div class="feature-table-card">
 
-                <h3>Vulnerability Pattern Detection</h3>
+                <!-- CARD HEADER -->
+                <div class="feature-info-label-row">
 
+                    <h3>Vulnerability Pattern Detection</h3>
+
+                    <button
+                        type="button"
+                        class="feature-info-toggle"
+                        id="vulnerabilityPatternsInfoToggle"
+                        aria-label="About vulnerability pattern detection"
+                        aria-expanded="false"
+                    >
+                        ?
+                    </button>
+
+                </div>
+
+
+                <!-- VULNERABILITY PATTERNS TABLE -->
                 <table class="feature-table">
+
                     <thead>
                         <tr>
                             <th>Feature</th>
@@ -126,10 +290,140 @@
 
                 </table>
 
+
+                <!-- =================================================
+                     VULNERABILITY PATTERNS INFO CARD
+                ================================================== -->
+                <div
+                    class="feature-info-card"
+                    id="vulnerabilityPatternsInfoCard"
+                    hidden
+                >
+
+                    <button
+                        type="button"
+                        class="feature-info-card-close"
+                        aria-label="Close information"
+                        title="Close"
+                    >
+                        ×
+                    </button>
+
+                    <div class="feature-info-card-title">
+                        VULNERABILITY PATTERN DETECTION
+                    </div>
+
+                    <div class="feature-info-card-content">
+
+                        <table class="feature-info-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>Explanation</th>
+                                    <th>Password Sample</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td>Leetspeak</td>
+                                    <td>
+                                        Detects substitutions such as
+                                        <code>@</code> for <code>a</code> or
+                                        <code>3</code> for <code>e</code>
+                                        commonly used to modify words.
+                                    </td>
+                                    <td>
+                                        <code>P@ssw0rd</code>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Numeric Prefix</td>
+                                    <td>
+                                        Detects numbers placed at the beginning
+                                        of the password.
+                                    </td>
+                                    <td>
+                                        <code>123Hello</code>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Numeric Infix</td>
+                                    <td>
+                                        Detects numbers placed within the
+                                        password.
+                                    </td>
+                                    <td>
+                                        <code>Hel123lo</code>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Numeric Suffix</td>
+                                    <td>
+                                        Detects numbers placed at the end of
+                                        the password.
+                                    </td>
+                                    <td>
+                                        <code>Hello123</code>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Sequential Pattern</td>
+                                    <td>
+                                        Detects predictable characters that
+                                        appear next to each other in sequence
+                                        and belong to the same character type,
+                                        such as <code>abc</code> or
+                                        <code>123</code>.
+                                    </td>
+                                    <td>
+                                        <code>abc123</code>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Repeated Pattern</td>
+                                    <td>
+                                        Detects the same character or character
+                                        pattern repeated next to each other
+                                        using the same character type, such as
+                                        <code>aaa</code> or <code>111</code>.
+                                    </td>
+                                    <td>
+                                        <code>aaa123</code>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Rule-Based Pattern</td>
+                                    <td>
+                                        Detects predictable password
+                                        modifications or patterns commonly
+                                        generated from known words or
+                                        password rules.
+                                    </td>
+                                    <td>
+                                        <code>Password123!</code>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
 
     </div>
-
 </div>

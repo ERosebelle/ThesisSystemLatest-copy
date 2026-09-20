@@ -14,6 +14,7 @@
 <body>
 
     <div class="recommendation-page">
+
         <section class="recommendation-section">
 
             <div class="section-title">
@@ -22,27 +23,74 @@
 
             <div class="recommendation-card" id="recommendationCard">
 
-                <div class="recommendation-image-container" id="recommendationImage"></div>
-
-                <div class="recommendation-content" id="recommendationContent">
+                <!--
+                    Recommendation items generated dynamically
+                    by recommendation.js
+                -->
+                <div
+                    class="recommendation-image-container"
+                    id="recommendationImage">
                 </div>
 
+                <div
+                    class="recommendation-content"
+                    id="recommendationContent">
+                </div>
+
+
+                <!-- =================================================
+                     USER'S CHOICE
+                ================================================== -->
+
                 <article class="recommendation-item user-choice-card">
+
                     <div class="recommendation-image-wrapper">
+
                         <img
                             class="recommendation-image"
                             src="../assets/images/User%27s%20Choice.jpg"
                             alt="User's Choice"
                         >
+
                     </div>
 
                     <p class="recommendation-text">
-                        The system's recommendation doesn't force the user to apply the suggestions, they have a choice to decline or not use it
+                        The system's recommendation doesn't force the user
+                        to apply the suggestions, they have a choice to
+                        decline or not use it.
                     </p>
+
+                </article>
+
+
+                <!-- =================================================
+                     CHANGE PASSWORD EVERY 6 MONTHS
+                ================================================== -->
+
+                <article class="recommendation-item change-password-card">
+
+                    <div class="recommendation-image-wrapper">
+
+                        <img
+                            class="recommendation-image"
+                            src="../assets/images/ChangePassword.jpg"
+                            alt="Change Password Every 6 Months"
+                        >
+
+                    </div>
+
+                    <p class="recommendation-text">
+                        Change your password every 6 months to help keep
+                        your account safe. If you think someone knows your
+                        password, change it right away.
+                    </p>
+
                 </article>
 
             </div>
+
         </section>
+
     </div>
 
 </body>
