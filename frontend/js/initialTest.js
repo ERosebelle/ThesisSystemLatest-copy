@@ -41,19 +41,282 @@ const infoButtons = document.querySelectorAll(".info-option");
 const infoTitle = document.getElementById("infoTitle");
 const infoContent = document.getElementById("infoContent");
 
+// TUTORIAL IMAGE ZOOM
+let zoomImages = [];
+let zoomCurrentIndex = -1;
+let zoomIsSlider = false;
+
+function initializeImageZoom() {
+    const tutorialImages = document.querySelectorAll(
+        ".tutorial-container img"
+    );
+
+    if (tutorialImages.length === 0) {
+        return;
+    }
+
+    tutorialImages.forEach(image => {
+        image.onclick = event => {
+            event.stopPropagation();
+
+            const isStep3Image =
+                image.classList.contains("tutorial-slide");
+
+            if (isStep3Image) {
+                zoomImages = Array.from(
+                    document.querySelectorAll(".tutorial-slide")
+                );
+
+                zoomCurrentIndex = zoomImages.indexOf(image);
+                zoomIsSlider = true;
+
+                openImageZoom(
+                    image.src,
+                    image.alt || ""
+                );
+            }
+            else {
+                zoomImages = [];
+                zoomCurrentIndex = -1;
+                zoomIsSlider = false;
+
+                openImageZoom(
+                    image.src,
+                    image.alt || ""
+                );
+            }
+        };
+    });
+}
+
+function createImageZoomOverlay() {
+    let overlay = document.getElementById("imageZoomOverlay");
+
+    if (overlay) {
+        return overlay;
+    }
+
+    overlay = document.createElement("div");
+    overlay.id = "imageZoomOverlay";
+    overlay.className = "image-zoom-overlay";
+
+    overlay.innerHTML = `
+        <button
+            type="button"
+            class="image-zoom-close"
+            id="imageZoomClose"
+            aria-label="Close enlarged image"
+        >
+            ×
+        </button>
+
+        <button
+            type="button"
+            class="image-zoom-prev"
+            id="imageZoomPrev"
+            aria-label="Previous image"
+        >
+            &#10094;
+        </button>
+
+        <img
+            class="image-zoom-preview"
+            id="imageZoomPreview"
+            alt=""
+        >
+
+        <button
+            type="button"
+            class="image-zoom-next"
+            id="imageZoomNext"
+            aria-label="Next image"
+        >
+            &#10095;
+        </button>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const closeButton =
+        document.getElementById("imageZoomClose");
+
+    const previousButton =
+        document.getElementById("imageZoomPrev");
+
+    const nextButton =
+        document.getElementById("imageZoomNext");
+
+    closeButton.addEventListener(
+        "click",
+        closeImageZoom
+    );
+
+    previousButton.addEventListener(
+        "click",
+        event => {
+            event.stopPropagation();
+            showZoomImage(zoomCurrentIndex - 1);
+        }
+    );
+
+    nextButton.addEventListener(
+        "click",
+        event => {
+            event.stopPropagation();
+            showZoomImage(zoomCurrentIndex + 1);
+        }
+    );
+
+    overlay.addEventListener("click", event => {
+        if (event.target === overlay) {
+            closeImageZoom();
+        }
+    });
+
+    return overlay;
+}
+
+function openImageZoom(imageSrc, imageAlt) {
+    const overlay = createImageZoomOverlay();
+
+    const preview =
+        document.getElementById("imageZoomPreview");
+
+    preview.src = imageSrc;
+    preview.alt = imageAlt;
+
+    updateZoomNavigation();
+
+    overlay.classList.add("active");
+
+    document.body.classList.add("image-zoom-open");
+}
+
+function showZoomImage(index) {
+    if (!zoomIsSlider || zoomImages.length === 0) {
+        return;
+    }
+
+    if (index >= zoomImages.length) {
+        index = 0;
+    }
+
+    if (index < 0) {
+        index = zoomImages.length - 1;
+    }
+
+    zoomCurrentIndex = index;
+
+    const image = zoomImages[zoomCurrentIndex];
+
+    const preview =
+        document.getElementById("imageZoomPreview");
+
+    if (!preview) {
+        return;
+    }
+
+    preview.src = image.src;
+    preview.alt = image.alt || "";
+
+    updateZoomNavigation();
+}
+
+function updateZoomNavigation() {
+    const previousButton =
+        document.getElementById("imageZoomPrev");
+
+    const nextButton =
+        document.getElementById("imageZoomNext");
+
+    if (!previousButton || !nextButton) {
+        return;
+    }
+
+    if (zoomIsSlider && zoomImages.length > 1) {
+        previousButton.classList.add("visible");
+        nextButton.classList.add("visible");
+    }
+    else {
+        previousButton.classList.remove("visible");
+        nextButton.classList.remove("visible");
+    }
+}
+
+function closeImageZoom() {
+    const overlay =
+        document.getElementById("imageZoomOverlay");
+
+    if (!overlay) {
+        return;
+    }
+
+    overlay.classList.remove("active");
+
+    document.body.classList.remove(
+        "image-zoom-open"
+    );
+
+    zoomImages = [];
+    zoomCurrentIndex = -1;
+    zoomIsSlider = false;
+}
+
+document.addEventListener("keydown", event => {
+
+    const overlay =
+        document.getElementById("imageZoomOverlay");
+
+    if (
+        !overlay ||
+        !overlay.classList.contains("active")
+    ) {
+        return;
+    }
+
+    if (event.key === "Escape") {
+        closeImageZoom();
+        return;
+    }
+
+    if (event.key === "ArrowRight") {
+        event.preventDefault();
+        showZoomImage(zoomCurrentIndex + 1);
+        return;
+    }
+
+    if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        showZoomImage(zoomCurrentIndex - 1);
+        return;
+    }
+});
+
 // TUTORIAL IMAGE SLIDER
 function initializeTutorialSlider() {
-    const slides = document.querySelectorAll(".tutorial-slide");
-    const dots = document.querySelectorAll(".dot");
-    const slider = document.querySelector(".tutorial-slider");
 
-    if (slides.length === 0 || dots.length === 0 || !slider) {
+    const slides =
+        document.querySelectorAll(".tutorial-slide");
+
+    const dots =
+        document.querySelectorAll(".dot");
+
+    const slider =
+        document.querySelector(".tutorial-slider");
+
+    if (
+        slides.length === 0 ||
+        dots.length === 0 ||
+        !slider
+    ) {
+        initializeImageZoom();
         return;
     }
 
     let currentIndex = 0;
 
     function showSlide(index) {
+
         if (index >= slides.length) {
             currentIndex = 0;
         }
@@ -64,21 +327,65 @@ function initializeTutorialSlider() {
             currentIndex = index;
         }
 
-        slides.forEach(slide => slide.classList.remove("active"));
-        dots.forEach(dot => dot.classList.remove("active"));
+        slides.forEach(slide => {
+            slide.classList.remove("active");
+        });
+
+        dots.forEach(dot => {
+            dot.classList.remove("active");
+        });
 
         slides[currentIndex].classList.add("active");
         dots[currentIndex].classList.add("active");
     }
 
     dots.forEach((dot, index) => {
-        dot.onclick = () => showSlide(index);
+
+        dot.onclick = event => {
+            event.stopPropagation();
+
+            showSlide(index);
+        };
+
     });
 
-    slider.addEventListener("click", (event) => {
-        const box = slider.getBoundingClientRect();
-        const clickX = event.clientX - box.left;
-        const middle = box.width / 2;
+    slider.addEventListener("click", event => {
+
+        if (
+            event.target.classList.contains(
+                "tutorial-slide"
+            )
+        ) {
+
+            zoomImages = Array.from(
+                document.querySelectorAll(
+                    ".tutorial-slide"
+                )
+            );
+
+            zoomCurrentIndex =
+                zoomImages.indexOf(
+                    event.target
+                );
+
+            zoomIsSlider = true;
+
+            openImageZoom(
+                event.target.src,
+                event.target.alt || ""
+            );
+
+            return;
+        }
+
+        const box =
+            slider.getBoundingClientRect();
+
+        const clickX =
+            event.clientX - box.left;
+
+        const middle =
+            box.width / 2;
 
         if (clickX > middle) {
             showSlide(currentIndex + 1);
@@ -87,6 +394,8 @@ function initializeTutorialSlider() {
             showSlide(currentIndex - 1);
         }
     });
+
+    initializeImageZoom();
 }
 
 const informationData = {
@@ -240,19 +549,57 @@ const informationData = {
 
         <div class="tutorial-container">
             <p>Step 3: Review the vulnerability result and recommendations.</p>
-            <p>Click an image to next</p>
-
+            <p>Click an image to view the next step.</p>
 
             <div class="tutorial-slider">
-                <img class="tutorial-slide active" src="../assets/images/step3-(1-3).png">
-                <img class="tutorial-slide" src="../assets/images/step3-(2-3).png">
-                <img class="tutorial-slide" src="../assets/images/step3-(3-3).png">
+
+                <img
+                    class="tutorial-slide active"
+                    src="../assets/images/step3%20(1).png"
+                >
+
+                <img
+                    class="tutorial-slide"
+                    src="../assets/images/step3%20(2).png"
+                >
+
+                <img
+                    class="tutorial-slide"
+                    src="../assets/images/step3%20(3).png"
+                >
+
+                <img
+                    class="tutorial-slide"
+                    src="../assets/images/step3%20(4).png"
+                >
+
+                <img
+                    class="tutorial-slide"
+                    src="../assets/images/step3%20(5).png"
+                >
+
+                <img
+                    class="tutorial-slide"
+                    src="../assets/images/step3%20(6).png"
+                >
+
+                <img
+                    class="tutorial-slide"
+                    src="../assets/images/step3%20(7).png"
+                >
+
             </div>
 
             <div class="tutorial-dots">
+
                 <span class="dot active"></span>
                 <span class="dot"></span>
                 <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+
             </div>
         </div>
         `
@@ -261,163 +608,283 @@ const informationData = {
 };
 
 infoButtons.forEach(button => {
+
     button.addEventListener("click", () => {
-        const section = button.dataset.section;
-        const selected = informationData[section];
+
+        const section =
+            button.dataset.section;
+
+        const selected =
+            informationData[section];
 
         if (selected) {
-            infoTitle.textContent = selected.title;
-            infoContent.innerHTML = selected.content;
+
+            infoTitle.textContent =
+                selected.title;
+
+            infoContent.innerHTML =
+                selected.content;
 
             if (section === "tutorial") {
                 initializeTutorialSlider();
             }
         }
 
-        infoButtons.forEach(btn => btn.classList.remove("active"));
+        infoButtons.forEach(btn => {
+            btn.classList.remove("active");
+        });
+
         button.classList.add("active");
+
     });
+
 });
 
 // PASSWORD ANALYSIS BUTTON
-const scanButton = document.getElementById("scanButton");
+const scanButton =
+    document.getElementById("scanButton");
 
 if (passwordInput && scanButton) {
-    passwordInput.addEventListener("keydown", event => {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            scanButton.click();
+
+    passwordInput.addEventListener(
+        "keydown",
+        event => {
+
+            if (event.key === "Enter") {
+
+                event.preventDefault();
+
+                scanButton.click();
+
+            }
+
         }
-    });
+    );
+
 }
 
 if (scanButton && passwordInput) {
-    scanButton.addEventListener("click", async () => {
 
-        const password = passwordInput.value.trim();
+    scanButton.addEventListener(
+        "click",
+        async () => {
 
-        if (password === "") {
-            passwordInput.focus();
-            passwordInput.style.boxShadow = "0 0 25px rgba(239,68,68,.8)";
+            const password =
+                passwordInput.value.trim();
 
-            setTimeout(() => {
-                passwordInput.style.boxShadow = "";
-            }, 1000);
+            if (password === "") {
 
-            return;
-        }
+                passwordInput.focus();
 
-        scanButton.disabled = true;
-        scanButton.textContent = "Analyzing...";
+                passwordInput.style.boxShadow =
+                    "0 0 25px rgba(239,68,68,.8)";
 
-        try {
+                setTimeout(() => {
 
-            const response = await fetch("http://localhost:3000/analyze", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ password: password })
-            });
+                    passwordInput.style.boxShadow =
+                        "";
 
-            if (!response.ok) {
-                throw new Error("Server Error");
+                }, 1000);
+
+                return;
+
             }
 
-            const result = await response.json();
+            scanButton.disabled = true;
 
-            sessionStorage.setItem(
-                "analysisResult",
-                JSON.stringify(result)
-            );
+            scanButton.textContent =
+                "Analyzing...";
 
-            localStorage.setItem(
-                "analyzedPassword",
-                password
-            );
+            try {
 
-            sessionStorage.setItem(
-                "showResultTutorial",
-                "true"
-            );
+                const response =
+                    await fetch(
+                        "http://localhost:3000/analyze",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+                            body: JSON.stringify({
+                                password: password
+                            })
+                        }
+                    );
 
-            window.location.href = "result.html";
+                if (!response.ok) {
+                    throw new Error(
+                        "Server Error"
+                    );
+                }
+
+                const result =
+                    await response.json();
+
+                sessionStorage.setItem(
+                    "analysisResult",
+                    JSON.stringify(result)
+                );
+
+                localStorage.setItem(
+                    "analyzedPassword",
+                    password
+                );
+
+                sessionStorage.setItem(
+                    "showResultTutorial",
+                    "true"
+                );
+
+                window.location.href =
+                    "result.html";
+
+            }
+            catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "Unable to connect to the analysis server."
+                );
+
+                scanButton.disabled = false;
+
+                scanButton.textContent =
+                    "Analyze Password";
+
+            }
 
         }
-        catch (error) {
+    );
 
-            console.error(error);
-
-            alert(
-                "Unable to connect to the analysis server."
-            );
-
-            scanButton.disabled = false;
-            scanButton.textContent = "Analyze Password";
-
-        }
-
-    });
 }
 
 // INITIAL PAGE RESET
-sessionStorage.removeItem("analysisResult");
-localStorage.removeItem("analyzedPassword");
-localStorage.removeItem("comparisonResult");
-localStorage.removeItem("originalAnalysisResult");
+sessionStorage.removeItem(
+    "analysisResult"
+);
+
+localStorage.removeItem(
+    "analyzedPassword"
+);
+
+localStorage.removeItem(
+    "comparisonResult"
+);
+
+localStorage.removeItem(
+    "originalAnalysisResult"
+);
 
 if (passwordInput) {
     passwordInput.value = "";
 }
 
 if (scanButton) {
+
     scanButton.disabled = false;
-    scanButton.textContent = "Analyze Password";
+
+    scanButton.textContent =
+        "Analyze Password";
+
 }
 
-history.replaceState(null, "", window.location.href);
-history.pushState(null, "", window.location.href);
+history.replaceState(
+    null,
+    "",
+    window.location.href
+);
 
-window.addEventListener("popstate", () => {
+history.pushState(
+    null,
+    "",
+    window.location.href
+);
 
-    sessionStorage.removeItem("analysisResult");
-    localStorage.removeItem("analyzedPassword");
-    localStorage.removeItem("comparisonResult");
-    localStorage.removeItem("originalAnalysisResult");
+window.addEventListener(
+    "popstate",
+    () => {
 
-    if (passwordInput) {
-        passwordInput.value = "";
-    }
+        sessionStorage.removeItem(
+            "analysisResult"
+        );
 
-    if (scanButton) {
-        scanButton.disabled = false;
-        scanButton.textContent = "Analyze Password";
-    }
+        localStorage.removeItem(
+            "analyzedPassword"
+        );
 
-    history.pushState(null, "", window.location.href);
+        localStorage.removeItem(
+            "comparisonResult"
+        );
 
-});
-
-window.addEventListener("pageshow", event => {
-
-    if (event.persisted) {
-
-        sessionStorage.removeItem("analysisResult");
-        localStorage.removeItem("analyzedPassword");
-        localStorage.removeItem("comparisonResult");
-        localStorage.removeItem("originalAnalysisResult");
+        localStorage.removeItem(
+            "originalAnalysisResult"
+        );
 
         if (passwordInput) {
             passwordInput.value = "";
         }
 
         if (scanButton) {
+
             scanButton.disabled = false;
-            scanButton.textContent = "Analyze Password";
+
+            scanButton.textContent =
+                "Analyze Password";
+
+        }
+
+        history.pushState(
+            null,
+            "",
+            window.location.href
+        );
+
+    }
+);
+
+window.addEventListener(
+    "pageshow",
+    event => {
+
+        if (event.persisted) {
+
+            sessionStorage.removeItem(
+                "analysisResult"
+            );
+
+            localStorage.removeItem(
+                "analyzedPassword"
+            );
+
+            localStorage.removeItem(
+                "comparisonResult"
+            );
+
+            localStorage.removeItem(
+                "originalAnalysisResult"
+            );
+
+            if (passwordInput) {
+                passwordInput.value = "";
+            }
+
+            if (scanButton) {
+
+                scanButton.disabled = false;
+
+                scanButton.textContent =
+                    "Analyze Password";
+
+            }
+
         }
 
     }
+);
 
-});
-
-window.addEventListener("unload", function () { });
+window.addEventListener(
+    "unload",
+    function () {}
+);

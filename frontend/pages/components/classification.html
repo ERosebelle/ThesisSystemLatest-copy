@@ -40,20 +40,61 @@
                 </button>
 
                 <div class="info-card-title">
-                    VULNERABILITY
+                    Password Vulnerabilities
                 </div>
 
                 <div
                     class="info-card-content"
                     id="vulnerabilityInfoText"
                 >
-                    <strong>Brute Force</strong> - An attack that systematically tries many possible character combinations until the correct password is found.
-                    <br><br>
 
-                    <strong>Dictionary</strong> - An attack that tries passwords from a predefined list of common words, passwords, and phrases.
-                    <br><br>
+                    <div class="info-section">
 
-                    <strong>Rule-Based</strong> - An attack that applies common password patterns and modifications to dictionary words or known passwords.
+                        <strong>Brute Force</strong>
+
+                        <div class="info-definition">
+                            Tries many possible password combinations until the correct one is found.
+                        </div>
+
+                        <div class="info-example">
+                            <strong>Example:</strong>
+                            Trying combinations like "abc123", "abc124", "abc125", and so on.
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-section">
+
+                        <strong>Dictionary-Based</strong>
+
+                        <div class="info-definition">
+                            Tries common words, passwords, or phrases from a prepared list.
+                        </div>
+
+                        <div class="info-example">
+                            <strong>Example:</strong>
+                            A password like "basketball" may be tried because it is a common word.
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-section">
+
+                        <strong>Rule-Based</strong>
+
+                        <div class="info-definition">
+                            Tries common changes or patterns made to familiar words or passwords.
+                        </div>
+
+                        <div class="info-example">
+                            <strong>Example:</strong>
+                            Changing "basketball" to "Basketball123!".
+                        </div>
+
+                    </div>
+
                 </div>
 
             </div>
@@ -110,20 +151,69 @@
                 </button>
 
                 <div class="info-card-title">
-                    RISK LEVEL
+                    Risk Level
                 </div>
 
                 <div
                     class="info-card-content"
                     id="riskInfoText"
                 >
-                    <strong>Moderate Risk</strong> - The password has some weaknesses that could make it vulnerable to common cracking techniques.
-                    <br><br>
 
-                    <strong>High Risk</strong> - The password has significant weaknesses that make it more susceptible to password-cracking attacks.
-                    <br><br>
+                    <div class="info-section">
 
-                    <strong>Critical Risk</strong> - The password has severe weaknesses and may be quickly compromised using common cracking techniques.
+                        <strong>Moderate Risk</strong>
+
+                        <div class="info-definition">
+                            The password has some weaknesses that may make it vulnerable to common attacks.
+                        </div>
+
+                        <div class="info-example">
+                            <strong>Example:</strong>
+                            A password is fairly varied but still contains a predictable pattern.
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-section">
+
+                        <strong>High Risk</strong>
+
+                        <div class="info-definition">
+                            The password has significant weaknesses that make it more susceptible to password-cracking attempts.
+                        </div>
+
+                        <div class="info-example">
+                            <strong>Example:</strong>
+                            A password uses a common word with a simple number or symbol added.
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-section">
+
+                        <strong>Critical Risk</strong>
+
+                        <div class="info-definition">
+                            The password has severe weaknesses and may be quickly compromised using common techniques.
+                        </div>
+
+                        <div class="info-example">
+                            <strong>Example:</strong>
+                            A very simple password such as "123456" or "password".
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-reminder">
+
+                        <strong>Reminder:</strong>
+                        The system does not try to crack or reveal your password. It analyzes the password's characteristics and patterns to determine its dominant vulnerability category and provide an understandable explanation of the result.
+
+                    </div>
+
                 </div>
 
             </div>
