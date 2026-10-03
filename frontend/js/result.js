@@ -1,8 +1,9 @@
+fetch("https://thesissystemlatest.onrender.com/analyze", { method: "HEAD" }).catch(() => {});
 async function analyzePassword(password, previousPassword) {
 
     const response =
         await fetch(
-            "http://localhost:3000/analyze",
+            "https://thesissystemlatest.onrender.com/analyze",
             {
                 method: "POST",
                 headers: {
@@ -812,15 +813,14 @@ document.addEventListener(
     }
 );
 
-window.addEventListener(
-    "pageshow",
-    event => {
+window.addEventListener("pageshow", (event) => {
+    // 1. Kuhanin ang navigation entry gamit ang modern PerformanceObserver API
+    const entries = performance.getEntriesByType("navigation");
+    const isBackForward = entries.length > 0 && entries[0].type === "back_forward";
 
-        if (event.persisted) {
-
-            window.location.replace(
-                "initialTest.html"
-            );
-        }
+    // 2. I-check kung galing sa bfcache (event.persisted) o kaya naman ay back/forward button
+    if (event.persisted || isBackForward) {
+        document.documentElement.style.display = "none";
+        window.location.replace("initialTest.html");
     }
-);
+});

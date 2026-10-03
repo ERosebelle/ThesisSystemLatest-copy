@@ -1,5 +1,5 @@
 // COMPARISON TEST PAGE - comparisonTest.js
-
+fetch("https://thesissystemlatest.onrender.com/analyze", { method: "HEAD" }).catch(() => {});
 // PASSWORD VISIBILITY TOGGLE
 const passwordInput = document.getElementById("comparePasswordInput");
 const togglePassword = document.getElementById("togglePassword");
@@ -691,7 +691,7 @@ if (passwordInput && compareButton) {
 
                 const response =
                     await fetch(
-                        "http://localhost:3000/analyze",
+                        "https://thesissystemlatest.onrender.com/analyze",
                         {
                             method: "POST",
 
@@ -925,22 +925,28 @@ if (compareButton) {
 })();
 
 
-window.addEventListener(
-    "pageshow",
-    event => {
+window.addEventListener("pageshow", (event) => {
+    // 1. Kuhanin ang navigation entry gamit ang modern PerformanceObserver API
+    const entries = performance.getEntriesByType("navigation");
+    const isBackForward = entries.length > 0 && entries[0].type === "back_forward";
 
-        if (event.persisted) {
-
-            window.location.replace(
-                "initialTest.html"
-            );
-        }
-
+    // 2. I-check kung galing sa bfcache (event.persisted) o kaya naman ay back/forward button
+    if (event.persisted || isBackForward) {
+        document.documentElement.style.display = "none";
+        window.location.replace("initialTest.html");
     }
-);
+});
 
 
 window.addEventListener(
     "unload",
     function () {}
 );
+
+function scrollToInfo(){
+    if(window.innerWidth<=1024){
+        setTimeout(()=>{
+            document.querySelector(".info-panel").scrollIntoView({behavior:"smooth",block:"start"});
+        },100);
+    }
+}

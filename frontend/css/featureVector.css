@@ -921,3 +921,601 @@
         justify-self: start;
     }
 }
+
+/* =========================================================
+   DYNAMIC RESPONSIVE ADD-ON
+   Works across desktop, laptop, tablet, phone
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   BASE FLUID SCALING
+   --------------------------------------------------------- */
+
+.feature-page {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.feature-vector-section {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding:
+        clamp(0px, 1vw, 12px)
+        clamp(0px, 1.5vw, 20px);
+}
+
+.feature-vector-header {
+    width: 100%;
+    max-width: 1100px;
+}
+
+.feature-vector-section h2 {
+    font-size: clamp(18px, 1.6vw, 22px);
+    line-height: 1.3;
+}
+
+.feature-vector-description {
+    font-size: clamp(11px, 1vw, 13px) !important;
+    line-height: clamp(1.5, 1.8, 1.8);
+    padding-inline: clamp(0px, 2vw, 20px);
+}
+
+.feature-vector-divider {
+    width: min(100%, 1050px);
+    margin:
+        clamp(12px, 1.5vw, 18px)
+        auto
+        clamp(14px, 1.7vw, 20px);
+}
+
+
+/* ---------------------------------------------------------
+   FEATURE TABLE CONTAINER
+   --------------------------------------------------------- */
+
+.feature-table-container {
+    width: 100%;
+    max-width: 1050px;
+    min-width: 0;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    gap: clamp(12px, 2vw, 24px);
+
+    margin-inline: auto;
+}
+
+
+/* ---------------------------------------------------------
+   FEATURE CARDS
+   --------------------------------------------------------- */
+
+.feature-table-card {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    max-width: 500px;
+
+    padding:
+        clamp(12px, 1.5vw, 16px)
+        clamp(12px, 1.7vw, 18px);
+
+    border-radius: clamp(11px, 1.2vw, 14px);
+}
+
+.feature-table-card h3 {
+    font-size: clamp(11px, 1vw, 13px);
+    margin-bottom: clamp(7px, 1vw, 10px);
+}
+
+
+/* ---------------------------------------------------------
+   FEATURE TABLE
+   --------------------------------------------------------- */
+
+.feature-table {
+    width: 100%;
+    min-width: 0;
+}
+
+.feature-table th {
+    padding:
+        clamp(5px, .7vw, 7px)
+        clamp(4px, .7vw, 8px);
+
+    font-size: clamp(9px, .8vw, 11px);
+}
+
+.feature-table td {
+    padding:
+        clamp(5px, .7vw, 7px)
+        clamp(4px, .7vw, 8px) !important;
+
+    font-size: clamp(10px, .9vw, 13px);
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+
+/* ---------------------------------------------------------
+   INFO BUTTON
+   --------------------------------------------------------- */
+
+.feature-info-toggle {
+    top: clamp(10px, 1.2vw, 16px);
+    right: clamp(10px, 1.3vw, 18px);
+
+    width: clamp(20px, 1.8vw, 22px);
+    height: clamp(20px, 1.8vw, 22px);
+    min-width: clamp(20px, 1.8vw, 22px);
+
+    font-size: clamp(10px, .9vw, 12px);
+}
+
+
+/* ---------------------------------------------------------
+   INFO CARD
+   --------------------------------------------------------- */
+
+.feature-info-card {
+    padding:
+        clamp(18px, 2.5vw, 30px);
+
+    border-radius:
+        clamp(11px, 1.2vw, 14px);
+}
+
+.feature-info-card-title {
+    margin-right: clamp(30px, 3vw, 40px);
+    margin-bottom: clamp(14px, 1.8vw, 20px);
+
+    font-size: clamp(10px, .9vw, 12px);
+    letter-spacing: clamp(1px, .15vw, 2px);
+}
+
+
+/* ---------------------------------------------------------
+   INFO CLOSE BUTTON
+   --------------------------------------------------------- */
+
+.feature-info-card-close {
+    width: clamp(22px, 2vw, 24px);
+    height: clamp(22px, 2vw, 24px);
+    min-width: clamp(22px, 2vw, 24px);
+
+    margin-top: -4px;
+    margin-right: clamp(-27px, -2.5vw, -27px);
+
+    font-size: clamp(15px, 1.4vw, 17px);
+}
+
+
+/* ---------------------------------------------------------
+   INFO TABLE
+   --------------------------------------------------------- */
+
+.feature-info-table {
+    width: 100%;
+    min-width: 0;
+}
+
+.feature-info-table th {
+    padding:
+        clamp(7px, .9vw, 10px)
+        clamp(5px, .8vw, 9px);
+
+    font-size: clamp(8px, .75vw, 10px);
+}
+
+.feature-info-table td {
+    padding:
+        clamp(7px, .9vw, 10px)
+        clamp(5px, .8vw, 9px);
+
+    font-size: clamp(9px, .8vw, 11px);
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+.feature-info-table code {
+    max-width: 100%;
+    padding:
+        clamp(3px, .4vw, 4px)
+        clamp(5px, .6vw, 7px);
+
+    font-size: clamp(8px, .7vw, 10px);
+    overflow-wrap: anywhere;
+}
+
+
+/* ---------------------------------------------------------
+   BREAKDOWN
+   --------------------------------------------------------- */
+
+.feature-info-breakdown {
+    margin-top: clamp(14px, 1.5vw, 18px);
+    padding-top: clamp(12px, 1.4vw, 16px);
+}
+
+.feature-info-breakdown-title {
+    margin-bottom: clamp(9px, 1vw, 12px);
+    font-size: clamp(9px, .75vw, 10px);
+}
+
+.feature-info-breakdown-item {
+    grid-template-columns:
+        minmax(0, 24%)
+        minmax(0, 52%)
+        minmax(0, 24%);
+
+    gap: clamp(5px, .8vw, 8px);
+    padding: clamp(6px, .7vw, 8px) 0;
+}
+
+.feature-info-breakdown-item strong,
+.feature-info-breakdown-item span {
+    font-size: clamp(9px, .8vw, 11px);
+    overflow-wrap: anywhere;
+}
+
+.feature-info-breakdown-item code {
+    max-width: 100%;
+    font-size: clamp(8px, .7vw, 10px);
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   MEDIUM DESKTOP / LAPTOP
+   901px - 1100px
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .feature-vector-section {
+        justify-content: flex-start;
+    }
+
+    .feature-table-container {
+        gap: 16px;
+    }
+
+    .feature-table-card {
+        max-width: none;
+    }
+
+    .feature-table th,
+    .feature-table td {
+        padding-inline: 6px;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+   601px - 900px
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .feature-vector-section {
+        justify-content: flex-start;
+        padding-inline: 0;
+    }
+
+    .feature-vector-header {
+        margin-bottom: 4px;
+    }
+
+    .feature-vector-divider {
+        margin-top: 14px;
+        margin-bottom: 16px;
+    }
+
+    .feature-table-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+
+    .feature-table-card {
+        width: 100%;
+        max-width: none;
+        flex: none;
+    }
+
+    .feature-info-card {
+        padding: 22px;
+    }
+
+    .feature-info-breakdown-item {
+        grid-template-columns:
+            minmax(100px, 24%)
+            minmax(0, 1fr)
+            minmax(70px, 24%);
+    }
+}
+
+
+/* =========================================================
+   LARGE PHONE
+   401px - 600px
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .feature-vector-section h2 {
+        font-size: 18px;
+    }
+
+    .feature-vector-description {
+        font-size: 11px !important;
+        line-height: 1.55;
+        padding-inline: 8px;
+    }
+
+    .feature-table-container {
+        gap: 14px;
+    }
+
+    .feature-table-card {
+        padding: 13px 12px;
+    }
+
+    .feature-table-card h3 {
+        font-size: 11px;
+    }
+
+    .feature-table th {
+        font-size: 8px;
+        letter-spacing: .35px;
+    }
+
+    .feature-table td {
+        font-size: 10px;
+        padding: 6px 4px !important;
+    }
+
+    .feature-info-card {
+        padding: 18px;
+    }
+
+    .feature-info-card-title {
+        font-size: 10px;
+        margin-bottom: 14px;
+    }
+
+    .feature-info-table th {
+        padding: 7px 4px;
+        font-size: 8px;
+    }
+
+    .feature-info-table td {
+        padding: 7px 4px;
+        font-size: 9px;
+    }
+
+    .feature-info-table code {
+        font-size: 8px;
+        padding: 3px 5px;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .feature-info-breakdown-item {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+
+    .feature-info-breakdown-item code {
+        justify-self: start;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONE
+   400px AND BELOW
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .feature-vector-section h2 {
+        font-size: 16px;
+    }
+
+    .feature-vector-description {
+        font-size: 10px !important;
+    }
+
+    .feature-table-card {
+        padding: 11px 9px;
+    }
+
+    .feature-table-card h3 {
+        font-size: 10px;
+    }
+
+    .feature-table th {
+        padding: 5px 3px;
+        font-size: 7px;
+    }
+
+    .feature-table td {
+        padding: 5px 3px !important;
+        font-size: 9px;
+    }
+
+    .feature-info-card {
+        padding: 15px;
+    }
+
+    .feature-info-card-close {
+        margin-right: -18px;
+    }
+
+    .feature-info-table th {
+        font-size: 7px;
+    }
+
+    .feature-info-table td {
+        font-size: 8px;
+        padding: 6px 3px;
+    }
+
+    .feature-info-breakdown-item strong,
+    .feature-info-breakdown-item span {
+        font-size: 9px;
+    }
+}
+
+
+/* =========================================================
+   VERY NARROW DEVICES
+   320px AND BELOW
+   ========================================================= */
+
+@media (max-width: 320px) {
+
+    .feature-vector-section h2 {
+        font-size: 15px;
+    }
+
+    .feature-vector-description {
+        font-size: 9px !important;
+    }
+
+    .feature-table-card {
+        padding: 10px 7px;
+    }
+
+    .feature-table th {
+        font-size: 6.5px;
+    }
+
+    .feature-table td {
+        font-size: 8px;
+    }
+
+    .feature-info-card {
+        padding: 12px;
+    }
+
+    .feature-info-table th,
+    .feature-info-table td {
+        padding: 5px 2px;
+    }
+
+    .feature-info-table td {
+        font-size: 7.5px;
+    }
+}
+
+
+/* =========================================================
+   SHORT SCREENS
+   Laptop / landscape phones / split-screen
+   ========================================================= */
+
+@media (max-height: 650px) and (min-width: 601px) {
+
+    .feature-vector-section {
+        justify-content: flex-start;
+    }
+
+    .feature-vector-divider {
+        margin-top: 10px;
+        margin-bottom: 12px;
+    }
+
+    .feature-table-card {
+        padding-top: 11px;
+        padding-bottom: 11px;
+    }
+
+    .feature-table th,
+    .feature-table td {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+}
+
+
+/* =========================================================
+   LANDSCAPE PHONE
+   ========================================================= */
+
+@media (max-width: 900px) and (orientation: landscape) {
+
+    .feature-table-container {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .feature-table-card {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    .feature-info-breakdown-item {
+        grid-template-columns:
+            24%
+            52%
+            24%;
+    }
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   Prevent hover effects from feeling broken
+   ========================================================= */
+
+@media (hover: none) {
+
+    .feature-table-card:hover {
+        transform: none;
+        border-color: rgba(56, 189, 248, .20);
+        box-shadow:
+            0 8px 20px rgba(0, 0, 0, .30),
+            0 0 12px rgba(56, 189, 248, .06);
+    }
+
+    .feature-table tbody tr:hover {
+        background: transparent;
+    }
+
+    .feature-info-toggle:hover {
+        transform: none;
+    }
+
+    .feature-info-card-close:hover {
+        transform: none;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .feature-table-card,
+    .feature-info-toggle,
+    .feature-info-card-close,
+    .feature-table tbody tr {
+        transition: none;
+    }
+
+    .feature-table-card::before,
+    .feature-table-card::after,
+    .present {
+        animation: none;
+    }
+}

@@ -1,676 +1,589 @@
-// PASSWORD VISIBILITY TOGGLE
-const passwordInput = document.getElementById("passwordInput");
-const togglePassword = document.getElementById("togglePassword");
-const eyeOpen = document.getElementById("eyeOpen");
-const eyeClosed = document.getElementById("eyeClosed");
+document.addEventListener("DOMContentLoaded", () => {
 
-if (passwordInput && togglePassword && eyeOpen && eyeClosed) {
-    togglePassword.addEventListener("click", () => {
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-            eyeOpen.classList.add("hidden");
-            eyeClosed.classList.remove("hidden");
-        }
-        else {
-            passwordInput.type = "password";
-            eyeClosed.classList.add("hidden");
-            eyeOpen.classList.remove("hidden");
-        }
-    });
-}
+    const API_URL = "https://thesissystemlatest.onrender.com/analyze";
 
-// INFORMATION PANEL
-const scene = document.querySelector(".scene");
-const infoButton = document.getElementById("infoButton");
-const closeInfo = document.getElementById("closeInfo");
+    fetch(API_URL, {
+        method: "HEAD"
+    }).catch(() => {});
 
-if (scene && infoButton) {
-    infoButton.addEventListener("click", () => {
-        scene.classList.toggle("show-info");
-    });
-}
 
-if (scene && closeInfo) {
-    closeInfo.addEventListener("click", () => {
-        scene.classList.remove("show-info");
-    });
-}
+    const passwordInput = document.getElementById("passwordInput");
+    const togglePassword = document.getElementById("togglePassword");
+    const eyeOpen = document.getElementById("eyeOpen");
+    const eyeClosed = document.getElementById("eyeClosed");
+    const scanButton = document.getElementById("scanButton");
 
-// INFORMATION CONTENT
-const infoButtons = document.querySelectorAll(".info-option");
-const infoTitle = document.getElementById("infoTitle");
-const infoContent = document.getElementById("infoContent");
+    if (togglePassword && passwordInput) {
 
-// TUTORIAL IMAGE ZOOM
-let zoomImages = [];
-let zoomCurrentIndex = -1;
-let zoomIsSlider = false;
+        togglePassword.addEventListener("click", () => {
 
-function initializeImageZoom() {
-    const tutorialImages = document.querySelectorAll(
-        ".tutorial-container img"
-    );
+            const isPassword =
+                passwordInput.type === "password";
 
-    if (tutorialImages.length === 0) {
-        return;
-    }
+            passwordInput.type =
+                isPassword ? "text" : "password";
 
-    tutorialImages.forEach(image => {
-        image.onclick = event => {
-            event.stopPropagation();
-
-            const isStep3Image =
-                image.classList.contains("tutorial-slide");
-
-            if (isStep3Image) {
-                zoomImages = Array.from(
-                    document.querySelectorAll(".tutorial-slide")
-                );
-
-                zoomCurrentIndex = zoomImages.indexOf(image);
-                zoomIsSlider = true;
-
-                openImageZoom(
-                    image.src,
-                    image.alt || ""
-                );
+            if (eyeOpen) {
+                eyeOpen.style.display =
+                    isPassword ? "none" : "block";
             }
-            else {
-                zoomImages = [];
-                zoomCurrentIndex = -1;
-                zoomIsSlider = false;
 
-                openImageZoom(
-                    image.src,
-                    image.alt || ""
-                );
+            if (eyeClosed) {
+                eyeClosed.style.display =
+                    isPassword ? "block" : "none";
             }
-        };
-    });
-}
-
-function createImageZoomOverlay() {
-    let overlay = document.getElementById("imageZoomOverlay");
-
-    if (overlay) {
-        return overlay;
-    }
-
-    overlay = document.createElement("div");
-    overlay.id = "imageZoomOverlay";
-    overlay.className = "image-zoom-overlay";
-
-    overlay.innerHTML = `
-        <button
-            type="button"
-            class="image-zoom-close"
-            id="imageZoomClose"
-            aria-label="Close enlarged image"
-        >
-            ×
-        </button>
-
-        <button
-            type="button"
-            class="image-zoom-prev"
-            id="imageZoomPrev"
-            aria-label="Previous image"
-        >
-            &#10094;
-        </button>
-
-        <img
-            class="image-zoom-preview"
-            id="imageZoomPreview"
-            alt=""
-        >
-
-        <button
-            type="button"
-            class="image-zoom-next"
-            id="imageZoomNext"
-            aria-label="Next image"
-        >
-            &#10095;
-        </button>
-    `;
-
-    document.body.appendChild(overlay);
-
-    const closeButton =
-        document.getElementById("imageZoomClose");
-
-    const previousButton =
-        document.getElementById("imageZoomPrev");
-
-    const nextButton =
-        document.getElementById("imageZoomNext");
-
-    closeButton.addEventListener(
-        "click",
-        closeImageZoom
-    );
-
-    previousButton.addEventListener(
-        "click",
-        event => {
-            event.stopPropagation();
-            showZoomImage(zoomCurrentIndex - 1);
-        }
-    );
-
-    nextButton.addEventListener(
-        "click",
-        event => {
-            event.stopPropagation();
-            showZoomImage(zoomCurrentIndex + 1);
-        }
-    );
-
-    overlay.addEventListener("click", event => {
-        if (event.target === overlay) {
-            closeImageZoom();
-        }
-    });
-
-    return overlay;
-}
-
-function openImageZoom(imageSrc, imageAlt) {
-    const overlay = createImageZoomOverlay();
-
-    const preview =
-        document.getElementById("imageZoomPreview");
-
-    preview.src = imageSrc;
-    preview.alt = imageAlt;
-
-    updateZoomNavigation();
-
-    overlay.classList.add("active");
-
-    document.body.classList.add("image-zoom-open");
-}
-
-function showZoomImage(index) {
-    if (!zoomIsSlider || zoomImages.length === 0) {
-        return;
-    }
-
-    if (index >= zoomImages.length) {
-        index = 0;
-    }
-
-    if (index < 0) {
-        index = zoomImages.length - 1;
-    }
-
-    zoomCurrentIndex = index;
-
-    const image = zoomImages[zoomCurrentIndex];
-
-    const preview =
-        document.getElementById("imageZoomPreview");
-
-    if (!preview) {
-        return;
-    }
-
-    preview.src = image.src;
-    preview.alt = image.alt || "";
-
-    updateZoomNavigation();
-}
-
-function updateZoomNavigation() {
-    const previousButton =
-        document.getElementById("imageZoomPrev");
-
-    const nextButton =
-        document.getElementById("imageZoomNext");
-
-    if (!previousButton || !nextButton) {
-        return;
-    }
-
-    if (zoomIsSlider && zoomImages.length > 1) {
-        previousButton.classList.add("visible");
-        nextButton.classList.add("visible");
-    }
-    else {
-        previousButton.classList.remove("visible");
-        nextButton.classList.remove("visible");
-    }
-}
-
-function closeImageZoom() {
-    const overlay =
-        document.getElementById("imageZoomOverlay");
-
-    if (!overlay) {
-        return;
-    }
-
-    overlay.classList.remove("active");
-
-    document.body.classList.remove(
-        "image-zoom-open"
-    );
-
-    zoomImages = [];
-    zoomCurrentIndex = -1;
-    zoomIsSlider = false;
-}
-
-document.addEventListener("keydown", event => {
-
-    const overlay =
-        document.getElementById("imageZoomOverlay");
-
-    if (
-        !overlay ||
-        !overlay.classList.contains("active")
-    ) {
-        return;
-    }
-
-    if (event.key === "Escape") {
-        closeImageZoom();
-        return;
-    }
-
-    if (event.key === "ArrowRight") {
-        event.preventDefault();
-        showZoomImage(zoomCurrentIndex + 1);
-        return;
-    }
-
-    if (event.key === "ArrowLeft") {
-        event.preventDefault();
-        showZoomImage(zoomCurrentIndex - 1);
-        return;
-    }
-});
-
-// TUTORIAL IMAGE SLIDER
-function initializeTutorialSlider() {
-
-    const slides =
-        document.querySelectorAll(".tutorial-slide");
-
-    const dots =
-        document.querySelectorAll(".dot");
-
-    const slider =
-        document.querySelector(".tutorial-slider");
-
-    if (
-        slides.length === 0 ||
-        dots.length === 0 ||
-        !slider
-    ) {
-        initializeImageZoom();
-        return;
-    }
-
-    let currentIndex = 0;
-
-    function showSlide(index) {
-
-        if (index >= slides.length) {
-            currentIndex = 0;
-        }
-        else if (index < 0) {
-            currentIndex = slides.length - 1;
-        }
-        else {
-            currentIndex = index;
-        }
-
-        slides.forEach(slide => {
-            slide.classList.remove("active");
         });
-
-        dots.forEach(dot => {
-            dot.classList.remove("active");
-        });
-
-        slides[currentIndex].classList.add("active");
-        dots[currentIndex].classList.add("active");
     }
 
-    dots.forEach((dot, index) => {
 
-        dot.onclick = event => {
-            event.stopPropagation();
+    const infoButton = document.getElementById("infoButton");
+    const infoPanel = document.getElementById("infoPanel");
+    const closeInfo = document.getElementById("closeInfo");
+    const infoTitle = document.getElementById("infoTitle");
+    const infoContent = document.getElementById("infoContent");
 
-            showSlide(index);
-        };
+    const infoMenu =
+        document.querySelector(".info-menu");
 
-    });
+    const infoItems =
+        document.querySelectorAll(".info-item");
 
-    slider.addEventListener("click", event => {
 
-        if (
-            event.target.classList.contains(
-                "tutorial-slide"
-            )
-        ) {
+    const information = {
 
-            zoomImages = Array.from(
-                document.querySelectorAll(
-                    ".tutorial-slide"
-                )
-            );
+        about: {
+            title: "About the System",
+            content: `
+                <p>
+                    The Password Vulnerability Classification System
+                    analyzes user-generated passwords and identifies
+                    their dominant vulnerability type.
+                </p>
 
-            zoomCurrentIndex =
-                zoomImages.indexOf(
-                    event.target
-                );
+                <p>
+                    The system classifies passwords into
+                    <strong>Brute-Force</strong>,
+                    <strong>Dictionary-Based</strong>, or
+                    <strong>Rule-Based</strong> vulnerability.
+                </p>
 
-            zoomIsSlider = true;
+                <p>
+                    It also provides a risk level, explanation,
+                    decision-tree path, and recommendations.
+                </p>
+            `
+        },
 
-            openImageZoom(
-                event.target.src,
-                event.target.alt || ""
-            );
+        how: {
+            title: "How It Works",
+            content: `
+                <p>
+                    The system first extracts structural
+                    characteristics from the password.
+                </p>
 
+                <p>
+                    These characteristics are converted into
+                    a feature vector and processed by the
+                    trained CART Decision Tree model.
+                </p>
+
+                <p>
+                    The system then follows the decision path
+                    to determine the dominant vulnerability
+                    classification and corresponding risk level.
+                </p>
+            `
+        },
+
+        analysis: {
+            title: "Password Analysis",
+            content: `
+                <p>
+                    The system analyzes characteristics such as
+                    password length, character classes, dictionary
+                    words, leetspeak, numeric placement, sequences,
+                    repetitions, and recognizable patterns.
+                </p>
+
+                <p>
+                    The analysis focuses on password characteristics
+                    rather than attempting to reveal or crack the
+                    password.
+                </p>
+            `
+        },
+
+        cracking: {
+            title: "Cracking Methods",
+            content: `
+                <p>
+                    <strong>Brute-Force</strong> refers to systematically
+                    trying possible combinations of characters.
+                </p>
+
+                <p>
+                    <strong>Dictionary-Based</strong> attacks use known
+                    words or commonly used terms as password guesses.
+                </p>
+
+                <p>
+                    <strong>Rule-Based</strong> attacks apply predictable
+                    transformations, substitutions, sequences,
+                    repetitions, or common password patterns.
+                </p>
+            `
+        },
+
+        decision: {
+            title: "Decision Tree",
+            content: `
+                <p>
+                    The system uses a CART Decision Tree to classify
+                    password vulnerability.
+                </p>
+
+                <p>
+                    Each decision node evaluates a password feature
+                    and determines which branch should be followed.
+                </p>
+
+                <p>
+                    The resulting path provides an explanation of
+                    how the classification was reached.
+                </p>
+            `
+        },
+
+        tutorial: {
+            title: "Tutorial",
+            content: `
+                <div class="tutorial-slider">
+
+                    <div class="tutorial-images">
+
+                        <div class="tutorial-slide active">
+                            <img src="../assets/images/tut1.png" alt="Tutorial Step 1">
+                        </div>
+
+                        <div class="tutorial-slide">
+                            <img src="../assets/images/tut2.png" alt="Tutorial Step 2">
+                        </div>
+
+                        <div class="tutorial-slide">
+                            <img src="../assets/images/tut3.png" alt="Tutorial Step 3">
+                        </div>
+
+                        <div class="tutorial-slide">
+                            <img src="../assets/images/tut4.png" alt="Tutorial Step 4">
+                        </div>
+
+                        <div class="tutorial-slide">
+                            <img src="../assets/images/tut5.png" alt="Tutorial Step 5">
+                        </div>
+
+                        <div class="tutorial-slide">
+                            <img src="../assets/images/tut6.png" alt="Tutorial Step 6">
+                        </div>
+
+                        <div class="tutorial-slide">
+                            <img src="../assets/images/tut7.png" alt="Tutorial Step 7">
+                        </div>
+
+                    </div>
+
+                    <div class="tutorial-dots">
+                        <span class="tutorial-dot active" data-slide="0"></span>
+                        <span class="tutorial-dot" data-slide="1"></span>
+                        <span class="tutorial-dot" data-slide="2"></span>
+                        <span class="tutorial-dot" data-slide="3"></span>
+                        <span class="tutorial-dot" data-slide="4"></span>
+                        <span class="tutorial-dot" data-slide="5"></span>
+                        <span class="tutorial-dot" data-slide="6"></span>
+                    </div>
+
+                </div>
+            `
+        }
+    };
+
+
+    function updateInfoMenuArrow() {
+
+        if (!infoMenu) {
             return;
         }
 
-        const box =
-            slider.getBoundingClientRect();
+        const hasOverflow =
+            infoMenu.scrollWidth > infoMenu.clientWidth + 5;
 
-        const clickX =
-            event.clientX - box.left;
+        const atEnd =
+            infoMenu.scrollLeft +
+            infoMenu.clientWidth >=
+            infoMenu.scrollWidth - 5;
 
-        const middle =
-            box.width / 2;
-
-        if (clickX > middle) {
-            showSlide(currentIndex + 1);
-        }
-        else {
-            showSlide(currentIndex - 1);
-        }
-    });
-
-    initializeImageZoom();
-}
-
-const informationData = {
-
-    about: {
-        title: "About the System",
-        content: `
-        <h3>Password Vulnerability Classification</h3>
-
-        <p>
-        This system analyzes user-generated passwords
-        to identify possible vulnerabilities against
-        common password cracking strategies.
-        </p>
-
-        <p>
-        Unlike traditional password meters that only
-        provide strength scores, this system determines
-        what type of attack strategy may become effective
-        against the password.
-        </p>
-
-        <p>
-        The system uses extracted password characteristics
-        and applies a Decision Tree classification model
-        to identify possible vulnerability patterns.
-        </p>
-        `
-    },
-
-    process: {
-        title: "How The System Works",
-        content: `
-        <h3>Password Processing Flow</h3>
-
-        <ol>
-            <li>User enters a password for analysis.</li>
-            <li>The system extracts password characteristics.</li>
-            <li>The original password is removed after extraction.</li>
-            <li>Only the generated password representation is retained for analysis.</li>
-            <li>Extracted features are evaluated by the classification model.</li>
-            <li>The Decision Tree identifies the possible cracking method.</li>
-            <li>The system displays the vulnerability result and recommended improvements.</li>
-        </ol>
-        `
-    },
-
-    analysis: {
-        title: "Password Characteristics Analyzed",
-        content: `
-        <h3>Features Examined</h3>
-
-        <p>
-        The system checks password structures and patterns
-        without storing the original password.
-        </p>
-
-        <ul>
-            <li>Password Length</li>
-            <li>Presence of Lowercase Letters</li>
-            <li>Presence of Uppercase Letters</li>
-            <li>Presence of Numbers</li>
-            <li>Presence of Symbols</li>
-            <li>Dictionary Word Detection</li>
-            <li>Leetspeak Usage</li>
-            <li>Numeric Suffix Patterns</li>
-            <li>Sequential Patterns</li>
-            <li>Repeated Characters or Patterns</li>
-            <li>Rule-Based Pattern Detection</li>
-        </ul>
-
-        <p>
-        Character class count is also generated internally
-        for system classification purposes.
-        </p>
-        `
-    },
-
-    methods: {
-        title: "Password Cracking Methods",
-        content: `
-        <h3>Possible Attack Strategies</h3>
-
-        <p>
-        The system classifies password vulnerability
-        according to three common cracking approaches.
-        </p>
-
-        <ul>
-            <li>
-                <strong>Dictionary Attack</strong>
-                <br>
-                Attempts commonly used words, phrases, and known password patterns.
-            </li>
-
-            <li>
-                <strong>Brute Force Attack</strong>
-                <br>
-                Attempts possible character combinations until the password is discovered.
-            </li>
-
-            <li>
-                <strong>Rule-Based Attack</strong>
-                <br>
-                Applies transformation rules such as adding numbers, replacing characters,
-                or modifying common password formats.
-            </li>
-        </ul>
-        `
-    },
-
-    decision: {
-        title: "Decision Tree Classification",
-        content: `
-        <h3>Machine Learning Classification</h3>
-
-        <p>
-        The system uses a supervised Decision Tree model
-        to classify password vulnerability.
-        </p>
-
-        <p>
-        The extracted password characteristics serve
-        as input values that allow the model to determine
-        the most likely cracking method.
-        </p>
-
-        <p>
-        The classification result helps users understand
-        what security weakness should be improved.
-        </p>
-        `
-    },
-
-    tutorial: {
-        title: "System Tutorial",
-        content: `
-        <h3>How To Use The System</h3>
-
-        <p>Follow these steps to analyze your password.</p>
-
-        <div class="tutorial-container">
-            <p>Step 1: Enter your password in the input field.</p>
-            <img src="../assets/images/step1.png">
-        </div>
-
-        <div class="tutorial-container">
-            <p>Step 2: Click Analyze Password to begin feature extraction.</p>
-            <img src="../assets/images/step2.png">
-        </div>
-
-        <div class="tutorial-container">
-            <p>Step 3: Review the vulnerability result and recommendations.</p>
-            <p>Click an image to view the next step.</p>
-
-            <div class="tutorial-slider">
-
-                <img
-                    class="tutorial-slide active"
-                    src="../assets/images/step3%20(1).png"
-                >
-
-                <img
-                    class="tutorial-slide"
-                    src="../assets/images/step3%20(2).png"
-                >
-
-                <img
-                    class="tutorial-slide"
-                    src="../assets/images/step3%20(3).png"
-                >
-
-                <img
-                    class="tutorial-slide"
-                    src="../assets/images/step3%20(4).png"
-                >
-
-                <img
-                    class="tutorial-slide"
-                    src="../assets/images/step3%20(5).png"
-                >
-
-                <img
-                    class="tutorial-slide"
-                    src="../assets/images/step3%20(6).png"
-                >
-
-                <img
-                    class="tutorial-slide"
-                    src="../assets/images/step3%20(7).png"
-                >
-
-            </div>
-
-            <div class="tutorial-dots">
-
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-
-            </div>
-        </div>
-        `
+        infoMenu.classList.toggle("has-overflow", hasOverflow);
+        infoMenu.classList.toggle("at-end", atEnd);
     }
 
-};
 
-infoButtons.forEach(button => {
+    function initializeInfoMenuScroll() {
 
-    button.addEventListener("click", () => {
-
-        const section =
-            button.dataset.section;
-
-        const selected =
-            informationData[section];
-
-        if (selected) {
-
-            infoTitle.textContent =
-                selected.title;
-
-            infoContent.innerHTML =
-                selected.content;
-
-            if (section === "tutorial") {
-                initializeTutorialSlider();
-            }
+        if (!infoMenu) {
+            return;
         }
 
-        infoButtons.forEach(btn => {
-            btn.classList.remove("active");
+        infoMenu.addEventListener(
+            "scroll",
+            updateInfoMenuArrow,
+            { passive: true }
+        );
+
+        updateInfoMenuArrow();
+    }
+
+
+    function scrollToInfo() {
+
+        if (!infoPanel) {
+            return;
+        }
+
+        if (window.innerWidth <= 768) {
+
+            setTimeout(() => {
+
+                infoPanel.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            }, 100);
+        }
+    }
+
+
+    function openInfoPanel(type) {
+
+        if (
+            !infoPanel ||
+            !infoTitle ||
+            !infoContent
+        ) {
+            return;
+        }
+
+        const data = information[type];
+
+        if (!data) {
+            return;
+        }
+
+        infoTitle.textContent = data.title;
+        infoContent.innerHTML = data.content;
+
+        infoPanel.classList.add("active");
+
+        infoItems.forEach(item => {
+            item.classList.remove("active");
+
+            if (item.dataset.info === type) {
+                item.classList.add("active");
+            }
         });
 
-        button.classList.add("active");
+        if (infoMenu) {
+            infoMenu.scrollLeft = 0;
+        }
 
-    });
+        updateInfoMenuArrow();
 
-});
+        initializeImageZoom();
+        initializeTutorialSlider();
 
-// PASSWORD ANALYSIS BUTTON
-const scanButton =
-    document.getElementById("scanButton");
+        scrollToInfo();
+    }
 
-if (passwordInput && scanButton) {
 
-    passwordInput.addEventListener(
-        "keydown",
-        event => {
+    function closeInfoPanel() {
 
-            if (event.key === "Enter") {
+        if (!infoPanel) {
+            return;
+        }
 
-                event.preventDefault();
+        infoPanel.classList.remove("active");
 
-                scanButton.click();
+        infoItems.forEach(item => {
+            item.classList.remove("active");
+        });
 
+        if (window.innerWidth <= 768) {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    }
+
+
+    if (infoItems.length) {
+
+        infoItems.forEach(item => {
+
+            item.addEventListener("click", () => {
+                openInfoPanel(item.dataset.info);
+            });
+        });
+    }
+
+
+    if (infoButton) {
+
+        infoButton.addEventListener("click", () => {
+
+            if (infoMenu) {
+                infoMenu.scrollLeft = 0;
             }
 
+            scrollToInfo();
+
+            setTimeout(updateInfoMenuArrow, 250);
+        });
+    }
+
+
+    if (closeInfo) {
+        closeInfo.addEventListener("click", closeInfoPanel);
+    }
+
+
+    function createImageZoomOverlay(image) {
+
+        if (!image) {
+            return;
         }
-    );
 
-}
+        const existing =
+            document.querySelector(".image-zoom-overlay");
 
-if (scanButton && passwordInput) {
+        if (existing) {
+            existing.remove();
+        }
 
-    scanButton.addEventListener(
-        "click",
-        async () => {
+        const overlay =
+            document.createElement("div");
 
-            const password =
-                passwordInput.value.trim();
+        overlay.className = "image-zoom-overlay";
+
+        const preview =
+            document.createElement("img");
+
+        preview.src = image.src;
+        preview.alt = image.alt || "";
+
+        const closeButton =
+            document.createElement("button");
+
+        closeButton.className = "image-zoom-close";
+        closeButton.innerHTML = "&times;";
+
+        overlay.appendChild(preview);
+        overlay.appendChild(closeButton);
+
+        document.body.appendChild(overlay);
+
+        preview.style.left = "50%";
+        preview.style.top = "50%";
+        preview.style.transform = "translate(-50%, -50%)";
+
+        overlay.addEventListener("click", () => {
+            overlay.remove();
+        });
+
+        closeButton.addEventListener("click", event => {
+            event.stopPropagation();
+            overlay.remove();
+        });
+
+        preview.addEventListener("click", event => {
+            event.stopPropagation();
+        });
+    }
+
+
+    function initializeImageZoom() {
+
+        if (!infoContent) {
+            return;
+        }
+
+        const images =
+            infoContent.querySelectorAll(".tutorial-slide img");
+
+        images.forEach(image => {
+
+            if (image.dataset.zoomInitialized) {
+                return;
+            }
+
+            image.dataset.zoomInitialized = "true";
+
+            image.addEventListener("click", event => {
+
+                event.stopPropagation();
+
+                if (window.innerWidth <= 768) {
+
+                    scrollToInfo();
+
+                    setTimeout(() => {
+                        createImageZoomOverlay(image);
+                    }, 150);
+
+                } else {
+                    createImageZoomOverlay(image);
+                }
+            });
+        });
+    }
+
+
+    let currentSlide = 0;
+
+
+    function showTutorialSlide(index) {
+
+        const slides =
+            infoContent?.querySelectorAll(".tutorial-slide");
+
+        const dots =
+            infoContent?.querySelectorAll(".tutorial-dot");
+
+        if (!slides || !slides.length) {
+            return;
+        }
+
+        if (index < 0 || index >= slides.length) {
+            return;
+        }
+
+        currentSlide = index;
+
+        slides.forEach((slide, i) => {
+            slide.classList.toggle("active", i === currentSlide);
+        });
+
+        if (dots) {
+            dots.forEach((dot, i) => {
+                dot.classList.toggle("active", i === currentSlide);
+            });
+        }
+
+        scrollToInfo();
+
+        initializeImageZoom();
+    }
+
+
+    function initializeTutorialSlider() {
+
+        if (!infoContent) {
+            return;
+        }
+
+        const slides =
+            infoContent.querySelectorAll(".tutorial-slide");
+
+        const dots =
+            infoContent.querySelectorAll(".tutorial-dot");
+
+        if (!slides.length) {
+            return;
+        }
+
+        currentSlide = 0;
+
+        slides.forEach(slide => {
+
+            slide.onclick = event => {
+
+                const target = event.target;
+
+                if (target && target.tagName === "IMG") {
+                    return;
+                }
+
+                const rect = slide.getBoundingClientRect();
+                const clickX = event.clientX - rect.left;
+
+                if (clickX < rect.width / 2) {
+
+                    if (currentSlide > 0) {
+                        showTutorialSlide(currentSlide - 1);
+                    }
+
+                } else if (currentSlide < slides.length - 1) {
+                    showTutorialSlide(currentSlide + 1);
+                }
+            };
+        });
+
+        dots.forEach(dot => {
+
+            dot.onclick = event => {
+
+                event.stopPropagation();
+
+                showTutorialSlide(Number(dot.dataset.slide));
+
+                scrollToInfo();
+            };
+        });
+
+        showTutorialSlide(0);
+    }
+
+
+    function clearAnalysisData() {
+
+        sessionStorage.removeItem("analysisResult");
+        localStorage.removeItem("analyzedPassword");
+        localStorage.removeItem("comparisonResult");
+        localStorage.removeItem("originalAnalysisResult");
+    }
+
+
+    function resetAnalyzeForm() {
+
+        if (passwordInput) {
+            passwordInput.value = "";
+        }
+
+        if (scanButton) {
+            scanButton.disabled = false;
+            scanButton.textContent = "ANALYZE PASSWORD";
+        }
+    }
+
+
+    if (passwordInput && scanButton) {
+
+        passwordInput.addEventListener("keydown", event => {
+
+            if (event.key === "Enter") {
+                event.preventDefault();
+                scanButton.click();
+            }
+        });
+    }
+
+
+    if (scanButton && passwordInput) {
+
+        scanButton.addEventListener("click", async () => {
+
+            const password = passwordInput.value.trim();
 
             if (password === "") {
 
@@ -680,50 +593,38 @@ if (scanButton && passwordInput) {
                     "0 0 25px rgba(239,68,68,.8)";
 
                 setTimeout(() => {
-
-                    passwordInput.style.boxShadow =
-                        "";
-
+                    passwordInput.style.boxShadow = "";
                 }, 1000);
 
                 return;
-
             }
 
-            scanButton.disabled = true;
+            const originalText = scanButton.textContent;
 
-            scanButton.textContent =
-                "Analyzing...";
+            scanButton.disabled = true;
+            scanButton.textContent = "ANALYZING...";
 
             try {
 
-                const response =
-                    await fetch(
-                        "http://localhost:3000/analyze",
-                        {
-                            method: "POST",
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-                            body: JSON.stringify({
-                                password: password
-                            })
-                        }
-                    );
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        password: password
+                    })
+                });
 
                 if (!response.ok) {
-                    throw new Error(
-                        "Server Error"
-                    );
+                    throw new Error(`Server error: ${response.status}`);
                 }
 
-                const result =
-                    await response.json();
+                const analysisResult = await response.json();
 
                 sessionStorage.setItem(
                     "analysisResult",
-                    JSON.stringify(result)
+                    JSON.stringify(analysisResult)
                 );
 
                 localStorage.setItem(
@@ -736,155 +637,86 @@ if (scanButton && passwordInput) {
                     "true"
                 );
 
-                window.location.href =
-                    "result.html";
+                window.location.href = "result.html";
 
-            }
-            catch (error) {
+            } catch (error) {
 
-                console.error(error);
+                console.error("Analysis error:", error);
 
                 alert(
-                    "Unable to connect to the analysis server."
+                    "Unable to connect to the analysis server. Please try again."
                 );
 
                 scanButton.disabled = false;
-
-                scanButton.textContent =
-                    "Analyze Password";
-
+                scanButton.textContent = originalText;
             }
-
-        }
-    );
-
-}
-
-// INITIAL PAGE RESET
-sessionStorage.removeItem(
-    "analysisResult"
-);
-
-localStorage.removeItem(
-    "analyzedPassword"
-);
-
-localStorage.removeItem(
-    "comparisonResult"
-);
-
-localStorage.removeItem(
-    "originalAnalysisResult"
-);
-
-if (passwordInput) {
-    passwordInput.value = "";
-}
-
-if (scanButton) {
-
-    scanButton.disabled = false;
-
-    scanButton.textContent =
-        "Analyze Password";
-
-}
-
-history.replaceState(
-    null,
-    "",
-    window.location.href
-);
-
-history.pushState(
-    null,
-    "",
-    window.location.href
-);
-
-window.addEventListener(
-    "popstate",
-    () => {
-
-        sessionStorage.removeItem(
-            "analysisResult"
-        );
-
-        localStorage.removeItem(
-            "analyzedPassword"
-        );
-
-        localStorage.removeItem(
-            "comparisonResult"
-        );
-
-        localStorage.removeItem(
-            "originalAnalysisResult"
-        );
-
-        if (passwordInput) {
-            passwordInput.value = "";
-        }
-
-        if (scanButton) {
-
-            scanButton.disabled = false;
-
-            scanButton.textContent =
-                "Analyze Password";
-
-        }
-
-        history.pushState(
-            null,
-            "",
-            window.location.href
-        );
-
+        });
     }
-);
 
-window.addEventListener(
-    "pageshow",
-    event => {
+
+    clearAnalysisData();
+    resetAnalyzeForm();
+
+
+    history.replaceState(null, "", window.location.href);
+    history.pushState(null, "", window.location.href);
+
+
+    window.addEventListener("popstate", () => {
+
+        clearAnalysisData();
+        resetAnalyzeForm();
+
+        history.pushState(null, "", window.location.href);
+    });
+
+
+    window.addEventListener("pageshow", event => {
 
         if (event.persisted) {
+            clearAnalysisData();
+            resetAnalyzeForm();
+        }
+    });
 
-            sessionStorage.removeItem(
-                "analysisResult"
-            );
 
-            localStorage.removeItem(
-                "analyzedPassword"
-            );
+    initializeInfoMenuScroll();
 
-            localStorage.removeItem(
-                "comparisonResult"
-            );
+    window.addEventListener("resize", updateInfoMenuArrow);
 
-            localStorage.removeItem(
-                "originalAnalysisResult"
-            );
 
-            if (passwordInput) {
-                passwordInput.value = "";
-            }
+    let secretSequence = [];
 
-            if (scanButton) {
+    const secretCode = [
+        "blue",
+        "Enter",
+        "red",
+        "Enter",
+        "red",
+        "Enter"
+    ];
 
-                scanButton.disabled = false;
+    document.addEventListener("keydown", event => {
 
-                scanButton.textContent =
-                    "Analyze Password";
+        secretSequence.push(event.key);
 
-            }
-
+        if (secretSequence.length > secretCode.length) {
+            secretSequence.shift();
         }
 
-    }
-);
+        const matches =
+            secretSequence.length === secretCode.length &&
+            secretSequence.every(
+                (key, index) => key === secretCode[index]
+            );
 
-window.addEventListener(
-    "unload",
-    function () {}
-);
+        if (matches) {
+
+            window.location.href =
+                "../secrett/secretInitial.html";
+
+            secretSequence = [];
+        }
+    });
+
+});

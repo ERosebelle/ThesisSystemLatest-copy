@@ -76,27 +76,162 @@
    TREE HOLOGRAM //to adjust position
    ========================================================= */
 
+
+/* Base hologram */
 .decision-tree-hologram {
     position: absolute;
-
-    left: 65%;
-    top: 25%;
-
-    width: 100%;
-    height: 72%;
-
+    left: 50%;
+    top: 50%;
+    width: min(92%, 520px);
+    height: min(86%, 340px);
     display: flex;
     align-items: center;
     justify-content: center;
-
     transform: translate(-50%, -50%);
-
-    cursor: pointer;
-    outline: none;
-
     box-sizing: border-box;
+}
 
-    z-index: 2;
+
+/* Tree SVG scales with the hologram container */
+.dt-tree-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 320px;
+    max-height: 220px;
+    min-width: 0;
+    min-height: 0;
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .decision-tree-visual {
+        width: 100%;
+        height: clamp(300px, 45vw, 430px);
+        min-height: 300px;
+    }
+
+    .decision-tree-hologram {
+        left: 50%;
+        top: 50%;
+        width: 94%;
+        height: 88%;
+    }
+
+    .dt-tree-svg {
+        width: min(90%, 340px);
+        height: min(90%, 250px);
+        max-width: 340px;
+        max-height: 250px;
+    }
+}
+
+
+/* =========================================================
+   PHONE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .decision-tree-visual {
+        height: clamp(260px, 70vw, 350px);
+        min-height: 260px;
+    }
+
+    .decision-tree-hologram {
+        left: 50%;
+        top: 50%;
+        width: 94%;
+        height: 88%;
+    }
+
+    .dt-tree-svg {
+        width: min(92%, 300px);
+        height: min(88%, 220px);
+        max-width: 300px;
+        max-height: 220px;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .decision-tree-visual {
+        height: clamp(240px, 72vw, 320px);
+        min-height: 240px;
+    }
+
+    .decision-tree-hologram {
+        left: 50%;
+        top: 50%;
+        width: 96%;
+        height: 88%;
+    }
+
+    .dt-tree-svg {
+        width: min(94%, 270px);
+        height: min(88%, 200px);
+        max-width: 270px;
+        max-height: 200px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONE
+   ========================================================= */
+
+@media (max-width: 320px) {
+
+    .decision-tree-visual {
+        height: 230px;
+        min-height: 230px;
+    }
+
+    .decision-tree-hologram {
+        width: 98%;
+        height: 86%;
+    }
+
+    .dt-tree-svg {
+        width: 95%;
+        height: 85%;
+        max-width: 240px;
+        max-height: 180px;
+    }
+}
+
+
+/* =========================================================
+   LANDSCAPE PHONES
+   ========================================================= */
+
+@media (max-height: 500px) and (max-width: 900px) {
+
+    .decision-tree-visual {
+        height: 280px;
+        min-height: 280px;
+    }
+
+    .decision-tree-hologram {
+        width: 90%;
+        height: 90%;
+    }
+
+    .dt-tree-svg {
+        max-width: 280px;
+        max-height: 200px;
+    }
 }
 
 
@@ -1781,5 +1916,177 @@
 
     100% {
         background-position: 28px 28px, 28px 28px;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE FIX — DECISION TREE CONTENT
+   ========================================================= */
+
+/* =========================
+   TABLET
+   ========================= */
+
+@media (max-width: 900px) {
+
+    /* Main overview becomes vertical */
+    .decision-tree-overview {
+        height: auto;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    /* Hologram card */
+    .decision-tree-visual {
+        width: 100%;
+        height: 480px;
+        min-height: 380px;
+        flex-shrink: 0;
+    }
+
+    /* Move hologram to the actual center */
+    .decision-tree-hologram {
+        left: 50%;
+        top: 30%;
+        width: 100%;
+        height: 85%;
+    }
+
+    /* Make tree itself larger */
+    .dt-tree-svg {
+        width: 90%;
+        height: 90%;
+        max-width: 360px;
+        max-height: 280px;
+    }
+
+    /* Security assessment card */
+    .decision-explanation {
+        width: 100%;
+        height: auto;
+        min-height: 340px;
+        max-height: none;
+        overflow: visible;
+    }
+
+    /* Traversal modal */
+    .decision-traversal-content {
+        grid-template-columns: 1fr;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .decision-tree-detail-wrapper {
+        width: 100%;
+        height: 460px;
+        min-height: 460px;
+    }
+
+    .decision-tree-explanation {
+        width: 100%;
+        min-height: 260px;
+        max-height: none;
+    }
+}
+
+
+/* =========================
+   LARGE PHONE
+   ========================= */
+
+@media (max-width: 600px) {
+
+    /* Hologram card */
+    .decision-tree-visual {
+        width: 100%;
+        height: 350px;
+        min-height: 350px;
+    }
+
+    .decision-tree-hologram {
+        left: 50%;
+        top: 50%;
+        width: 105%;
+        height: 85%;
+    }
+
+    .dt-tree-svg {
+        width: 95%;
+        height: 90%;
+        max-width: 320px;
+        max-height: 250px;
+    }
+
+    /* Security assessment */
+    .decision-explanation {
+        width: 100%;
+        min-height: 340px;
+        max-height: none;
+        padding: 16px;
+    }
+
+    /* Traversal */
+    .decision-traversal-content {
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .decision-tree-detail-wrapper {
+        width: 100%;
+        height: 420px;
+        min-height: 420px;
+        flex-shrink: 0;
+    }
+
+    .decision-tree-explanation {
+        width: 100%;
+        min-height: 250px;
+        max-height: none;
+        flex-shrink: 0;
+    }
+}
+
+
+/* =========================
+   SMALL PHONE
+   ========================= */
+
+@media (max-width: 400px) {
+
+    /* Hologram card */
+    .decision-tree-visual {
+        height: 330px;
+        min-height: 330px;
+    }
+
+    .decision-tree-hologram {
+        width: 108%;
+        height: 84%;
+    }
+
+    .dt-tree-svg {
+        width: 96%;
+        height: 90%;
+        max-width: 300px;
+        max-height: 235px;
+    }
+
+    /* Security assessment */
+    .decision-explanation {
+        min-height: 320px;
+        padding: 14px;
+    }
+
+    /* Traversal */
+    .decision-tree-detail-wrapper {
+        height: 350px;
+        min-height: 350px;
+    }
+
+    .decision-tree-explanation {
+        min-height: 220px;
+        padding: 13px;
     }
 }

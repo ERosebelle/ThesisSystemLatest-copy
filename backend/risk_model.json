@@ -1,1 +1,246 @@
-{"options":{"gainFunction":"gini","splitFunction":"mean","minNumSamples":2,"maxDepth":10,"gainThreshold":0.01,"kind":"classifier"},"root":{"kind":"classifier","gainFunction":"gini","splitFunction":"mean","minNumSamples":2,"maxDepth":10,"gainThreshold":0.01,"splitValue":0.5,"splitColumn":6,"gain":0.29210277777776694,"numberSamples":600,"left":{"kind":"classifier","gainFunction":"gini","splitFunction":"mean","minNumSamples":2,"maxDepth":10,"gainThreshold":0.01,"splitValue":0.5,"splitColumn":12,"gain":0.13131666666666297,"numberSamples":200,"left":{"kind":"classifier","gainFunction":"gini","splitFunction":"mean","minNumSamples":2,"maxDepth":10,"gainThreshold":0.01,"splitValue":8.5,"splitColumn":0,"gain":0.02609730848861877,"numberSamples":140,"left":{"kind":"classifier","gainFunction":"gini","splitFunction":"mean","minNumSamples":2,"maxDepth":10,"gainThreshold":0.01,"distribution":[[1]]},"right":{"kind":"classifier","gainFunction":"gini","splitFunction":"mean","minNumSamples":2,"maxDepth":10,"gainThreshold":0.01,"splitValue":0.5,"splitColumn":10,"gain":0.005948151425362785,"numberSamples":138,"distribution":[[0,0.07971014492753624,0.9202898550724649]]}},"right":{"kind":"classifier","gainFunction":"gini","splitFunction":"mean","minNumSamples":2,"maxDepth":10,"gainThreshold":0.01,"splitValue":3.5,"splitColumn":1,"gain":0.23792063492063498,"numberSamples":60,"left":{"kind":"classifier","gainFunction":"gini","splitFunction":"mean","minNumSamples":2,"maxDepth":10,"gainThreshold":0.01,"splitValue":2.5,"splitColumn":1,"gain":0.19727891156462482,"numberSamples":35,"left":{"kind":"classifier","gainFunction":"gini","splitFunction":"mean","minNumSamples":2,"maxDepth":10,"gainThreshold":0.01,"splitValue":12,"splitColumn":0,"gain":0.2777777777777779,"numberSamples":6,"left":{"kind":"classifier","gainFunction":"gini","splitFunction":"mean","minNumSamples":2,"maxDepth":10,"gainThreshold":0.01,"gain":null,"distribution":[[1]]},"right":{"kind":"classifier","gainFunction":"gini","splitFunction":"mean","minNumSamples":2,"maxDepth":10,"gainThreshold":0.01,"distribution":[[0,1]]}},"right":{"kind":"classifier","gainFunction":"gini","splitFunction":"mean","minNumSamples":2,"maxDepth":10,"gainThreshold":0.01,"gain":null,"distribution":[[0,0.9999999999999996]]}},"right":{"kind":"classifier","gainFunction":"gini","splitFunction":"mean","minNumSamples":2,"maxDepth":10,"gainThreshold":0.01,"splitValue":11.5,"splitColumn":0,"gain":0.36479999999999907,"numberSamples":25,"left":{"kind":"classifier","gainFunction":"gini","splitFunction":"mean","minNumSamples":2,"maxDepth":10,"gainThreshold":0.01,"gain":null,"distribution":[[0,0.9999999999999999]]},"right":{"kind":"classifier","gainFunction":"gini","splitFunction":"mean","minNumSamples":2,"maxDepth":10,"gainThreshold":0.01,"gain":null,"distribution":[[0,0,0.9999999999999996]]}}}},"right":{"kind":"classifier","gainFunction":"gini","splitFunction":"mean","minNumSamples":2,"maxDepth":10,"gainThreshold":0.01,"splitValue":3.5,"splitColumn":1,"gain":0.16290123626374595,"numberSamples":400,"left":{"kind":"classifier","gainFunction":"gini","splitFunction":"mean","minNumSamples":2,"maxDepth":10,"gainThreshold":0.01,"splitValue":18.5,"splitColumn":0,"gain":0.0027321579519591537,"numberSamples":364,"distribution":[[0.9972527472527443,0.0027472527472527475]]},"right":{"kind":"classifier","gainFunction":"gini","splitFunction":"mean","minNumSamples":2,"maxDepth":10,"gainThreshold":0.01,"gain":null,"distribution":[[0,1.0000000000000002]]}}},"name":"DTClassifier"}
+{
+    "options": {
+        "gainFunction": "gini",
+        "splitFunction": "mean",
+        "minNumSamples": 2,
+        "maxDepth": 10,
+        "gainThreshold": 0.01,
+        "kind": "classifier"
+    },
+    "root": {
+        "kind": "classifier",
+        "gainFunction": "gini",
+        "splitFunction": "mean",
+        "minNumSamples": 2,
+        "maxDepth": 10,
+        "gainThreshold": 0.01,
+        "splitValue": 0.5,
+        "splitColumn": 6,
+        "gain": 0.29210277777776694,
+        "numberSamples": 600,
+        "left": {
+            "kind": "classifier",
+            "gainFunction": "gini",
+            "splitFunction": "mean",
+            "minNumSamples": 2,
+            "maxDepth": 10,
+            "gainThreshold": 0.01,
+            "splitValue": 0.5,
+            "splitColumn": 12,
+            "gain": 0.13131666666666297,
+            "numberSamples": 200,
+            "left": {
+                "kind": "classifier",
+                "gainFunction": "gini",
+                "splitFunction": "mean",
+                "minNumSamples": 2,
+                "maxDepth": 10,
+                "gainThreshold": 0.01,
+                "splitValue": 8.5,
+                "splitColumn": 0,
+                "gain": 0.02609730848861877,
+                "numberSamples": 140,
+                "left": {
+                    "kind": "classifier",
+                    "gainFunction": "gini",
+                    "splitFunction": "mean",
+                    "minNumSamples": 2,
+                    "maxDepth": 10,
+                    "gainThreshold": 0.01,
+                    "distribution": [
+                        [
+                            1
+                        ]
+                    ]
+                },
+                "right": {
+                    "kind": "classifier",
+                    "gainFunction": "gini",
+                    "splitFunction": "mean",
+                    "minNumSamples": 2,
+                    "maxDepth": 10,
+                    "gainThreshold": 0.01,
+                    "splitValue": 0.5,
+                    "splitColumn": 10,
+                    "gain": 0.005948151425362785,
+                    "numberSamples": 138,
+                    "distribution": [
+                        [
+                            0,
+                            0.07971014492753624,
+                            0.9202898550724649
+                        ]
+                    ]
+                }
+            },
+            "right": {
+                "kind": "classifier",
+                "gainFunction": "gini",
+                "splitFunction": "mean",
+                "minNumSamples": 2,
+                "maxDepth": 10,
+                "gainThreshold": 0.01,
+                "splitValue": 3.5,
+                "splitColumn": 1,
+                "gain": 0.23792063492063498,
+                "numberSamples": 60,
+                "left": {
+                    "kind": "classifier",
+                    "gainFunction": "gini",
+                    "splitFunction": "mean",
+                    "minNumSamples": 2,
+                    "maxDepth": 10,
+                    "gainThreshold": 0.01,
+                    "splitValue": 2.5,
+                    "splitColumn": 1,
+                    "gain": 0.19727891156462482,
+                    "numberSamples": 35,
+                    "left": {
+                        "kind": "classifier",
+                        "gainFunction": "gini",
+                        "splitFunction": "mean",
+                        "minNumSamples": 2,
+                        "maxDepth": 10,
+                        "gainThreshold": 0.01,
+                        "splitValue": 12,
+                        "splitColumn": 0,
+                        "gain": 0.2777777777777779,
+                        "numberSamples": 6,
+                        "left": {
+                            "kind": "classifier",
+                            "gainFunction": "gini",
+                            "splitFunction": "mean",
+                            "minNumSamples": 2,
+                            "maxDepth": 10,
+                            "gainThreshold": 0.01,
+                            "gain": null,
+                            "distribution": [
+                                [
+                                    1
+                                ]
+                            ]
+                        },
+                        "right": {
+                            "kind": "classifier",
+                            "gainFunction": "gini",
+                            "splitFunction": "mean",
+                            "minNumSamples": 2,
+                            "maxDepth": 10,
+                            "gainThreshold": 0.01,
+                            "distribution": [
+                                [
+                                    0,
+                                    1
+                                ]
+                            ]
+                        }
+                    },
+                    "right": {
+                        "kind": "classifier",
+                        "gainFunction": "gini",
+                        "splitFunction": "mean",
+                        "minNumSamples": 2,
+                        "maxDepth": 10,
+                        "gainThreshold": 0.01,
+                        "gain": null,
+                        "distribution": [
+                            [
+                                0,
+                                0.9999999999999996
+                            ]
+                        ]
+                    }
+                },
+                "right": {
+                    "kind": "classifier",
+                    "gainFunction": "gini",
+                    "splitFunction": "mean",
+                    "minNumSamples": 2,
+                    "maxDepth": 10,
+                    "gainThreshold": 0.01,
+                    "splitValue": 11.5,
+                    "splitColumn": 0,
+                    "gain": 0.36479999999999907,
+                    "numberSamples": 25,
+                    "left": {
+                        "kind": "classifier",
+                        "gainFunction": "gini",
+                        "splitFunction": "mean",
+                        "minNumSamples": 2,
+                        "maxDepth": 10,
+                        "gainThreshold": 0.01,
+                        "gain": null,
+                        "distribution": [
+                            [
+                                0,
+                                0.9999999999999999
+                            ]
+                        ]
+                    },
+                    "right": {
+                        "kind": "classifier",
+                        "gainFunction": "gini",
+                        "splitFunction": "mean",
+                        "minNumSamples": 2,
+                        "maxDepth": 10,
+                        "gainThreshold": 0.01,
+                        "gain": null,
+                        "distribution": [
+                            [
+                                0,
+                                0,
+                                0.9999999999999996
+                            ]
+                        ]
+                    }
+                }
+            }
+        },
+        "right": {
+            "kind": "classifier",
+            "gainFunction": "gini",
+            "splitFunction": "mean",
+            "minNumSamples": 2,
+            "maxDepth": 10,
+            "gainThreshold": 0.01,
+            "splitValue": 3.5,
+            "splitColumn": 1,
+            "gain": 0.16290123626374595,
+            "numberSamples": 400,
+            "left": {
+                "kind": "classifier",
+                "gainFunction": "gini",
+                "splitFunction": "mean",
+                "minNumSamples": 2,
+                "maxDepth": 10,
+                "gainThreshold": 0.01,
+                "splitValue": 18.5,
+                "splitColumn": 0,
+                "gain": 0.0027321579519591537,
+                "numberSamples": 364,
+                "distribution": [
+                    [
+                        0.9972527472527443,
+                        0.0027472527472527475
+                    ]
+                ]
+            },
+            "right": {
+                "kind": "classifier",
+                "gainFunction": "gini",
+                "splitFunction": "mean",
+                "minNumSamples": 2,
+                "maxDepth": 10,
+                "gainThreshold": 0.01,
+                "gain": null,
+                "distribution": [
+                    [
+                        0,
+                        1.0000000000000002
+                    ]
+                ]
+            }
+        }
+    },
+    "name": "DTClassifier"
+}

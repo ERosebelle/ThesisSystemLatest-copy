@@ -713,3 +713,338 @@ body::after {
     }
 
 }
+
+/* =========================================================
+   RESPONSIVE PAGE LAYOUT
+   ========================================================= */
+
+/* =========================
+   TABLET
+   ========================= */
+
+@media (max-width: 900px) {
+
+    html,
+    body {
+        height: auto;
+        min-height: 100vh;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .result-container {
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+
+        padding: 25px 25px 40px;
+    }
+
+    .dashboard {
+        flex-direction: column;
+        flex: none;
+        height: auto;
+        min-height: 0;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+    }
+
+    .content-panel {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+    }
+
+    #contentRoot {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+    }
+
+    .action-bar {
+        position: relative;
+        left: auto;
+        right: auto;
+        bottom: auto;
+
+        margin-top: 25px;
+
+        flex-wrap: wrap;
+    }
+}
+
+
+/* =========================
+   SMALL TABLET
+   ========================= */
+
+@media (max-width: 700px) {
+
+    .result-container {
+        padding: 20px 18px 35px;
+    }
+
+    .page-header {
+        margin-bottom: 20px;
+    }
+
+    .dashboard {
+        gap: 18px;
+    }
+
+    .sidebar {
+        padding: 12px;
+    }
+
+    #contentRoot {
+        padding: 20px;
+    }
+
+    .action-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+
+    .important-note {
+        width: 100%;
+        max-width: 100%;
+        transform: none;
+    }
+
+    .action-buttons {
+        width: 100%;
+        display: flex;
+    }
+
+    .action-buttons button {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+
+/* =========================
+   PHONE
+   ========================= */
+
+@media (max-width: 550px) {
+
+    html,
+    body {
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .result-container {
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+
+        padding: 18px 14px 30px;
+    }
+
+    .page-header {
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .header-logo {
+        width: 44px;
+        height: 44px;
+    }
+
+    .header-text h1 {
+        font-size: 17px;
+    }
+
+    .header-text p {
+        font-size: 10px;
+        letter-spacing: 1.5px;
+    }
+
+    .dashboard {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        padding: 10px;
+
+        overflow: visible;
+    }
+
+    .sidebar-item {
+        flex: none;
+        min-height: 48px;
+
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .sidebar-icon {
+        width: 25px;
+        height: 25px;
+    }
+
+    .content-panel {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+
+        overflow: visible;
+    }
+
+    #contentRoot {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+
+        padding: 16px;
+
+        overflow: visible;
+    }
+
+    .result-section {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+    }
+
+    .action-bar {
+        width: 100%;
+        position: relative;
+
+        left: auto;
+        right: auto;
+        bottom: auto;
+
+        margin-top: 20px;
+    }
+
+    .important-note {
+        width: 100%;
+        max-width: 100%;
+
+        transform: none;
+    }
+
+    .important-text p {
+        font-size: 12px;
+    }
+
+    .action-buttons {
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .action-buttons button {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+
+/* =========================
+   VERY SMALL PHONE
+   ========================= */
+
+@media (max-width: 400px) {
+
+    .result-container {
+        padding: 15px 10px 25px;
+    }
+
+    .header-logo {
+        width: 40px;
+        height: 40px;
+    }
+
+    .header-text h1 {
+        font-size: 15px;
+    }
+
+    .header-text p {
+        font-size: 9px;
+    }
+
+    .sidebar-item {
+        min-height: 44px;
+        font-size: 12px;
+    }
+
+    #contentRoot {
+        padding: 12px;
+    }
+}
+
+/* =========================================================
+   CUSTOM SCROLLBAR
+   ========================================================= */
+
+/* Chrome, Edge, Safari */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+#contentRoot::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+#contentRoot::-webkit-scrollbar-track {
+    background: rgba(2, 6, 23, 0.65);
+    border-radius: 10px;
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+#contentRoot::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        180deg,
+        #38bdf8,
+        #2563eb
+    );
+    border-radius: 10px;
+    border: 2px solid rgba(2, 6, 23, 0.65);
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+#contentRoot::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+        180deg,
+        #7dd3fc,
+        #3b82f6
+    );
+}
+
+
+/* =========================================================
+   FIREFOX
+   ========================================================= */
+
+html,
+body,
+#contentRoot {
+    scrollbar-width: thin;
+    scrollbar-color: #2563eb rgba(2, 6, 23, 0.65);
+}

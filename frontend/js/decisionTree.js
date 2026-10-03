@@ -199,7 +199,7 @@ const DecisionTree = (() => {
 
         svg.setAttribute(
             "viewBox",
-            "20 0 250 100"
+            "20 0 250 250"
         );
 
         svg.setAttribute(
