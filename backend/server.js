@@ -771,7 +771,7 @@ function getStrategies(vulnerabilityType, extractedFeatures, password, treeRoot,
         technicalBreakdown.remediation = `Consider making it longer and using different types of characters to expand the overall combination pool.`;
     }
 
-    tips.push("Consider enabling Multi-Factor Authentication (MFA) to add an extra verification step if someone discovers your password.");
+    tips.push("Enable MFA for extra protection.");
 
     if (recommendationResult && recommendationResult.label && RECOMMENDATION_LABEL_TEMPLATES[recommendationResult.label]) {
         tips.push(
