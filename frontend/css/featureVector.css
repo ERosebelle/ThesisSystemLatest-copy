@@ -1,14 +1,29 @@
+/* =========================================================
+   FEATURE PAGE
+========================================================= */
+
 .feature-page {
     width: 100%;
-    min-height: 100%;
+    max-width: 100%;
+    min-width: 0;
     box-sizing: border-box;
+    overflow: visible;
 }
+
+
+/* =========================================================
+   FEATURE VECTOR SECTION
+========================================================= */
 
 .feature-vector-section {
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
     min-height: 100%;
     margin: 0;
-    padding: 0;
+    padding:
+        clamp(0px, 1vh, 12px)
+        clamp(10px, 1.5vw, 28px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,109 +31,132 @@
     box-sizing: border-box;
 }
 
+
+/* =========================================================
+   HEADER
+========================================================= */
+
 .feature-vector-header {
     width: 100%;
-    text-align: center;
-    margin: 0 0 3px;
+    max-width: 1600px;
+    min-width: 0;
+    margin: 0 0 clamp(4px, 0.7vh, 10px);
     box-sizing: border-box;
+    text-align: center;
 }
 
 .feature-vector-section h2 {
     margin: 0;
     padding: 0;
-    font-size: 22px;
+    font-size: clamp(18px, 1.7vw, 30px);
     font-weight: 700;
+    line-height: 1.3;
     color: #f8fafc;
     letter-spacing: .4px;
     text-align: center;
-    text-shadow: 0 0 10px rgba(56, 189, 248, .40);
+    text-shadow:
+        0 0 10px rgba(56, 189, 248, .40);
 }
 
 .feature-vector-description {
     width: 100%;
-    margin: -7px 0 0;
+    max-width: 1500px;
+    min-width: 0;
+    margin:
+        clamp(-5px, -.5vh, -3px)
+        auto
+        0;
+    padding-inline: clamp(0px, 2vw, 20px);
     color: #cbd5e1;
-    font-size: 13px !important;
-    line-height: 1.8;
+    font-size: clamp(11px, 1vw, 17px) !important;
+    line-height: 1.65;
     letter-spacing: .2px;
     text-align: center;
     box-sizing: border-box;
 }
 
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
 .feature-vector-divider {
-    width: 100%;
-    max-width: 1050px;
+    width: min(100%, 1600px);
+    max-width: 100%;
     height: 1px;
-    margin: 18px auto 20px auto;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(56, 189, 248, .55),
-        rgba(56, 189, 248, .18),
-        transparent
-    );
+    margin:
+        clamp(14px, 1.8vh, 28px)
+        auto
+        clamp(16px, 2vh, 30px);
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(56, 189, 248, .55),
+            rgba(56, 189, 248, .18),
+            transparent
+        );
 }
 
-/* ================================
+
+/* =========================================================
    FEATURE TABLE CONTAINER
-================================ */
+========================================================= */
 
 .feature-table-container {
+    width: min(100%, 1600px);
+    max-width: 100%;
+    min-width: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
     align-items: flex-start;
-    gap: 24px;
-    width: 100%;
-    max-width: 1050px;
+    justify-content: center;
+    gap: clamp(14px, 2vw, 44px);
     margin: 0 auto;
     box-sizing: border-box;
 }
 
-/* ================================
+
+/* =========================================================
    FEATURE TABLE CARDS
-================================ */
+========================================================= */
 
 .feature-table-card {
-    flex: 1 1 0;
-    width: 0;
-    max-width: 500px;
-
     position: relative;
-    overflow: hidden;
-
-    padding: 16px 18px;
-
-    border-radius: 14px;
-
-    background: linear-gradient(
-        160deg,
-        rgba(15, 23, 42, .96),
-        rgba(30, 41, 59, .94),
-        rgba(51, 65, 85, .88)
-    );
-
-    border: 1px solid rgba(56, 189, 248, .20);
-
-    /*backdrop-filter: blur(8px);*/
-
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    max-width: 760px;
+    padding:
+        clamp(14px, 1.6vw, 28px)
+        clamp(13px, 1.6vw, 30px);
+    border-radius:
+        clamp(12px, 1vw, 20px);
+    background:
+        linear-gradient(
+            160deg,
+            rgba(15, 23, 42, .96),
+            rgba(30, 41, 59, .94),
+            rgba(51, 65, 85, .88)
+        );
+    border:
+        1px solid rgba(56, 189, 248, .20);
     box-shadow:
         0 8px 20px rgba(0, 0, 0, .30),
         0 0 12px rgba(56, 189, 248, .06);
-
     box-sizing: border-box;
-
-    /*
-     * Important:
-     * Cards grow only according to their own content.
-     * The shorter table will NOT stretch to match the taller one.
-     */
     align-self: flex-start;
-
+    overflow: hidden;
     transition:
         transform .35s ease,
         box-shadow .35s ease,
         border-color .35s ease;
 }
+
+
+/* =========================================================
+   CARD TOP ENERGY LINE
+========================================================= */
 
 .feature-table-card::before {
     content: "";
@@ -127,7 +165,6 @@
     left: 0;
     width: 100%;
     height: 3px;
-
     background:
         linear-gradient(
             90deg,
@@ -136,54 +173,84 @@
             #60a5fa,
             transparent
         );
-
     background-size: 200% 100%;
-
     animation: energyMove 3s linear infinite;
 }
 
+
+/* =========================================================
+   CARD TITLE
+========================================================= */
+
 .feature-table-card h3 {
-    margin: 0 0 10px;
-    font-size: 13px;
+    margin:
+        0
+        0
+        clamp(8px, 1vh, 18px);
+    font-size:
+        clamp(12px, 1vw, 19px);
     font-weight: 600;
+    line-height: 1.3;
     color: #7dd3fc;
     letter-spacing: .4px;
     text-align: center;
 }
 
-/* ================================
+
+/* =========================================================
    FEATURE TABLE
-================================ */
+========================================================= */
 
 .feature-table {
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
     table-layout: fixed;
     border-collapse: collapse;
+    box-sizing: border-box;
 }
 
 .feature-table th {
-    padding: 7px 8px;
+    padding:
+        clamp(6px, .8vw, 13px)
+        clamp(5px, .7vw, 14px);
     text-align: center;
-    font-size: 11px;
+    font-size:
+        clamp(8px, .8vw, 15px);
+    line-height: 1.3;
     text-transform: uppercase;
     letter-spacing: .6px;
     color: #94a3b8;
-    border-bottom: 1px solid rgba(148, 163, 184, .25);
+    border-bottom:
+        1px solid rgba(148, 163, 184, .25);
+    overflow-wrap: anywhere;
 }
 
 .feature-table td {
-    padding: 7px 8px !important;
-    font-size: 13px;
+    padding:
+        clamp(6px, .9vw, 14px)
+        clamp(5px, .7vw, 14px) !important;
+    font-size:
+        clamp(9px, .95vw, 19px);
+    line-height: 1.4;
     color: #e2e8f0;
-    border-bottom: 1px solid rgba(148, 163, 184, .12);
+    border-bottom:
+        1px solid rgba(148, 163, 184, .12);
     text-align: center;
+    vertical-align: middle;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    box-sizing: border-box;
 }
 
 .feature-table tr:last-child td {
     border-bottom: none;
 }
 
-/* Keep both tables symmetrical in column proportions */
+
+/* =========================================================
+   FEATURE TABLE COLUMN WIDTHS
+========================================================= */
 
 .feature-table th:first-child,
 .feature-table td:first-child {
@@ -198,46 +265,51 @@
     font-weight: 700;
 }
 
-/* ================================
+
+/* =========================================================
    TABLE ROW INTERACTION
-================================ */
+========================================================= */
 
 .feature-table tbody tr {
-    position: relative;
-    transition: .3s ease;
+    transition:
+        background .3s ease;
 }
 
 .feature-table tbody tr:hover {
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(56, 189, 248, .15),
-        transparent
-    );
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(56, 189, 248, .15),
+            transparent
+        );
 }
 
-/* ================================
+
+/* =========================================================
    CARD HOVER
-================================ */
+========================================================= */
 
 .feature-table-card:hover {
     transform: translateY(-6px);
-
-    border-color: rgba(56, 189, 248, .5);
-
+    border-color:
+        rgba(56, 189, 248, .5);
     box-shadow:
         0 20px 45px rgba(0, 0, 0, .5),
         0 0 30px rgba(56, 189, 248, .25);
 }
 
-/* ================================
+
+/* =========================================================
    VALUE STATES
-================================ */
+========================================================= */
 
 .present {
     color: #38bdf8;
-    text-shadow: 0 0 6px rgba(56, 189, 248, .7);
-    animation: valueGlow 2s infinite;
+    text-shadow:
+        0 0 6px rgba(56, 189, 248, .7);
+    animation:
+        valueGlow 2s infinite;
 }
 
 .absent {
@@ -248,36 +320,34 @@
     color: #f8fafc;
 }
 
-/* ================================
+
+/* =========================================================
    CARD DECORATION
-================================ */
+========================================================= */
 
 .feature-table-card::after {
     content: "";
     position: absolute;
-
     right: -50px;
     bottom: -60px;
-
     width: 100px;
     height: 100px;
-
-    background: linear-gradient(
-        145deg,
-        rgba(56, 189, 248, .10),
-        transparent
-    );
-
+    background:
+        linear-gradient(
+            145deg,
+            rgba(56, 189, 248, .10),
+            transparent
+        );
     border-radius: 50%;
-
     pointer-events: none;
-
-    animation: orbitFloat 5s ease-in-out infinite;
+    animation:
+        orbitFloat 5s ease-in-out infinite;
 }
 
-/* ================================
+
+/* =========================================================
    ANIMATIONS
-================================ */
+========================================================= */
 
 @keyframes energyMove {
     from {
@@ -292,54 +362,43 @@
 @keyframes valueGlow {
     0%,
     100% {
-        text-shadow: 0 0 6px rgba(56, 189, 248, .5);
+        text-shadow:
+            0 0 6px rgba(56, 189, 248, .5);
     }
 
     50% {
-        text-shadow: 0 0 18px rgba(56, 189, 248, 1);
+        text-shadow:
+            0 0 18px rgba(56, 189, 248, 1);
     }
 }
 
 @keyframes orbitFloat {
     0%,
     100% {
-        transform: translate(0, 0) scale(1);
+        transform:
+            translate(0, 0)
+            scale(1);
         opacity: .5;
     }
 
     50% {
-        transform: translate(-15px, -15px) scale(1.2);
+        transform:
+            translate(-15px, -15px)
+            scale(1.2);
         opacity: 1;
     }
 }
 
-/* ================================
-   RESPONSIVE
-================================ */
 
-@media (max-width: 900px) {
-
-    .feature-table-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .feature-table-card {
-        width: 100%;
-        max-width: 650px;
-    }
-}
 /* =========================================================
-   FEATURE VECTOR INFO BUTTONS
+   FEATURE INFO BUTTON ROW
 ========================================================= */
 
 .feature-info-label-row {
     position: static;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 100%;
     margin-bottom: 10px;
 }
@@ -348,161 +407,138 @@
     margin: 0;
 }
 
+
 /* =========================================================
-   ? BUTTON
+   INFO BUTTON
 ========================================================= */
 
 .feature-info-toggle {
     position: absolute;
-
-    top: 16px;
-    right: 18px;
-
+    top: clamp(10px, 1.3vw, 24px);
+    right: clamp(10px, 1.3vw, 28px);
     z-index: 20;
-
-    width: 22px;
-    height: 22px;
-    min-width: 22px;
-
+    width: clamp(21px, 1.8vw, 32px);
+    height: clamp(21px, 1.8vw, 32px);
+    min-width: clamp(21px, 1.8vw, 32px);
     padding: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    border: 1px solid rgba(56, 189, 248, 0.35);
+    border:
+        1px solid rgba(56, 189, 248, .35);
     border-radius: 50%;
-
     background:
         linear-gradient(
             145deg,
-            rgba(30, 41, 59, 0.95),
-            rgba(11, 17, 28, 0.95)
+            rgba(30, 41, 59, .95),
+            rgba(11, 17, 28, .95)
         );
-
     color: #7dd3fc;
-
     font-family: Arial, sans-serif;
-    font-size: 12px;
+    font-size:
+        clamp(11px, .9vw, 17px);
     font-weight: 800;
     line-height: 1;
-
     cursor: pointer;
-
     box-shadow:
-        0 0 10px rgba(56, 189, 248, 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-
+        0 0 10px rgba(56, 189, 248, .05),
+        inset 0 1px 0 rgba(255, 255, 255, .05);
     transition:
-        color 0.2s ease,
-        background 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        transform 0.2s ease;
+        color .2s ease,
+        background .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease,
+        transform .2s ease;
 }
 
 .feature-info-toggle:hover {
     color: #f8fafc;
-
-    border-color: rgba(56, 189, 248, 0.75);
-
+    border-color:
+        rgba(56, 189, 248, .75);
     background:
         linear-gradient(
             145deg,
-            rgba(14, 116, 144, 0.45),
-            rgba(15, 23, 42, 0.98)
+            rgba(14, 116, 144, .45),
+            rgba(15, 23, 42, .98)
         );
-
     box-shadow:
-        0 0 14px rgba(56, 189, 248, 0.25),
-        inset 0 0 8px rgba(56, 189, 248, 0.06);
-
+        0 0 14px rgba(56, 189, 248, .25),
+        inset 0 0 8px rgba(56, 189, 248, .06);
     transform: scale(1.08);
 }
 
 .feature-info-toggle:active {
-    transform: scale(0.94);
+    transform: scale(.94);
 }
 
 .feature-info-toggle:focus-visible {
-    outline: 2px solid rgba(56, 189, 248, 0.65);
+    outline:
+        2px solid rgba(56, 189, 248, .65);
     outline-offset: 3px;
 }
 
 
 /* =========================================================
-   FEATURE VECTOR INFO CARD
-   Covers the ENTIRE original table card
+   INFO CARD
 ========================================================= */
 
 .feature-info-card {
     position: absolute;
     inset: 0;
-
     z-index: 50;
-
     width: 100%;
     height: 100%;
-
-    padding: 30px;
-
+    padding:
+        clamp(18px, 2.2vw, 44px);
     box-sizing: border-box;
-
-    border: 1px solid rgba(56, 189, 248, 0.35);
-    border-radius: 14px;
-
+    border:
+        1px solid rgba(56, 189, 248, .35);
+    border-radius:
+        clamp(12px, 1vw, 20px);
     background:
         linear-gradient(
             145deg,
-            rgba(15, 31, 48, 0.99),
-            rgba(8, 17, 30, 0.99)
+            rgba(15, 31, 48, .99),
+            rgba(8, 17, 30, .99)
         );
-
     box-shadow:
-        0 18px 45px rgba(0, 0, 0, 0.45),
-        0 0 30px rgba(56, 189, 248, 0.10),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-
+        0 18px 45px rgba(0, 0, 0, .45),
+        0 0 30px rgba(56, 189, 248, .10),
+        inset 0 1px 0 rgba(255, 255, 255, .05);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-
     overflow-y: auto;
     overflow-x: hidden;
-
     scrollbar-width: thin;
     scrollbar-color:
         #38bdf8
-        rgba(15, 23, 42, 0.45);
-
-    animation: featureInfoCardAppear 0.18s ease-out;
+        rgba(15, 23, 42, .45);
+    animation:
+        featureInfoCardAppear .18s ease-out;
 }
 
 
-/* TOP GLOW LINE */
+/* =========================================================
+   INFO CARD TOP GLOW
+========================================================= */
 
 .feature-info-card::before {
     content: "";
-
     position: absolute;
-
     top: 0;
     left: 14px;
     right: 14px;
-
     height: 2px;
-
-    border-radius: 0 0 4px 4px;
-
+    border-radius:
+        0 0 4px 4px;
     background:
         linear-gradient(
             90deg,
             #38bdf8,
             #818cf8
         );
-
     box-shadow:
-        0 0 10px rgba(56, 189, 248, 0.3);
-
+        0 0 10px rgba(56, 189, 248, .3);
     pointer-events: none;
 }
 
@@ -512,171 +548,163 @@
 ========================================================= */
 
 .feature-info-card-title {
-    margin: 0 40px 20px 0;
-
+    margin:
+        0
+        clamp(30px, 3vw, 44px)
+        clamp(14px, 2vh, 32px)
+        0;
     color: #38bdf8;
-
-    font-size: 12px;
+    font-size:
+        clamp(10px, .95vw, 17px);
     font-weight: 800;
-
-    letter-spacing: 2px;
+    letter-spacing:
+        clamp(1px, .12vw, 2px);
     line-height: 1.3;
-
     text-transform: uppercase;
-
     text-align: left;
-
     text-shadow:
-        0 0 10px rgba(56, 189, 248, 0.18);
+        0 0 10px rgba(56, 189, 248, .18);
 }
 
 
 /* =========================================================
-   X CLOSE BUTTON
-========================================================= */
-
-/* =========================================================
-   SMALL FIXED X CLOSE BUTTON
+   INFO CARD CLOSE BUTTON
 ========================================================= */
 
 .feature-info-card-close {
     position: sticky;
-
     top: 0;
     float: right;
-
     z-index: 60;
-
-    width: 24px;
-    height: 24px;
-    min-width: 24px;
-
-    margin: -4px -27px 0 10px;
+    width:
+        clamp(23px, 1.8vw, 34px);
+    height:
+        clamp(23px, 1.8vw, 34px);
+    min-width:
+        clamp(23px, 1.8vw, 34px);
+    margin:
+        -4px
+        clamp(-18px, -1.8vw, -27px)
+        0
+        8px;
     padding: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    border: 1px solid rgba(56, 189, 248, 0.25);
+    border:
+        1px solid rgba(56, 189, 248, .25);
     border-radius: 7px;
-
-    background: rgba(15, 23, 42, 0.90);
-
+    background:
+        rgba(15, 23, 42, .90);
     color: #94a3b8;
-
     font-family: Arial, sans-serif;
-    font-size: 17px;
+    font-size:
+        clamp(15px, 1.2vw, 23px);
     font-weight: 400;
     line-height: 1;
-
     cursor: pointer;
-
     box-shadow:
-        0 3px 10px rgba(0, 0, 0, 0.30),
-        inset 0 1px 0 rgba(255, 255, 255, 0.04);
-
+        0 3px 10px rgba(0, 0, 0, .30),
+        inset 0 1px 0 rgba(255, 255, 255, .04);
     transition:
-        color 0.2s ease,
-        background 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        transform 0.2s ease;
+        color .2s ease,
+        background .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease,
+        transform .2s ease;
 }
 
 .feature-info-card-close:hover {
     color: #f8fafc;
-
-    border-color: rgba(56, 189, 248, 0.7);
-
+    border-color:
+        rgba(56, 189, 248, .7);
     background:
         linear-gradient(
             145deg,
-            rgba(14, 116, 144, 0.40),
-            rgba(15, 23, 42, 0.96)
+            rgba(14, 116, 144, .40),
+            rgba(15, 23, 42, .96)
         );
-
     box-shadow:
-        0 0 14px rgba(56, 189, 248, 0.20),
-        inset 0 0 7px rgba(56, 189, 248, 0.05);
-
+        0 0 14px rgba(56, 189, 248, .20),
+        inset 0 0 7px rgba(56, 189, 248, .05);
     transform: scale(1.06);
 }
 
 .feature-info-card-close:active {
-    transform: scale(0.92);
+    transform: scale(.92);
 }
 
 .feature-info-card-close:focus-visible {
-    outline: 2px solid rgba(56, 189, 248, 0.65);
+    outline:
+        2px solid rgba(56, 189, 248, .65);
     outline-offset: 2px;
 }
+
+
+/* =========================================================
+   INFO CARD CONTENT
+========================================================= */
+
+.feature-info-card-content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
 
 /* =========================================================
    INFO TABLE
 ========================================================= */
 
-.feature-info-card-content {
+.feature-info-table {
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border:
+        1px solid rgba(56, 189, 248, .12);
+    border-radius: 10px;
+    overflow: hidden;
     box-sizing: border-box;
 }
 
-.feature-info-table {
-    width: 100%;
-
-    table-layout: fixed;
-
-    border-collapse: collapse;
-
-    border: 1px solid rgba(56, 189, 248, 0.12);
-    border-radius: 10px;
-
-    overflow: hidden;
-}
-
-
-/* HEADER */
-
 .feature-info-table th {
-    padding: 10px 9px;
-
+    padding:
+        clamp(7px, .9vw, 16px)
+        clamp(5px, .7vw, 14px);
     background:
-        rgba(56, 189, 248, 0.07);
-
+        rgba(56, 189, 248, .07);
     color: #7dd3fc;
-
-    font-size: 10px;
+    font-size:
+        clamp(8px, .75vw, 14px);
     font-weight: 800;
-
-    letter-spacing: 0.8px;
-
+    line-height: 1.3;
+    letter-spacing: .8px;
     text-transform: uppercase;
-
     text-align: center;
-
     border-bottom:
-        1px solid rgba(148, 163, 184, 0.22);
+        1px solid rgba(148, 163, 184, .22);
+    overflow-wrap: anywhere;
 }
-
-
-/* BODY */
 
 .feature-info-table td {
-    padding: 10px 9px;
-
+    padding:
+        clamp(7px, .9vw, 16px)
+        clamp(5px, .7vw, 14px);
     color: #cbd5e1;
-
-    font-size: 11px;
+    font-size:
+        clamp(9px, .85vw, 16px);
     font-weight: 500;
-
     line-height: 1.5;
-
     text-align: center;
-
     vertical-align: middle;
-
     border-bottom:
-        1px solid rgba(148, 163, 184, 0.12);
+        1px solid rgba(148, 163, 184, .12);
+    overflow-wrap: anywhere;
+    word-break: normal;
+    box-sizing: border-box;
 }
 
 .feature-info-table tr:last-child td {
@@ -684,14 +712,14 @@
 }
 
 
-/* COLUMN WIDTHS */
+/* =========================================================
+   INFO TABLE COLUMN WIDTHS
+========================================================= */
 
 .feature-info-table th:first-child,
 .feature-info-table td:first-child {
     width: 23%;
-
     color: #f8fafc;
-
     font-weight: 700;
 }
 
@@ -706,46 +734,50 @@
 }
 
 
-/* ROW HOVER */
+/* =========================================================
+   INFO TABLE HOVER
+========================================================= */
 
 .feature-info-table tbody tr {
     transition:
-        background 0.2s ease;
+        background .2s ease;
 }
 
 .feature-info-table tbody tr:hover {
     background:
-        rgba(56, 189, 248, 0.07);
+        rgba(56, 189, 248, .07);
 }
 
 
-/* PASSWORD SAMPLE */
+/* =========================================================
+   PASSWORD SAMPLE
+========================================================= */
 
 .feature-info-table code {
     display: inline-block;
-
-    padding: 4px 7px;
-
-    border: 1px solid rgba(56, 189, 248, 0.18);
+    max-width: 100%;
+    padding:
+        clamp(3px, .4vw, 7px)
+        clamp(5px, .55vw, 11px);
+    border:
+        1px solid rgba(56, 189, 248, .18);
     border-radius: 6px;
-
     background:
-        rgba(15, 23, 42, 0.75);
-
+        rgba(15, 23, 42, .75);
     color: #7dd3fc;
-
     font-family:
         Consolas,
         "Courier New",
         monospace;
-
-    font-size: 10px;
+    font-size:
+        clamp(8px, .7vw, 14px);
     font-weight: 700;
-
-    white-space: nowrap;
-
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+        inset 0 1px 0 rgba(255, 255, 255, .03);
+    box-sizing: border-box;
 }
 
 
@@ -754,43 +786,41 @@
 ========================================================= */
 
 .feature-info-breakdown {
-    margin-top: 18px;
-
-    padding-top: 16px;
-
+    margin-top:
+        clamp(14px, 1.8vh, 28px);
+    padding-top:
+        clamp(12px, 1.6vh, 24px);
     border-top:
-        1px solid rgba(148, 163, 184, 0.16);
+        1px solid rgba(148, 163, 184, .16);
 }
 
 .feature-info-breakdown-title {
-    margin-bottom: 12px;
-
+    margin-bottom:
+        clamp(8px, 1vh, 12px);
     color: #38bdf8;
-
-    font-size: 10px;
+    font-size:
+        clamp(9px, .75vw, 14px);
     font-weight: 800;
-
-    letter-spacing: 1.8px;
-
+    letter-spacing:
+        clamp(1px, .12vw, 1.8px);
     text-transform: uppercase;
 }
 
 .feature-info-breakdown-item {
     display: grid;
-
     grid-template-columns:
-        24%
-        52%
-        24%;
-
+        minmax(0, 24%)
+        minmax(0, 52%)
+        minmax(0, 24%);
     align-items: center;
-
-    gap: 8px;
-
-    padding: 8px 0;
-
+    gap:
+        clamp(4px, .7vw, 8px);
+    padding:
+        clamp(7px, .8vh, 13px)
+        0;
     border-bottom:
-        1px solid rgba(148, 163, 184, 0.08);
+        1px solid rgba(148, 163, 184, .08);
+    min-width: 0;
 }
 
 .feature-info-breakdown-item:last-child {
@@ -799,43 +829,43 @@
 
 .feature-info-breakdown-item strong {
     color: #f8fafc;
-
-    font-size: 11px;
+    font-size:
+        clamp(9px, .85vw, 16px);
     font-weight: 700;
-
     line-height: 1.4;
+    overflow-wrap: anywhere;
 }
 
 .feature-info-breakdown-item span {
     color: #cbd5e1;
-
-    font-size: 11px;
-
+    font-size:
+        clamp(9px, .85vw, 16px);
     line-height: 1.5;
+    overflow-wrap: anywhere;
 }
 
 .feature-info-breakdown-item code {
     justify-self: center;
-
-    padding: 4px 7px;
-
-    border: 1px solid rgba(56, 189, 248, 0.18);
+    max-width: 100%;
+    padding:
+        clamp(3px, .4vw, 7px)
+        clamp(5px, .55vw, 11px);
+    border:
+        1px solid rgba(56, 189, 248, .18);
     border-radius: 6px;
-
     background:
-        rgba(15, 23, 42, 0.75);
-
+        rgba(15, 23, 42, .75);
     color: #7dd3fc;
-
     font-family:
         Consolas,
         "Courier New",
         monospace;
-
-    font-size: 10px;
+    font-size:
+        clamp(8px, .7vw, 14px);
     font-weight: 700;
-
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 
@@ -849,19 +879,16 @@
 
 .feature-info-card::-webkit-scrollbar-track {
     background:
-        rgba(15, 23, 42, 0.45);
-
+        rgba(15, 23, 42, .45);
     border-radius: 10px;
 }
 
 .feature-info-card::-webkit-scrollbar-thumb {
     background:
         #38bdf8;
-
     border-radius: 10px;
-
     border:
-        1px solid rgba(15, 23, 42, 0.35);
+        1px solid rgba(15, 23, 42, .35);
 }
 
 .feature-info-card::-webkit-scrollbar-thumb:hover {
@@ -871,22 +898,19 @@
 
 
 /* =========================================================
-   ANIMATION
+   INFO CARD ANIMATION
 ========================================================= */
 
 @keyframes featureInfoCardAppear {
-
     from {
         opacity: 0;
-
         transform:
             translateY(-5px)
-            scale(0.97);
+            scale(.97);
     }
 
     to {
         opacity: 1;
-
         transform:
             translateY(0)
             scale(1);
@@ -895,303 +919,18 @@
 
 
 /* =========================================================
-   RESPONSIVE INFO CARD
+   DESKTOP
+   901px AND ABOVE
 ========================================================= */
 
-@media (max-width: 900px) {
-
-    .feature-info-card {
-        padding: 22px;
-    }
-
-    .feature-info-table th,
-    .feature-info-table td {
-        padding: 8px 6px;
-
-        font-size: 10px;
-    }
-
-    .feature-info-breakdown-item {
-        grid-template-columns:
-            1fr;
-        gap: 5px;
-    }
-
-    .feature-info-breakdown-item code {
-        justify-self: start;
-    }
-}
-
-/* =========================================================
-   DYNAMIC RESPONSIVE ADD-ON
-   Works across desktop, laptop, tablet, phone
-   ========================================================= */
-
-/* ---------------------------------------------------------
-   BASE FLUID SCALING
-   --------------------------------------------------------- */
-
-.feature-page {
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    box-sizing: border-box;
-}
-
-.feature-vector-section {
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    padding:
-        clamp(0px, 1vw, 12px)
-        clamp(0px, 1.5vw, 20px);
-}
-
-.feature-vector-header {
-    width: 100%;
-    max-width: 1100px;
-}
-
-.feature-vector-section h2 {
-    font-size: clamp(18px, 1.6vw, 22px);
-    line-height: 1.3;
-}
-
-.feature-vector-description {
-    font-size: clamp(11px, 1vw, 13px) !important;
-    line-height: clamp(1.5, 1.8, 1.8);
-    padding-inline: clamp(0px, 2vw, 20px);
-}
-
-.feature-vector-divider {
-    width: min(100%, 1050px);
-    margin:
-        clamp(12px, 1.5vw, 18px)
-        auto
-        clamp(14px, 1.7vw, 20px);
-}
-
-
-/* ---------------------------------------------------------
-   FEATURE TABLE CONTAINER
-   --------------------------------------------------------- */
-
-.feature-table-container {
-    width: 100%;
-    max-width: 1050px;
-    min-width: 0;
-
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-
-    gap: clamp(12px, 2vw, 24px);
-
-    margin-inline: auto;
-}
-
-
-/* ---------------------------------------------------------
-   FEATURE CARDS
-   --------------------------------------------------------- */
-
-.feature-table-card {
-    flex: 1 1 0;
-    width: auto;
-    min-width: 0;
-    max-width: 500px;
-
-    padding:
-        clamp(12px, 1.5vw, 16px)
-        clamp(12px, 1.7vw, 18px);
-
-    border-radius: clamp(11px, 1.2vw, 14px);
-}
-
-.feature-table-card h3 {
-    font-size: clamp(11px, 1vw, 13px);
-    margin-bottom: clamp(7px, 1vw, 10px);
-}
-
-
-/* ---------------------------------------------------------
-   FEATURE TABLE
-   --------------------------------------------------------- */
-
-.feature-table {
-    width: 100%;
-    min-width: 0;
-}
-
-.feature-table th {
-    padding:
-        clamp(5px, .7vw, 7px)
-        clamp(4px, .7vw, 8px);
-
-    font-size: clamp(9px, .8vw, 11px);
-}
-
-.feature-table td {
-    padding:
-        clamp(5px, .7vw, 7px)
-        clamp(4px, .7vw, 8px) !important;
-
-    font-size: clamp(10px, .9vw, 13px);
-    line-height: 1.35;
-    overflow-wrap: anywhere;
-}
-
-
-/* ---------------------------------------------------------
-   INFO BUTTON
-   --------------------------------------------------------- */
-
-.feature-info-toggle {
-    top: clamp(10px, 1.2vw, 16px);
-    right: clamp(10px, 1.3vw, 18px);
-
-    width: clamp(20px, 1.8vw, 22px);
-    height: clamp(20px, 1.8vw, 22px);
-    min-width: clamp(20px, 1.8vw, 22px);
-
-    font-size: clamp(10px, .9vw, 12px);
-}
-
-
-/* ---------------------------------------------------------
-   INFO CARD
-   --------------------------------------------------------- */
-
-.feature-info-card {
-    padding:
-        clamp(18px, 2.5vw, 30px);
-
-    border-radius:
-        clamp(11px, 1.2vw, 14px);
-}
-
-.feature-info-card-title {
-    margin-right: clamp(30px, 3vw, 40px);
-    margin-bottom: clamp(14px, 1.8vw, 20px);
-
-    font-size: clamp(10px, .9vw, 12px);
-    letter-spacing: clamp(1px, .15vw, 2px);
-}
-
-
-/* ---------------------------------------------------------
-   INFO CLOSE BUTTON
-   --------------------------------------------------------- */
-
-.feature-info-card-close {
-    width: clamp(22px, 2vw, 24px);
-    height: clamp(22px, 2vw, 24px);
-    min-width: clamp(22px, 2vw, 24px);
-
-    margin-top: -4px;
-    margin-right: clamp(-27px, -2.5vw, -27px);
-
-    font-size: clamp(15px, 1.4vw, 17px);
-}
-
-
-/* ---------------------------------------------------------
-   INFO TABLE
-   --------------------------------------------------------- */
-
-.feature-info-table {
-    width: 100%;
-    min-width: 0;
-}
-
-.feature-info-table th {
-    padding:
-        clamp(7px, .9vw, 10px)
-        clamp(5px, .8vw, 9px);
-
-    font-size: clamp(8px, .75vw, 10px);
-}
-
-.feature-info-table td {
-    padding:
-        clamp(7px, .9vw, 10px)
-        clamp(5px, .8vw, 9px);
-
-    font-size: clamp(9px, .8vw, 11px);
-    line-height: 1.45;
-    overflow-wrap: anywhere;
-}
-
-.feature-info-table code {
-    max-width: 100%;
-    padding:
-        clamp(3px, .4vw, 4px)
-        clamp(5px, .6vw, 7px);
-
-    font-size: clamp(8px, .7vw, 10px);
-    overflow-wrap: anywhere;
-}
-
-
-/* ---------------------------------------------------------
-   BREAKDOWN
-   --------------------------------------------------------- */
-
-.feature-info-breakdown {
-    margin-top: clamp(14px, 1.5vw, 18px);
-    padding-top: clamp(12px, 1.4vw, 16px);
-}
-
-.feature-info-breakdown-title {
-    margin-bottom: clamp(9px, 1vw, 12px);
-    font-size: clamp(9px, .75vw, 10px);
-}
-
-.feature-info-breakdown-item {
-    grid-template-columns:
-        minmax(0, 24%)
-        minmax(0, 52%)
-        minmax(0, 24%);
-
-    gap: clamp(5px, .8vw, 8px);
-    padding: clamp(6px, .7vw, 8px) 0;
-}
-
-.feature-info-breakdown-item strong,
-.feature-info-breakdown-item span {
-    font-size: clamp(9px, .8vw, 11px);
-    overflow-wrap: anywhere;
-}
-
-.feature-info-breakdown-item code {
-    max-width: 100%;
-    font-size: clamp(8px, .7vw, 10px);
-    overflow-wrap: anywhere;
-}
-
-
-/* =========================================================
-   MEDIUM DESKTOP / LAPTOP
-   901px - 1100px
-   ========================================================= */
-
-@media (max-width: 1100px) {
-
-    .feature-vector-section {
-        justify-content: flex-start;
-    }
+@media (min-width: 901px) {
 
     .feature-table-container {
-        gap: 16px;
+        flex-direction: row;
     }
 
     .feature-table-card {
-        max-width: none;
-    }
-
-    .feature-table th,
-    .feature-table td {
-        padding-inline: 6px;
+        flex: 1 1 0;
     }
 }
 
@@ -1199,45 +938,83 @@
 /* =========================================================
    TABLET
    601px - 900px
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 900px) {
 
     .feature-vector-section {
         justify-content: flex-start;
-        padding-inline: 0;
+        padding:
+            10px
+            clamp(10px, 2vw, 20px);
     }
 
     .feature-vector-header {
-        margin-bottom: 4px;
+        margin-bottom: 5px;
+    }
+
+    .feature-vector-section h2 {
+        font-size:
+            clamp(19px, 2.7vw, 24px);
+    }
+
+    .feature-vector-description {
+        font-size:
+            clamp(11px, 1.8vw, 14px) !important;
+        line-height: 1.6;
+        padding-inline:
+            clamp(5px, 2vw, 16px);
     }
 
     .feature-vector-divider {
-        margin-top: 14px;
-        margin-bottom: 16px;
+        margin-top: 15px;
+        margin-bottom: 17px;
     }
 
     .feature-table-container {
         flex-direction: column;
         align-items: stretch;
-        gap: 16px;
+        width: 100%;
+        gap: 17px;
     }
 
     .feature-table-card {
         width: 100%;
         max-width: none;
         flex: none;
+        padding:
+            17px
+            16px;
+    }
+
+    .feature-table-card h3 {
+        font-size: 13px;
+    }
+
+    .feature-table th {
+        padding:
+            8px
+            6px;
+        font-size: 9.5px;
+    }
+
+    .feature-table td {
+        padding:
+            8px
+            6px !important;
+        font-size: 11.5px;
     }
 
     .feature-info-card {
-        padding: 22px;
+        padding:
+            clamp(18px, 3vw, 24px);
     }
 
     .feature-info-breakdown-item {
         grid-template-columns:
-            minmax(100px, 24%)
-            minmax(0, 1fr)
-            minmax(70px, 24%);
+            minmax(90px, 24%)
+            minmax(0, 52%)
+            minmax(65px, 24%);
     }
 }
 
@@ -1245,40 +1022,69 @@
 /* =========================================================
    LARGE PHONE
    401px - 600px
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 600px) {
 
+    .feature-vector-section {
+        padding:
+            9px
+            9px;
+    }
+
     .feature-vector-section h2 {
-        font-size: 18px;
+        font-size: 19px;
     }
 
     .feature-vector-description {
-        font-size: 11px !important;
-        line-height: 1.55;
-        padding-inline: 8px;
+        font-size: 12px !important;
+        line-height: 1.6;
+        padding-inline: 6px;
+    }
+
+    .feature-vector-divider {
+        margin-top: 13px;
+        margin-bottom: 15px;
     }
 
     .feature-table-container {
-        gap: 14px;
+        gap: 15px;
     }
 
     .feature-table-card {
-        padding: 13px 12px;
+        padding:
+            15px
+            13px;
+        border-radius: 12px;
     }
 
     .feature-table-card h3 {
-        font-size: 11px;
+        font-size: 12px;
+        margin-bottom: 9px;
     }
 
     .feature-table th {
-        font-size: 8px;
+        padding:
+            7px
+            5px;
+        font-size: 8.5px;
         letter-spacing: .35px;
     }
 
     .feature-table td {
-        font-size: 10px;
-        padding: 6px 4px !important;
+        padding:
+            7px
+            5px !important;
+        font-size: 10.5px;
+    }
+
+    .feature-info-toggle {
+        top: 10px;
+        right: 10px;
+        width: 22px;
+        height: 22px;
+        min-width: 22px;
+        font-size: 10.5px;
     }
 
     .feature-info-card {
@@ -1286,25 +1092,38 @@
     }
 
     .feature-info-card-title {
-        font-size: 10px;
-        margin-bottom: 14px;
+        font-size: 10.5px;
+        margin-right: 28px;
+        margin-bottom: 15px;
+    }
+
+    .feature-info-card-close {
+        width: 23px;
+        height: 23px;
+        min-width: 23px;
+        margin-right: -10px;
+        font-size: 15px;
     }
 
     .feature-info-table th {
-        padding: 7px 4px;
-        font-size: 8px;
+        padding:
+            8px
+            5px;
+        font-size: 8.5px;
     }
 
     .feature-info-table td {
-        padding: 7px 4px;
-        font-size: 9px;
+        padding:
+            8px
+            5px;
+        font-size: 9.5px;
     }
 
     .feature-info-table code {
-        font-size: 8px;
-        padding: 3px 5px;
-        white-space: normal;
-        word-break: break-word;
+        font-size: 8.5px;
+        padding:
+            3px
+            5px;
     }
 
     .feature-info-breakdown-item {
@@ -1321,34 +1140,46 @@
 /* =========================================================
    SMALL PHONE
    400px AND BELOW
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 400px) {
 
+    .feature-vector-section {
+        padding:
+            7px
+            7px;
+    }
+
     .feature-vector-section h2 {
-        font-size: 16px;
+        font-size: 17px;
     }
 
     .feature-vector-description {
-        font-size: 10px !important;
+        font-size: 10.5px !important;
     }
 
     .feature-table-card {
-        padding: 11px 9px;
+        padding:
+            13px
+            10px;
     }
 
     .feature-table-card h3 {
-        font-size: 10px;
+        font-size: 11px;
     }
 
     .feature-table th {
-        padding: 5px 3px;
-        font-size: 7px;
+        padding:
+            6px
+            4px;
+        font-size: 7.5px;
     }
 
     .feature-table td {
-        padding: 5px 3px !important;
-        font-size: 9px;
+        padding:
+            6px
+            4px !important;
+        font-size: 9.5px;
     }
 
     .feature-info-card {
@@ -1356,76 +1187,104 @@
     }
 
     .feature-info-card-close {
-        margin-right: -18px;
+        margin-right: -8px;
     }
 
     .feature-info-table th {
-        font-size: 7px;
+        font-size: 7.5px;
     }
 
     .feature-info-table td {
-        font-size: 8px;
-        padding: 6px 3px;
+        font-size: 8.5px;
+        padding:
+            7px
+            4px;
     }
 
     .feature-info-breakdown-item strong,
     .feature-info-breakdown-item span {
-        font-size: 9px;
+        font-size: 9.5px;
     }
 }
 
 
 /* =========================================================
-   VERY NARROW DEVICES
+   VERY NARROW PHONE
    320px AND BELOW
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 320px) {
 
+    .feature-vector-section {
+        padding:
+            6px
+            6px;
+    }
+
     .feature-vector-section h2 {
-        font-size: 15px;
+        font-size: 16px;
     }
 
     .feature-vector-description {
-        font-size: 9px !important;
+        font-size: 9.5px !important;
     }
 
     .feature-table-card {
-        padding: 10px 7px;
+        padding:
+            11px
+            8px;
     }
 
     .feature-table th {
-        font-size: 6.5px;
+        padding:
+            5px
+            3px;
+        font-size: 7px;
     }
 
     .feature-table td {
-        font-size: 8px;
+        padding:
+            5px
+            3px !important;
+        font-size: 8.5px;
     }
 
     .feature-info-card {
         padding: 12px;
     }
 
+    .feature-info-card-title {
+        font-size: 9.5px;
+    }
+
     .feature-info-table th,
     .feature-info-table td {
-        padding: 5px 2px;
+        padding:
+            6px
+            3px;
     }
 
     .feature-info-table td {
-        font-size: 7.5px;
+        font-size: 8px;
+    }
+
+    .feature-info-breakdown-item strong,
+    .feature-info-breakdown-item span {
+        font-size: 8.5px;
     }
 }
 
 
 /* =========================================================
-   SHORT SCREENS
-   Laptop / landscape phones / split-screen
-   ========================================================= */
+   SHORT DESKTOP / LAPTOP SCREENS
+========================================================= */
 
-@media (max-height: 650px) and (min-width: 601px) {
+@media (min-width: 901px) and (max-height: 800px) {
 
     .feature-vector-section {
         justify-content: flex-start;
+        padding-top: 8px;
+        padding-bottom: 8px;
     }
 
     .feature-vector-divider {
@@ -1434,53 +1293,83 @@
     }
 
     .feature-table-card {
-        padding-top: 11px;
-        padding-bottom: 11px;
+        padding-top: 12px;
+        padding-bottom: 12px;
     }
 
     .feature-table th,
     .feature-table td {
-        padding-top: 5px;
-        padding-bottom: 5px;
+        padding-top: 6px !important;
+        padding-bottom: 6px !important;
     }
 }
 
 
 /* =========================================================
-   LANDSCAPE PHONE
-   ========================================================= */
+   VERY SHORT SCREENS
+========================================================= */
 
-@media (max-width: 900px) and (orientation: landscape) {
+@media (max-height: 600px) {
 
-    .feature-table-container {
-        flex-direction: row;
-        align-items: flex-start;
+    .feature-vector-section {
+        justify-content: flex-start;
+        padding-top: 6px;
+    }
+
+    .feature-vector-divider {
+        margin-top: 8px;
+        margin-bottom: 10px;
     }
 
     .feature-table-card {
-        flex: 1 1 0;
-        min-width: 0;
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
 
-    .feature-info-breakdown-item {
-        grid-template-columns:
-            24%
-            52%
-            24%;
+    .feature-table-card h3 {
+        margin-bottom: 6px;
+    }
+
+    .feature-table th,
+    .feature-table td {
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+    }
+}
+
+
+/* =========================================================
+   LANDSCAPE PHONE / SMALL TABLET
+========================================================= */
+
+@media (max-width: 900px) and (orientation: landscape) {
+
+    .feature-vector-section {
+        justify-content: flex-start;
+    }
+
+    .feature-table-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .feature-table-card {
+        width: 100%;
+        max-width: none;
     }
 }
 
 
 /* =========================================================
    TOUCH DEVICES
-   Prevent hover effects from feeling broken
-   ========================================================= */
+========================================================= */
 
 @media (hover: none) {
 
     .feature-table-card:hover {
         transform: none;
-        border-color: rgba(56, 189, 248, .20);
+        border-color:
+            rgba(56, 189, 248, .20);
         box-shadow:
             0 8px 20px rgba(0, 0, 0, .30),
             0 0 12px rgba(56, 189, 248, .06);
@@ -1502,7 +1391,7 @@
 
 /* =========================================================
    REDUCED MOTION
-   ========================================================= */
+========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
 

@@ -1,3 +1,6 @@
+/* =========================================================
+   GLOBAL
+========================================================= */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,16 +8,23 @@
     font-family: "Segoe UI", Arial, sans-serif;
 }
 
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
 body {
     min-height: 100vh;
     overflow: hidden;
     color: #f8fafc;
-    background: radial-gradient(
-        circle at top,
-        #1e3a8a 0%,
-        #0f172a 45%,
-        #020617 100%
-    );
+    background:
+        radial-gradient(
+            circle at top,
+            #1e3a8a 0%,
+            #0f172a 45%,
+            #020617 100%
+        );
     animation: pageFade .8s ease forwards;
 }
 
@@ -66,12 +76,13 @@ body::after {
     width: 100%;
     height: 2px;
     opacity: .25;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        #38bdf8,
-        transparent
-    );
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #38bdf8,
+            transparent
+        );
     animation: scan 8s linear infinite;
     z-index: -1;
 }
@@ -86,6 +97,9 @@ body::after {
     }
 }
 
+/* =========================================================
+   MAIN RESULT CONTAINER
+========================================================= */
 .result-container {
     width: 100%;
     height: 100vh;
@@ -94,6 +108,9 @@ body::after {
     flex-direction: column;
 }
 
+/* =========================================================
+   PAGE HEADER
+========================================================= */
 .page-header {
     display: flex;
     align-items: center;
@@ -130,6 +147,9 @@ body::after {
     color: #7dd3fc;
 }
 
+/* =========================================================
+   DASHBOARD
+========================================================= */
 .dashboard {
     display: flex;
     gap: 24px;
@@ -137,12 +157,17 @@ body::after {
     min-height: 0;
 }
 
+/* =========================================================
+   SIDEBAR
+========================================================= */
 .sidebar {
     width: 260px;
     padding: 14px 18px;
-    border: 1px solid rgba(56, 189, 248, .18);
+    border:
+        1px solid rgba(56, 189, 248, .18);
     border-radius: 20px;
-    background: rgba(15, 23, 42, .65);
+    background:
+        rgba(15, 23, 42, .65);
     backdrop-filter: blur(16px);
     display: flex;
     flex-direction: column;
@@ -166,6 +191,8 @@ body::after {
     font-weight: 500;
     text-align: left;
     cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
     transition:
         color .25s ease,
         background .25s ease,
@@ -175,13 +202,15 @@ body::after {
 
 .sidebar-item:hover {
     color: #e2e8f0;
-    background: rgba(56, 189, 248, .05);
+    background:
+        rgba(56, 189, 248, .05);
     transform: translateX(2px);
 }
 
 .sidebar-item.active {
     color: #f8fafc;
-    background: rgba(56, 189, 248, .10);
+    background:
+        rgba(56, 189, 248, .10);
     box-shadow:
         inset 3px 0 0 #38bdf8,
         0 0 14px rgba(56, 189, 248, .25),
@@ -191,12 +220,17 @@ body::after {
 
 .sidebar-item.active:hover {
     color: #f8fafc;
-    background: rgba(56, 189, 248, .10);
+    background:
+        rgba(56, 189, 248, .10);
     box-shadow:
         inset 3px 0 0 #38bdf8,
         0 0 14px rgba(56, 189, 248, .25),
         0 0 30px rgba(56, 189, 248, .12);
     transform: translateX(3px);
+}
+
+.sidebar-item:active {
+    transform: scale(.98);
 }
 
 .sidebar-icon {
@@ -238,13 +272,17 @@ body::after {
     color: #f8fafc;
 }
 
+/* =========================================================
+   TUTORIAL BUTTON
+========================================================= */
 .tutorial-button {
     flex: 1;
 }
 
 .tutorial-button:hover {
     color: #e2e8f0;
-    background: rgba(56, 189, 248, .06);
+    background:
+        rgba(56, 189, 248, .06);
     transform: translateX(2px);
     box-shadow: none;
 }
@@ -275,13 +313,18 @@ body::after {
     filter: none;
 }
 
+/* =========================================================
+   CONTENT PANEL
+========================================================= */
 .content-panel {
     flex: 1;
     min-width: 0;
     min-height: 0;
-    border: 1px solid rgba(56, 189, 248, .18);
+    border:
+        1px solid rgba(56, 189, 248, .18);
     border-radius: 20px;
-    background: rgba(15, 23, 42, .65);
+    background:
+        rgba(15, 23, 42, .65);
     backdrop-filter: blur(16px);
     overflow: hidden;
 }
@@ -305,10 +348,14 @@ body::after {
     display: block;
 }
 
+/* =========================================================
+   TUTORIAL OVERLAY
+========================================================= */
 .tutorial-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(2, 6, 23, .65);
+    background:
+        rgba(2, 6, 23, .65);
     backdrop-filter: blur(4px);
     z-index: 99;
 }
@@ -321,18 +368,29 @@ body::after {
     position: fixed;
     top: 50%;
     left: 50%;
-    width: min(1400px, calc(100vw - 120px));
-    height: min(750px, calc(100vh - 140px));
+    width:
+        min(
+            1400px,
+            calc(100vw - 120px)
+        );
+    height:
+        min(
+            750px,
+            calc(100vh - 140px)
+        );
     padding: 45px;
-    border: 1px solid rgba(56, 189, 248, .40);
+    border:
+        1px solid rgba(56, 189, 248, .40);
     border-radius: 28px;
-    background: rgba(15, 23, 42, .96);
+    background:
+        rgba(15, 23, 42, .96);
     backdrop-filter: blur(24px);
     box-shadow:
         0 0 20px rgba(56, 189, 248, .30),
         0 0 50px rgba(56, 189, 248, .20),
         0 0 100px rgba(56, 189, 248, .10);
-    transform: translate(-50%, -50%);
+    transform:
+        translate(-50%, -50%);
     z-index: 100;
     overflow-y: auto;
 }
@@ -341,11 +399,19 @@ body::after {
     display: none !important;
 }
 
+/* =========================================================
+   ACTION BAR
+========================================================= */
 .action-bar {
     position: fixed;
     left: 40px;
     right: 40px;
-    bottom: clamp(25px, 4vh, 45px);
+    bottom:
+        clamp(
+            25px,
+            4vh,
+            45px
+        );
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -362,7 +428,8 @@ body::after {
     padding: 0;
     border: none;
     background: transparent;
-    transform: translate(40px, -10px);
+    transform:
+        translate(40px, -10px);
 }
 
 .important-icon {
@@ -389,25 +456,45 @@ body::after {
     line-height: 1.45;
 }
 
+/* =========================================================
+   RESET + COMPARISON BUTTONS
+   ALWAYS STACKED VERTICALLY
+========================================================= */
 .action-buttons {
+    width: 220px;
     display: flex;
-    gap: 20px;
+    flex-direction: column;
+    gap: 12px;
     flex-shrink: 0;
 }
 
 .action-buttons button {
+    width: 100%;
     min-width: 220px;
-    height: 52px;
+    min-height: 56px;
+    height: 56px;
+    padding: 0 24px;
     border: none;
     border-radius: 14px;
     font-size: 15px;
     font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
     cursor: pointer;
-    transition: .25s;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        transform .25s ease,
+        filter .25s ease,
+        box-shadow .25s ease;
 }
 
 .reset-btn {
-    background: rgba(51, 65, 85, .95);
+    background:
+        rgba(51, 65, 85, .95);
     color: #fff;
 }
 
@@ -420,8 +507,21 @@ body::after {
     transform: translateY(-2px);
 }
 
-@media (max-height: 800px) {
+.action-buttons button:active {
+    transform: translateY(0) scale(.98);
+}
 
+.action-buttons button:focus-visible,
+.sidebar-item:focus-visible {
+    outline: 2px solid #38bdf8;
+    outline-offset: 3px;
+}
+
+/* =========================================================
+   SHORT DESKTOP / LAPTOP ONLY
+   TABLETS ARE EXCLUDED
+========================================================= */
+@media (min-width: 1201px) and (max-height: 800px) {
     .result-container {
         padding-top: 20px;
         padding-bottom: 100px;
@@ -449,7 +549,8 @@ body::after {
     }
 
     .sidebar-item {
-        padding: 8px 8px 8px 16px;
+        padding:
+            8px 8px 8px 16px;
     }
 
     .sidebar-icon {
@@ -465,78 +566,35 @@ body::after {
         bottom: 20px;
     }
 
-    .tutorial-card {
-        width: min(1200px, calc(100vw - 80px));
-        height: min(650px, calc(100vh - 80px));
-        padding: 35px;
-    }
-}
-
-@media (max-width: 1100px) {
-
-    .result-container {
-        padding-left: 25px;
-        padding-right: 25px;
-    }
-
-    .action-bar {
-        left: 25px;
-        right: 25px;
-    }
-
-    .important-note {
-        width: 500px;
-        max-width: 500px;
-    }
-
-    .action-buttons button {
-        min-width: 190px;
-    }
-
-    .tutorial-card {
-        width: calc(100vw - 80px);
-        height: calc(100vh - 100px);
-        padding: 35px;
-    }
-}
-
-@media (max-width: 850px) {
-
-    .important-note {
-        width: 420px;
-        max-width: 420px;
-    }
-
     .action-buttons {
-        gap: 12px;
-    }
-
-    .action-buttons button {
-        min-width: 160px;
-    }
-
-    .sidebar {
-        width: 230px;
-    }
-
-    .sidebar-item {
-        font-size: 14px;
+        width: 220px;
         gap: 10px;
     }
 
-    .sidebar-icon {
-        width: 26px;
-        height: 26px;
+    .action-buttons button {
+        min-width: 220px;
+        height: 54px;
+        min-height: 54px;
     }
 
     .tutorial-card {
-        width: calc(100vw - 40px);
-        height: calc(100vh - 60px);
-        padding: 30px;
-        border-radius: 22px;
+        width:
+            min(
+                1200px,
+                calc(100vw - 80px)
+            );
+        height:
+            min(
+                650px,
+                calc(100vh - 80px)
+            );
+        padding: 35px;
     }
 }
 
+/* =========================================================
+   TOOLTIP
+========================================================= */
 .button-tooltip-wrapper {
     position: relative;
 }
@@ -544,11 +602,16 @@ body::after {
 .tooltip {
     position: absolute;
     left: 50%;
-    bottom: calc(100% + 18px);
-    transform: translateX(-50%) translateY(10px) scale(.96);
+    bottom:
+        calc(100% + 18px);
+    transform:
+        translateX(-50%)
+        translateY(10px)
+        scale(.96);
     width: 250px;
     padding: 18px 20px;
-    border: 1px solid rgba(255, 255, 255, .08);
+    border:
+        1px solid rgba(255, 255, 255, .08);
     border-radius: 18px;
     background:
         linear-gradient(
@@ -558,7 +621,10 @@ body::after {
         );
     backdrop-filter: blur(20px);
     color: #edf4ff;
-    font-family: "Manrope", "Segoe UI", sans-serif;
+    font-family:
+        "Manrope",
+        "Segoe UI",
+        sans-serif;
     font-size: 13px;
     font-weight: 500;
     letter-spacing: .25px;
@@ -590,7 +656,8 @@ body::after {
             transparent
         );
     background-size: 220% 100%;
-    animation: tooltipLight 8s ease-in-out infinite;
+    animation:
+        tooltipLight 8s ease-in-out infinite;
     pointer-events: none;
 }
 
@@ -610,14 +677,17 @@ body::after {
             transparent
         );
     background-size: 200% 100%;
-    animation: tooltipBorder 6s linear infinite;
+    animation:
+        tooltipBorder 6s linear infinite;
     pointer-events: none;
 }
 
 .tooltip strong {
     display: block;
     margin-bottom: 10px;
-    font-family: "Manrope", sans-serif;
+    font-family:
+        "Manrope",
+        sans-serif;
     font-size: 15px;
     font-weight: 800;
     letter-spacing: .4px;
@@ -628,24 +698,33 @@ body::after {
     opacity: 1;
     visibility: visible;
     transform:
-        translateX(-50%) translateY(0) scale(1);
-    animation: tooltipFloat 3.2s ease-in-out infinite;
+        translateX(-50%)
+        translateY(0)
+        scale(1);
+    animation:
+        tooltipFloat 3.2s ease-in-out infinite;
 }
 
 .button-tooltip-wrapper::after {
     content: "";
     position: absolute;
     left: 50%;
-    bottom: calc(100% + 11px);
+    bottom:
+        calc(100% + 11px);
     width: 14px;
     height: 14px;
     transform:
-        translateX(-50%) rotate(45deg);
-    background: rgb(18, 25, 39);
-    border-right: 1px solid rgba(255, 255, 255, .08);
-    border-bottom: 1px solid rgba(255, 255, 255, .08);
+        translateX(-50%)
+        rotate(45deg);
+    background:
+        rgb(18, 25, 39);
+    border-right:
+        1px solid rgba(255, 255, 255, .08);
+    border-bottom:
+        1px solid rgba(255, 255, 255, .08);
     opacity: 0;
-    transition: opacity .28s ease;
+    transition:
+        opacity .28s ease;
     pointer-events: none;
 }
 
@@ -654,7 +733,6 @@ body::after {
 }
 
 @keyframes tooltipLight {
-
     0% {
         background-position: -180% 0;
     }
@@ -669,7 +747,6 @@ body::after {
 }
 
 @keyframes tooltipBorder {
-
     from {
         background-position: 0% 0;
     }
@@ -680,35 +757,33 @@ body::after {
 }
 
 @keyframes tooltipFloat {
-
     0%,
     100% {
         transform:
-            translateX(-50%) translateY(0) scale(1);
+            translateX(-50%)
+            translateY(0)
+            scale(1);
     }
 
     50% {
         transform:
-            translateX(-50%) translateY(-3px) scale(1);
+            translateX(-50%)
+            translateY(-3px)
+            scale(1);
     }
 }
 
-
 /* =========================================================
-   RESPONSIVE PAGE LAYOUT
-   ========================================================= */
-
-
-/* =========================
    TABLET
-   ========================= */
-
-@media (max-width: 900px) {
-
+   1200px AND BELOW
+   SIDEBAR BECOMES HORIZONTAL NAVIGATION
+========================================================= */
+@media (max-width: 1200px) {
     html,
     body {
+        width: 100%;
         height: auto;
-        min-height: 100vh;
+        min-height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
     }
@@ -717,23 +792,375 @@ body::after {
         width: 100%;
         height: auto;
         min-height: 100vh;
-        padding: 25px 25px 40px;
+        padding:
+            25px 24px 45px;
+        display: block;
+    }
+
+    .page-header {
+        width: 100%;
+        margin-bottom: 24px;
+        gap: 16px;
+    }
+
+    .header-logo {
+        width: 54px;
+        height: 54px;
+    }
+
+    .header-text h1 {
+        font-size: 19px;
+    }
+
+    .header-text p {
+        font-size: 12px;
     }
 
     .dashboard {
-        flex-direction: column;
-        flex: none;
+        width: 100%;
         height: auto;
         min-height: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+        flex: none;
     }
 
+    /* -----------------------------------------
+       HORIZONTAL MOBILE / TABLET NAVIGATION
+    ----------------------------------------- */
     .sidebar {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        flex: none;
+        padding: 10px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .sidebar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .sidebar-item {
+        width: auto;
+        min-width: max-content;
+        flex: 0 0 auto;
+        min-height: 54px;
+        height: 54px;
+        padding:
+            10px 18px;
+        gap: 10px;
+        border-radius: 12px;
+        font-size: 15px;
+        white-space: nowrap;
+        justify-content: center;
+    }
+
+    .sidebar-item:hover {
+        transform: translateY(-1px);
+    }
+
+    .sidebar-item.active {
+        transform: none;
+        box-shadow:
+            inset 0 -3px 0 #38bdf8,
+            0 0 14px rgba(56, 189, 248, .25),
+            0 0 30px rgba(56, 189, 248, .12);
+    }
+
+    .sidebar-item.active:hover {
+        transform: none;
+    }
+
+    .sidebar-item:active {
+        transform: scale(.97);
+    }
+
+    .sidebar-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .sidebar-text {
+        white-space: nowrap;
+    }
+
+    .tutorial-button {
+        flex: 0 0 auto;
+    }
+
+    .tutorial-button:hover {
+        transform: translateY(-1px);
+    }
+
+    .tutorial-button.active {
+        transform: none;
+    }
+
+    /* -----------------------------------------
+       CONTENT
+    ----------------------------------------- */
+    .content-panel {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        flex: none;
+        overflow: visible;
+    }
+
+    #contentRoot {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        padding: 26px;
+        overflow: visible;
+    }
+
+    .result-section {
         width: 100%;
         height: auto;
         min-height: 0;
         overflow: visible;
     }
 
+    .result-section > * {
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    /* -----------------------------------------
+       ACTION BAR
+    ----------------------------------------- */
+    .action-bar {
+        position: relative;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        width: 100%;
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 22px;
+    }
+
+    .important-note {
+        width: 100%;
+        max-width: 100%;
+        transform: none;
+    }
+
+    .important-icon {
+        font-size: 22px;
+    }
+
+    .important-text strong {
+        font-size: 14px;
+    }
+
+    .important-text p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    /* RESET + COMPARISON STACK */
+    .action-buttons {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .action-buttons button {
+        width: 100%;
+        min-width: 0;
+        height: 58px;
+        min-height: 58px;
+        padding:
+            0 20px;
+        font-size: 15px;
+    }
+
+    .tutorial-card {
+        width:
+            calc(100vw - 60px);
+        height:
+            calc(100vh - 80px);
+        padding: 35px;
+        border-radius: 24px;
+    }
+}
+
+/* =========================================================
+   LARGE TABLET
+   901px - 1200px
+========================================================= */
+@media (min-width: 901px) and (max-width: 1200px) {
+    .result-container {
+        padding:
+            28px 28px 50px;
+    }
+
+    .page-header {
+        margin-bottom: 28px;
+    }
+
+    .header-logo {
+        width: 56px;
+        height: 56px;
+    }
+
+    .header-text h1 {
+        font-size: 20px;
+    }
+
+    .header-text p {
+        font-size: 13px;
+        letter-spacing: 1.8px;
+    }
+
+    .dashboard {
+        gap: 24px;
+    }
+
+    .sidebar {
+        padding: 10px;
+        gap: 9px;
+    }
+
+    .sidebar-item {
+        min-height: 58px;
+        height: 58px;
+        padding:
+            11px 20px;
+        font-size: 16px;
+    }
+
+    .sidebar-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    #contentRoot {
+        padding: 30px;
+    }
+
+    .action-bar {
+        margin-top: 32px;
+        gap: 24px;
+    }
+
+    .important-text strong {
+        font-size: 15px;
+    }
+
+    .important-text p {
+        font-size: 14px;
+        line-height: 1.55;
+    }
+
+    /* KEEP STACKED */
+    .action-buttons {
+        width: 100%;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .action-buttons button {
+        width: 100%;
+        height: 58px;
+        min-height: 58px;
+        font-size: 15px;
+    }
+}
+
+/* =========================================================
+   SMALL TABLET
+   700px AND BELOW
+========================================================= */
+@media (max-width: 700px) {
+    .result-container {
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        padding:
+            22px 18px 45px;
+    }
+
+    .page-header {
+        width: 100%;
+        margin-bottom: 22px;
+        gap: 13px;
+    }
+
+    .header-logo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .header-text {
+        min-width: 0;
+    }
+
+    .header-text h1 {
+        font-size: 19px;
+    }
+
+    .header-text p {
+        font-size: 11px;
+        letter-spacing: 1.5px;
+    }
+
+    .dashboard {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        gap: 20px;
+    }
+
+    /* -----------------------------------------
+       MOBILE HORIZONTAL NAV
+    ----------------------------------------- */
+    .sidebar {
+        width: 100%;
+        padding: 9px;
+        gap: 7px;
+        border-radius: 16px;
+    }
+
+    .sidebar-item {
+        min-height: 52px;
+        height: 52px;
+        padding:
+            9px 15px;
+        gap: 9px;
+        font-size: 15px;
+        border-radius: 11px;
+    }
+
+    .sidebar-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .sidebar-item.active {
+        box-shadow:
+            inset 0 -3px 0 #38bdf8,
+            0 0 12px rgba(56, 189, 248, .22),
+            0 0 24px rgba(56, 189, 248, .10);
+    }
+
+    /* -----------------------------------------
+       CONTENT
+    ----------------------------------------- */
     .content-panel {
         width: 100%;
         height: auto;
@@ -745,47 +1172,25 @@ body::after {
         width: 100%;
         height: auto;
         min-height: 0;
+        padding:
+            22px 18px;
         overflow: visible;
     }
 
+    .result-section {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+    }
+
+    /* -----------------------------------------
+       ACTION BUTTONS
+    ----------------------------------------- */
     .action-bar {
-        position: relative;
-        left: auto;
-        right: auto;
-        bottom: auto;
-        margin-top: 25px;
-        flex-wrap: wrap;
-    }
-}
-
-
-/* =========================
-   SMALL TABLET
-   ========================= */
-
-@media (max-width: 700px) {
-
-    .result-container {
-        padding: 20px 18px 35px;
-    }
-
-    .page-header {
-        margin-bottom: 20px;
-    }
-
-    .dashboard {
-        gap: 18px;
-    }
-
-    .sidebar {
-        padding: 12px;
-    }
-
-    #contentRoot {
-        padding: 20px;
-    }
-
-    .action-bar {
+        width: 100%;
+        margin-top: 26px;
+        display: flex;
         flex-direction: column;
         align-items: stretch;
         gap: 20px;
@@ -797,35 +1202,58 @@ body::after {
         transform: none;
     }
 
+    .important-icon {
+        font-size: 21px;
+    }
+
+    .important-text strong {
+        font-size: 14px;
+    }
+
+    .important-text p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    /* STACKED */
     .action-buttons {
         width: 100%;
         display: flex;
-        gap: 12px;
+        flex-direction: column;
+        gap: 10px;
     }
 
     .action-buttons button {
-        flex: 1 1 0;
-        width: auto;
+        width: 100%;
         min-width: 0;
-        height: 52px;
-        padding: 0 16px;
-        font-size: 14px;
-        white-space: nowrap;
+        height: 58px;
+        min-height: 58px;
+        padding:
+            0 18px;
+        font-size: 15px;
+        border-radius: 14px;
+    }
+
+    .tutorial-card {
+        width:
+            calc(100vw - 40px);
+        height:
+            calc(100vh - 60px);
+        padding: 30px;
+        border-radius: 22px;
     }
 }
 
-
-/* =========================
+/* =========================================================
    PHONE
-   ========================= */
-
+   550px AND BELOW
+========================================================= */
 @media (max-width: 550px) {
-
     html,
     body {
         width: 100%;
         height: auto;
-        min-height: 100vh;
+        min-height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
     }
@@ -834,10 +1262,13 @@ body::after {
         width: 100%;
         height: auto;
         min-height: 100vh;
-        padding: 18px 14px 30px;
+        padding:
+            18px 12px 40px;
+        display: block;
     }
 
     .page-header {
+        width: 100%;
         gap: 12px;
         margin-bottom: 18px;
     }
@@ -845,6 +1276,10 @@ body::after {
     .header-logo {
         width: 44px;
         height: 44px;
+    }
+
+    .header-text {
+        min-width: 0;
     }
 
     .header-text h1 {
@@ -862,32 +1297,55 @@ body::after {
         min-height: 0;
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 18px;
     }
 
+    /* -----------------------------------------
+       PHONE HORIZONTAL NAVIGATION
+    ----------------------------------------- */
     .sidebar {
         width: 100%;
         height: auto;
-        padding: 10px;
-        overflow: visible;
+        min-height: 0;
+        padding: 8px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 6px;
+        border-radius: 15px;
     }
 
     .sidebar-item {
-        flex: none;
-        min-height: 48px;
-        padding: 8px 10px;
-        font-size: 13px;
+        width: auto;
+        flex: 0 0 auto;
+        min-height: 50px;
+        height: 50px;
+        padding:
+            8px 14px;
+        gap: 8px;
+        font-size: 14px;
+        border-radius: 10px;
     }
 
     .sidebar-icon {
-        width: 25px;
-        height: 25px;
+        width: 26px;
+        height: 26px;
     }
 
+    .sidebar-item.active {
+        box-shadow:
+            inset 0 -3px 0 #38bdf8,
+            0 0 10px rgba(56, 189, 248, .20),
+            0 0 20px rgba(56, 189, 248, .08);
+    }
+
+    /* -----------------------------------------
+       CONTENT
+    ----------------------------------------- */
     .content-panel {
         width: 100%;
         height: auto;
         min-height: 0;
+        flex: none;
         overflow: visible;
     }
 
@@ -895,7 +1353,8 @@ body::after {
         width: 100%;
         height: auto;
         min-height: 0;
-        padding: 16px;
+        padding:
+            18px 14px;
         overflow: visible;
     }
 
@@ -903,15 +1362,26 @@ body::after {
         width: 100%;
         height: auto;
         min-height: 0;
+        overflow: visible;
     }
 
+    .result-section > * {
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    /* -----------------------------------------
+       ACTION BAR
+    ----------------------------------------- */
     .action-bar {
         width: 100%;
         position: relative;
         left: auto;
         right: auto;
         bottom: auto;
-        margin-top: 20px;
+        margin-top: 25px;
+        display: flex;
+        flex-direction: column;
         gap: 18px;
     }
 
@@ -925,6 +1395,10 @@ body::after {
         font-size: 20px;
     }
 
+    .important-text {
+        min-width: 0;
+    }
+
     .important-text strong {
         font-size: 13px;
     }
@@ -934,41 +1408,40 @@ body::after {
         line-height: 1.5;
     }
 
-    /*
-       MOBILE ACTION BUTTON FIX
-       Buttons stay large and readable instead of shrinking.
-    */
-
+    /* STACKED */
     .action-buttons {
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 9px;
     }
 
     .action-buttons button {
-        flex: none;
         width: 100%;
         min-width: 0;
-        height: 54px;
-        min-height: 54px;
-        padding: 0 18px;
+        height: 56px;
+        min-height: 56px;
+        padding:
+            0 16px;
         border-radius: 14px;
-        font-size: 14px;
+        font-size: 15px;
         font-weight: 600;
         white-space: nowrap;
     }
 }
 
-
-/* =========================
+/* =========================================================
    VERY SMALL PHONE
-   ========================= */
-
+========================================================= */
 @media (max-width: 400px) {
-
     .result-container {
-        padding: 15px 10px 25px;
+        width: 100%;
+        padding:
+            15px 9px 35px;
+    }
+
+    .page-header {
+        gap: 10px;
     }
 
     .header-logo {
@@ -977,47 +1450,317 @@ body::after {
     }
 
     .header-text h1 {
-        font-size: 15px;
+        font-size: 16px;
     }
 
     .header-text p {
-        font-size: 9px;
+        font-size: 10px;
+        letter-spacing: 1.2px;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 7px;
+        gap: 5px;
     }
 
     .sidebar-item {
-        min-height: 44px;
-        font-size: 12px;
+        min-height: 48px;
+        height: 48px;
+        padding:
+            8px 12px;
+        gap: 7px;
+        font-size: 13px;
+        border-radius: 9px;
+    }
+
+    .sidebar-icon {
+        width: 25px;
+        height: 25px;
     }
 
     #contentRoot {
-        padding: 12px;
+        width: 100%;
+        padding:
+            14px 10px;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
     }
 
     .action-bar {
+        width: 100%;
         gap: 16px;
     }
 
+    /* STACKED */
     .action-buttons {
-        gap: 9px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
     }
 
     .action-buttons button {
         width: 100%;
-        height: 52px;
-        min-height: 52px;
-        padding: 0 14px;
-        font-size: 13px;
+        height: 55px;
+        min-height: 55px;
+        padding:
+            0 14px;
+        font-size: 14px;
         border-radius: 13px;
     }
 }
 
+/* =========================================================
+   TOUCH DEVICES
+   LARGE iPAD / TABLET LANDSCAPE
+   Keeps navigation horizontal instead of turning
+   into a desktop sidebar.
+========================================================= */
+@media (hover: none) and (pointer: coarse) {
+    html,
+    body {
+        width: 100%;
+        height: auto;
+        min-height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .result-container {
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        padding:
+            25px 24px 45px;
+        display: block;
+    }
+
+    .page-header {
+        width: 100%;
+        margin-bottom: 24px;
+        gap: 16px;
+    }
+
+    .header-logo {
+        width: 54px;
+        height: 54px;
+    }
+
+    .header-text h1 {
+        font-size: 19px;
+    }
+
+    .header-text p {
+        font-size: 12px;
+        letter-spacing: 1.8px;
+    }
+
+    .dashboard {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+        flex: none;
+    }
+
+    /* -----------------------------------------
+       TOUCH NAVIGATION
+    ----------------------------------------- */
+    .sidebar {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        flex: none;
+        padding: 10px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .sidebar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .sidebar-item {
+        width: auto;
+        flex: 0 0 auto;
+        min-width: max-content;
+        min-height: 56px;
+        height: 56px;
+        padding:
+            10px 19px;
+        gap: 10px;
+        font-size: 15px;
+        border-radius: 12px;
+        justify-content: center;
+    }
+
+    .sidebar-item:hover {
+        transform: none;
+    }
+
+    .sidebar-item.active {
+        transform: none;
+        box-shadow:
+            inset 0 -3px 0 #38bdf8,
+            0 0 14px rgba(56, 189, 248, .25),
+            0 0 30px rgba(56, 189, 248, .12);
+    }
+
+    .sidebar-item.active:hover {
+        transform: none;
+    }
+
+    .sidebar-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .tutorial-button {
+        flex: 0 0 auto;
+    }
+
+    .tutorial-button.active {
+        transform: none;
+    }
+
+    /* -----------------------------------------
+       CONTENT
+    ----------------------------------------- */
+    .content-panel {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        flex: none;
+        overflow: visible;
+    }
+
+    #contentRoot {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        padding: 26px;
+        overflow: visible;
+    }
+
+    .result-section {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+    }
+
+    .result-section > * {
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    /* -----------------------------------------
+       ACTION BAR
+    ----------------------------------------- */
+    .action-bar {
+        position: relative;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        width: 100%;
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 22px;
+    }
+
+    .important-note {
+        width: 100%;
+        max-width: 100%;
+        transform: none;
+    }
+
+    .important-icon {
+        font-size: 22px;
+    }
+
+    .important-text strong {
+        font-size: 14px;
+    }
+
+    .important-text p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    /* ALWAYS STACKED ON TOUCH DEVICES */
+    .action-buttons {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .action-buttons button {
+        width: 100%;
+        min-width: 0;
+        height: 58px;
+        min-height: 58px;
+        padding:
+            0 18px;
+        font-size: 15px;
+        white-space: nowrap;
+    }
+
+    .tutorial-card {
+        width:
+            calc(100vw - 50px);
+        height:
+            calc(100vh - 70px);
+        padding: 32px;
+        border-radius: 24px;
+    }
+}
+
+/* =========================================================
+   MOBILE SAFETY
+========================================================= */
+@media (max-width: 1200px) {
+    .result-container,
+    .dashboard,
+    .sidebar,
+    .content-panel,
+    #contentRoot,
+    .result-section {
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    img,
+    video,
+    canvas,
+    svg {
+        max-width: 100%;
+    }
+
+    table {
+        max-width: 100%;
+    }
+
+    pre {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+}
 
 /* =========================================================
    CUSTOM SCROLLBAR
-   ========================================================= */
-
-/* Chrome, Edge, Safari */
-
+========================================================= */
 html::-webkit-scrollbar,
 body::-webkit-scrollbar,
 #contentRoot::-webkit-scrollbar {
@@ -1028,40 +1771,44 @@ body::-webkit-scrollbar,
 html::-webkit-scrollbar-track,
 body::-webkit-scrollbar-track,
 #contentRoot::-webkit-scrollbar-track {
-    background: rgba(2, 6, 23, 0.65);
+    background:
+        rgba(2, 6, 23, .65);
     border-radius: 10px;
 }
 
 html::-webkit-scrollbar-thumb,
 body::-webkit-scrollbar-thumb,
 #contentRoot::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-        180deg,
-        #38bdf8,
-        #2563eb
-    );
+    background:
+        linear-gradient(
+            180deg,
+            #38bdf8,
+            #2563eb
+        );
     border-radius: 10px;
-    border: 2px solid rgba(2, 6, 23, 0.65);
+    border:
+        2px solid rgba(2, 6, 23, .65);
 }
 
 html::-webkit-scrollbar-thumb:hover,
 body::-webkit-scrollbar-thumb:hover,
 #contentRoot::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(
-        180deg,
-        #7dd3fc,
-        #3b82f6
-    );
+    background:
+        linear-gradient(
+            180deg,
+            #7dd3fc,
+            #3b82f6
+        );
 }
-
 
 /* =========================================================
    FIREFOX
-   ========================================================= */
-
+========================================================= */
 html,
 body,
 #contentRoot {
     scrollbar-width: thin;
-    scrollbar-color: #2563eb rgba(2, 6, 23, 0.65);
+    scrollbar-color:
+        #2563eb
+        rgba(2, 6, 23, .65);
 }
