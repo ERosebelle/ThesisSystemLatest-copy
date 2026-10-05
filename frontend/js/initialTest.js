@@ -1,722 +1,686 @@
-document.addEventListener("DOMContentLoaded", () => {
+fetch("https://thesissystemlatest.onrender.com/analyze", { method: "HEAD" }).catch(() => {});
 
-    const API_URL = "https://thesissystemlatest.onrender.com/analyze";
+const API_URL = "https://thesissystemlatest.onrender.com/analyze";
 
-    fetch(API_URL, {
-        method: "HEAD"
-    }).catch(() => {});
+const passwordInput = document.getElementById("passwordInput");
+const togglePassword = document.getElementById("togglePassword");
+const eyeOpen = document.getElementById("eyeOpen");
+const eyeClosed = document.getElementById("eyeClosed");
+const scanButton = document.getElementById("scanButton");
+
+if (passwordInput && togglePassword) {
+    togglePassword.addEventListener("click", () => {
+        const isHidden = passwordInput.type === "password";
+
+        passwordInput.type = isHidden ? "text" : "password";
+        eyeOpen.classList.toggle("hidden", isHidden);
+        eyeClosed.classList.toggle("hidden", !isHidden);
+    });
+}
 
 
-    const passwordInput = document.getElementById("passwordInput");
-    const togglePassword = document.getElementById("togglePassword");
-    const eyeOpen = document.getElementById("eyeOpen");
-    const eyeClosed = document.getElementById("eyeClosed");
-    const scanButton = document.getElementById("scanButton");
+const scene = document.querySelector(".scene");
+const infoButton = document.getElementById("infoButton");
+const closeInfo = document.getElementById("closeInfo");
+const infoPanel = document.querySelector(".info-panel");
+const infoMenu = document.querySelector(".info-menu");
+const infoButtons = document.querySelectorAll(".info-option");
+const infoTitle = document.getElementById("infoTitle");
+const infoContent = document.getElementById("infoContent");
 
-    if (togglePassword && passwordInput) {
 
-        togglePassword.addEventListener("click", () => {
+function isMobile() {
+    return window.innerWidth <= 1024;
+}
 
-            const isPassword =
-                passwordInput.type === "password";
+function scrollToInfo() {
+    if (!isMobile() || !infoPanel) {
+        return;
+    }
 
-            passwordInput.type =
-                isPassword ? "text" : "password";
-
-            if (eyeOpen) {
-                eyeOpen.style.display =
-                    isPassword ? "none" : "block";
-            }
-
-            if (eyeClosed) {
-                eyeClosed.style.display =
-                    isPassword ? "block" : "none";
-            }
+    setTimeout(() => {
+        infoPanel.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
         });
+    }, 100);
+}
+
+function updateInfoMenuArrow() {
+    if (!infoMenu) {
+        return;
     }
 
+    const hasMore =
+        infoMenu.scrollWidth > infoMenu.clientWidth + 5 &&
+        infoMenu.scrollLeft + infoMenu.clientWidth <
+        infoMenu.scrollWidth - 5;
 
-    const infoButton = document.getElementById("infoButton");
-    const infoPanel = document.getElementById("infoPanel");
-    const closeInfo = document.getElementById("closeInfo");
-    const infoTitle = document.getElementById("infoTitle");
-    const infoContent = document.getElementById("infoContent");
+    infoMenu.classList.toggle("has-more-right", hasMore);
+}
 
-    const infoMenu =
-        document.querySelector(".info-menu");
+if (infoMenu) {
+    infoMenu.addEventListener(
+        "scroll",
+        updateInfoMenuArrow,
+        { passive: true }
+    );
+}
 
-    const infoItems =
-        document.querySelectorAll(".info-item");
+window.addEventListener("resize", updateInfoMenuArrow);
 
 
-    const information = {
+if (infoButton) {
+    infoButton.addEventListener("click", () => {
+        scene.classList.toggle("show-info");
 
-        about: {
-            title: "About the System",
-            content: `
-                <p>
-                    The Password Vulnerability Classification System
-                    analyzes user-generated passwords and identifies
-                    their dominant vulnerability type.
-                </p>
-
-                <p>
-                    The system classifies passwords into
-                    <strong>Brute-Force</strong>,
-                    <strong>Dictionary-Based</strong>, or
-                    <strong>Rule-Based</strong> vulnerability.
-                </p>
-
-                <p>
-                    It also provides a risk level, explanation,
-                    decision-tree path, and recommendations.
-                </p>
-            `
-        },
-
-        how: {
-            title: "How It Works",
-            content: `
-                <p>
-                    The system first extracts structural
-                    characteristics from the password.
-                </p>
-
-                <p>
-                    These characteristics are converted into
-                    a feature vector and processed by the
-                    trained CART Decision Tree model.
-                </p>
-
-                <p>
-                    The system then follows the decision path
-                    to determine the dominant vulnerability
-                    classification and corresponding risk level.
-                </p>
-            `
-        },
-
-        analysis: {
-            title: "Password Analysis",
-            content: `
-                <p>
-                    The system analyzes characteristics such as
-                    password length, character classes, dictionary
-                    words, leetspeak, numeric placement, sequences,
-                    repetitions, and recognizable patterns.
-                </p>
-
-                <p>
-                    The analysis focuses on password characteristics
-                    rather than attempting to reveal or crack the
-                    password.
-                </p>
-            `
-        },
-
-        cracking: {
-            title: "Cracking Methods",
-            content: `
-                <p>
-                    <strong>Brute-Force</strong> refers to systematically
-                    trying possible combinations of characters.
-                </p>
-
-                <p>
-                    <strong>Dictionary-Based</strong> attacks use known
-                    words or commonly used terms as password guesses.
-                </p>
-
-                <p>
-                    <strong>Rule-Based</strong> attacks apply predictable
-                    transformations, substitutions, sequences,
-                    repetitions, or common password patterns.
-                </p>
-            `
-        },
-
-        decision: {
-            title: "Decision Tree",
-            content: `
-                <p>
-                    The system uses a CART Decision Tree to classify
-                    password vulnerability.
-                </p>
-
-                <p>
-                    Each decision node evaluates a password feature
-                    and determines which branch should be followed.
-                </p>
-
-                <p>
-                    The resulting path provides an explanation of
-                    how the classification was reached.
-                </p>
-            `
-        },
-
-        tutorial: {
-            title: "Tutorial",
-            content: `
-                <div class="tutorial-slider">
-
-                    <div class="tutorial-images">
-
-                        <div class="tutorial-slide active">
-                            <img src="../assets/images/tut1.png" alt="Tutorial Step 1">
-                        </div>
-
-                        <div class="tutorial-slide">
-                            <img src="../assets/images/tut2.png" alt="Tutorial Step 2">
-                        </div>
-
-                        <div class="tutorial-slide">
-                            <img src="../assets/images/tut3.png" alt="Tutorial Step 3">
-                        </div>
-
-                        <div class="tutorial-slide">
-                            <img src="../assets/images/tut4.png" alt="Tutorial Step 4">
-                        </div>
-
-                        <div class="tutorial-slide">
-                            <img src="../assets/images/tut5.png" alt="Tutorial Step 5">
-                        </div>
-
-                        <div class="tutorial-slide">
-                            <img src="../assets/images/tut6.png" alt="Tutorial Step 6">
-                        </div>
-
-                        <div class="tutorial-slide">
-                            <img src="../assets/images/tut7.png" alt="Tutorial Step 7">
-                        </div>
-
-                    </div>
-
-                    <div class="tutorial-dots">
-                        <span class="tutorial-dot active" data-slide="0"></span>
-                        <span class="tutorial-dot" data-slide="1"></span>
-                        <span class="tutorial-dot" data-slide="2"></span>
-                        <span class="tutorial-dot" data-slide="3"></span>
-                        <span class="tutorial-dot" data-slide="4"></span>
-                        <span class="tutorial-dot" data-slide="5"></span>
-                        <span class="tutorial-dot" data-slide="6"></span>
-                    </div>
-
-                </div>
-            `
-        }
-    };
-
-
-    function updateInfoMenuArrow() {
-
-        if (!infoMenu) {
-            return;
-        }
-
-        const hasOverflow =
-            infoMenu.scrollWidth > infoMenu.clientWidth + 5;
-
-        const atEnd =
-            infoMenu.scrollLeft +
-            infoMenu.clientWidth >=
-            infoMenu.scrollWidth - 5;
-
-        infoMenu.classList.toggle("has-overflow", hasOverflow);
-        infoMenu.classList.toggle("at-end", atEnd);
-    }
-
-
-    function initializeInfoMenuScroll() {
-
-        if (!infoMenu) {
-            return;
-        }
-
-        infoMenu.addEventListener(
-            "scroll",
-            updateInfoMenuArrow,
-            { passive: true }
-        );
-
-        updateInfoMenuArrow();
-    }
-
-
-    function scrollToInfo() {
-
-        if (!infoPanel) {
-            return;
-        }
-
-        if (window.innerWidth <= 768) {
-
-            setTimeout(() => {
-
-                infoPanel.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-
-            }, 100);
-        }
-    }
-
-
-    function openInfoPanel(type) {
-
-        if (
-            !infoPanel ||
-            !infoTitle ||
-            !infoContent
-        ) {
-            return;
-        }
-
-        const data = information[type];
-
-        if (!data) {
-            return;
-        }
-
-        infoTitle.textContent = data.title;
-        infoContent.innerHTML = data.content;
-
-        infoPanel.classList.add("active");
-
-        infoItems.forEach(item => {
-            item.classList.remove("active");
-
-            if (item.dataset.info === type) {
-                item.classList.add("active");
-            }
-        });
-
-        if (infoMenu) {
-            infoMenu.scrollLeft = 0;
-        }
-
-        updateInfoMenuArrow();
-
-        initializeImageZoom();
-        initializeTutorialSlider();
-
-        scrollToInfo();
-    }
-
-
-    function closeInfoPanel() {
-
-        if (!infoPanel) {
-            return;
-        }
-
-        infoPanel.classList.remove("active");
-
-        infoItems.forEach(item => {
-            item.classList.remove("active");
-        });
-
-        if (window.innerWidth <= 768) {
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        }
-    }
-
-
-    if (infoItems.length) {
-
-        infoItems.forEach(item => {
-
-            item.addEventListener("click", () => {
-                openInfoPanel(item.dataset.info);
-            });
-        });
-    }
-
-
-    if (infoButton) {
-
-        infoButton.addEventListener("click", () => {
-
+        if (scene.classList.contains("show-info")) {
             if (infoMenu) {
                 infoMenu.scrollLeft = 0;
             }
 
             scrollToInfo();
 
-            setTimeout(updateInfoMenuArrow, 250);
-        });
+            setTimeout(updateInfoMenuArrow, 150);
+            setTimeout(updateInfoMenuArrow, 400);
+        }
+    });
+}
+
+if (closeInfo) {
+    closeInfo.addEventListener("click", () => {
+        scene.classList.remove("show-info");
+
+        if (isMobile()) {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    });
+}
+
+
+let zoomImages = [];
+let zoomIndex = 0;
+
+function createZoomOverlay() {
+    let overlay = document.getElementById("imageZoomOverlay");
+
+    if (overlay) {
+        return overlay;
     }
 
+    overlay = document.createElement("div");
+    overlay.id = "imageZoomOverlay";
+    overlay.className = "image-zoom-overlay";
 
-    if (closeInfo) {
-        closeInfo.addEventListener("click", closeInfoPanel);
-    }
+    overlay.innerHTML = `
+        <button class="image-zoom-close" type="button">×</button>
 
+        <button class="image-zoom-prev" type="button">
+            &#10094;
+        </button>
 
-    function createImageZoomOverlay(image) {
+        <img class="image-zoom-preview" alt="">
 
-        if (!image) {
-            return;
-        }
+        <button class="image-zoom-next" type="button">
+            &#10095;
+        </button>
+    `;
 
-        const existing =
-            document.querySelector(".image-zoom-overlay");
+    document.body.appendChild(overlay);
 
-        if (existing) {
-            existing.remove();
-        }
+    overlay.querySelector(".image-zoom-close")
+        .addEventListener("click", closeZoom);
 
-        const overlay =
-            document.createElement("div");
-
-        overlay.className = "image-zoom-overlay";
-
-        const preview =
-            document.createElement("img");
-
-        preview.src = image.src;
-        preview.alt = image.alt || "";
-
-        const closeButton =
-            document.createElement("button");
-
-        closeButton.className = "image-zoom-close";
-        closeButton.innerHTML = "&times;";
-
-        overlay.appendChild(preview);
-        overlay.appendChild(closeButton);
-
-        document.body.appendChild(overlay);
-
-        preview.style.left = "50%";
-        preview.style.top = "50%";
-        preview.style.transform = "translate(-50%, -50%)";
-
-        overlay.addEventListener("click", () => {
-            overlay.remove();
-        });
-
-        closeButton.addEventListener("click", event => {
+    overlay.querySelector(".image-zoom-prev")
+        .addEventListener("click", event => {
             event.stopPropagation();
-            overlay.remove();
+            changeZoom(-1);
         });
 
-        preview.addEventListener("click", event => {
+    overlay.querySelector(".image-zoom-next")
+        .addEventListener("click", event => {
             event.stopPropagation();
+            changeZoom(1);
         });
+
+    overlay.addEventListener("click", event => {
+        if (event.target === overlay) {
+            closeZoom();
+        }
+    });
+
+    return overlay;
+}
+
+function openZoom(images, index, navigation) {
+    zoomImages = images;
+    zoomIndex = index;
+
+    const overlay = createZoomOverlay();
+
+    const previous = overlay.querySelector(".image-zoom-prev");
+    const next = overlay.querySelector(".image-zoom-next");
+
+    previous.classList.toggle("visible", navigation && images.length > 1);
+    next.classList.toggle("visible", navigation && images.length > 1);
+
+    updateZoom();
+
+    overlay.classList.add("active");
+    document.body.classList.add("image-zoom-open");
+}
+
+function updateZoom() {
+    const overlay = document.getElementById("imageZoomOverlay");
+
+    if (!overlay || !zoomImages.length) {
+        return;
     }
 
+    const preview = overlay.querySelector(".image-zoom-preview");
 
-    function initializeImageZoom() {
+    preview.src = zoomImages[zoomIndex].src;
+    preview.alt = zoomImages[zoomIndex].alt || "";
 
-        if (!infoContent) {
-            return;
-        }
+    if (
+        zoomImages.length > 1 &&
+        zoomImages[zoomIndex].classList.contains("tutorial-slide")
+    ) {
+        updateSlide(zoomIndex);
+    }
+}
 
-        const images =
-            infoContent.querySelectorAll(".tutorial-slide img");
+function changeZoom(direction) {
+    if (zoomImages.length <= 1) {
+        return;
+    }
 
-        images.forEach(image => {
+    zoomIndex += direction;
 
-            if (image.dataset.zoomInitialized) {
-                return;
-            }
+    if (zoomIndex < 0) {
+        zoomIndex = zoomImages.length - 1;
+    }
 
-            image.dataset.zoomInitialized = "true";
+    if (zoomIndex >= zoomImages.length) {
+        zoomIndex = 0;
+    }
 
-            image.addEventListener("click", event => {
+    updateZoom();
+}
 
+function closeZoom() {
+    const overlay = document.getElementById("imageZoomOverlay");
+
+    if (overlay) {
+        overlay.classList.remove("active");
+    }
+
+    document.body.classList.remove("image-zoom-open");
+}
+
+document.addEventListener("keydown", event => {
+    const overlay = document.getElementById("imageZoomOverlay");
+
+    if (!overlay || !overlay.classList.contains("active")) {
+        return;
+    }
+
+    if (event.key === "Escape") {
+        closeZoom();
+    }
+
+    if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        changeZoom(-1);
+    }
+
+    if (event.key === "ArrowRight") {
+        event.preventDefault();
+        changeZoom(1);
+    }
+});
+
+
+function initializeTutorial() {
+    const slides = document.querySelectorAll(".tutorial-slide");
+    const dots = document.querySelectorAll(".dot");
+    const allTutorialImages = document.querySelectorAll(".tutorial-container img");
+
+    if (!allTutorialImages.length) {
+        return;
+    }
+
+    allTutorialImages.forEach(image => {
+        if (!image.classList.contains("tutorial-slide")) {
+            image.onclick = event => {
                 event.stopPropagation();
+                openZoom([image], 0, false);
+            };
+        }
+    });
 
-                if (window.innerWidth <= 768) {
+    slides.forEach((slide, index) => {
+        slide.onclick = event => {
+            event.stopPropagation();
+            openZoom(Array.from(slides), index, true);
+        };
+    });
 
-                    scrollToInfo();
+    dots.forEach((dot, index) => {
+        dot.onclick = event => {
+            event.stopPropagation();
+            showSlide(index);
+        };
+    });
 
-                    setTimeout(() => {
-                        createImageZoomOverlay(image);
-                    }, 150);
+    showSlide(0);
+}
 
-                } else {
-                    createImageZoomOverlay(image);
-                }
-            });
-        });
+function showSlide(index) {
+    const slides = document.querySelectorAll(".tutorial-slide");
+    const dots = document.querySelectorAll(".dot");
+
+    if (!slides.length) {
+        return;
     }
 
+    if (index < 0) {
+        index = slides.length - 1;
+    }
 
-    let currentSlide = 0;
+    if (index >= slides.length) {
+        index = 0;
+    }
+
+    slides.forEach(slide => slide.classList.remove("active"));
+    dots.forEach(dot => dot.classList.remove("active"));
+
+    slides[index].classList.add("active");
+
+    if (dots[index]) {
+        dots[index].classList.add("active");
+    }
+}
+
+function updateSlide(index) {
+    showSlide(index);
+}
 
 
-    function showTutorialSlide(index) {
+const informationData = {
 
-        const slides =
-            infoContent?.querySelectorAll(".tutorial-slide");
+    about: {
+        title: "About the System",
+        content: `
+        <h3>Password Vulnerability Classification</h3>
 
-        const dots =
-            infoContent?.querySelectorAll(".tutorial-dot");
+        <p>
+        This system analyzes user-generated passwords
+        to identify possible vulnerabilities against
+        common password cracking strategies.
+        </p>
 
-        if (!slides || !slides.length) {
-            return;
+        <p>
+        Unlike traditional password meters that only
+        provide strength scores, this system determines
+        what type of attack strategy may become effective
+        against the password.
+        </p>
+
+        <p>
+        The system uses extracted password characteristics
+        and applies a Decision Tree classification model
+        to identify possible vulnerability patterns.
+        </p>
+        `
+    },
+
+    process: {
+        title: "How The System Works",
+        content: `
+        <h3>Password Processing Flow</h3>
+
+        <ol>
+            <li>User enters a password for analysis.</li>
+            <li>The system extracts password characteristics.</li>
+            <li>The original password is removed after extraction.</li>
+            <li>Only the generated password representation is retained for analysis.</li>
+            <li>Extracted features are evaluated by the classification model.</li>
+            <li>The Decision Tree identifies the possible cracking method.</li>
+            <li>The system displays the vulnerability result and recommended improvements.</li>
+        </ol>
+        `
+    },
+
+    analysis: {
+        title: "Password Characteristics Analyzed",
+        content: `
+        <h3>Features Examined</h3>
+
+        <p>
+        The system checks password structures and patterns
+        without storing the original password.
+        </p>
+
+        <ul>
+            <li>Password Length</li>
+            <li>Presence of Lowercase Letters</li>
+            <li>Presence of Uppercase Letters</li>
+            <li>Presence of Numbers</li>
+            <li>Presence of Symbols</li>
+            <li>Dictionary Word Detection</li>
+            <li>Leetspeak Usage</li>
+            <li>Numeric Suffix Patterns</li>
+            <li>Sequential Patterns</li>
+            <li>Repeated Characters or Patterns</li>
+            <li>Rule-Based Pattern Detection</li>
+        </ul>
+
+        <p>
+        Character class count is also generated internally
+        for system classification purposes.
+        </p>
+        `
+    },
+
+    methods: {
+        title: "Password Cracking Methods",
+        content: `
+        <h3>Possible Attack Strategies</h3>
+
+        <p>
+        The system classifies password vulnerability
+        according to three common cracking approaches.
+        </p>
+
+        <ul>
+            <li>
+                <strong>Dictionary Attack</strong>
+                <br>
+                Attempts commonly used words, phrases, and known password patterns.
+            </li>
+
+            <li>
+                <strong>Brute Force Attack</strong>
+                <br>
+                Attempts possible character combinations until the password is discovered.
+            </li>
+
+            <li>
+                <strong>Rule-Based Attack</strong>
+                <br>
+                Applies transformation rules such as adding numbers, replacing characters,
+                or modifying common password formats.
+            </li>
+        </ul>
+        `
+    },
+
+    decision: {
+        title: "Decision Tree Classification",
+        content: `
+        <h3>Machine Learning Classification</h3>
+
+        <p>
+        The system uses a supervised Decision Tree model
+        to classify password vulnerability.
+        </p>
+
+        <p>
+        The extracted password characteristics serve
+        as input values that allow the model to determine
+        the most likely cracking method.
+        </p>
+
+        <p>
+        The classification result helps users understand
+        what security weakness should be improved.
+        </p>
+        `
+    },
+
+    tutorial: {
+        title: "System Tutorial",
+        content: `
+        <h3>How To Use The System</h3>
+
+        <p>
+        Follow these steps to analyze your password.
+        </p>
+
+        <div class="tutorial-container">
+
+            <p>
+            Step 1: Enter your password in the input field.
+            </p>
+
+            <img
+                src="../assets/images/step1.png"
+                alt="Step 1: Enter password"
+            >
+
+        </div>
+
+
+        <div class="tutorial-container">
+
+            <p>
+            Step 2: Click Analyze Password to begin feature extraction.
+            </p>
+
+            <img
+                src="../assets/images/step2.png"
+                alt="Step 2: Analyze password"
+            >
+
+        </div>
+
+
+        <div class="tutorial-container">
+
+            <p>
+            Step 3: Review the vulnerability result and recommendations.
+            </p>
+
+            <p>
+            Click an image to enlarge it.
+            </p>
+
+            <div class="tutorial-slider">
+
+                <img class="tutorial-slide active" src="../assets/images/step3%20(1).png" alt="Step 3: Result 1">
+                <img class="tutorial-slide" src="../assets/images/step3%20(2).png" alt="Step 3: Result 2">
+                <img class="tutorial-slide" src="../assets/images/step3%20(3).png" alt="Step 3: Result 3">
+                <img class="tutorial-slide" src="../assets/images/step3%20(4).png" alt="Step 3: Result 4">
+                <img class="tutorial-slide" src="../assets/images/step3%20(5).png" alt="Step 3: Result 5">
+                <img class="tutorial-slide" src="../assets/images/step3%20(6).png" alt="Step 3: Result 6">
+                <img class="tutorial-slide" src="../assets/images/step3%20(7).png" alt="Step 3: Result 7">
+
+            </div>
+
+            <div class="tutorial-dots">
+
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+
+            </div>
+
+        </div>
+        `
+    }
+};
+
+
+infoButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        const section = button.dataset.section;
+        const selected = informationData[section];
+
+        if (selected) {
+            infoTitle.textContent = selected.title;
+            infoContent.innerHTML = selected.content;
+
+            if (section === "tutorial") {
+                initializeTutorial();
+            }
         }
 
-        if (index < 0 || index >= slides.length) {
-            return;
-        }
-
-        currentSlide = index;
-
-        slides.forEach((slide, i) => {
-            slide.classList.toggle("active", i === currentSlide);
-        });
-
-        if (dots) {
-            dots.forEach((dot, i) => {
-                dot.classList.toggle("active", i === currentSlide);
-            });
-        }
+        infoButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
 
         scrollToInfo();
+    });
 
-        initializeImageZoom();
+});
+
+
+function clearAnalysisData() {
+    sessionStorage.removeItem("analysisResult");
+    localStorage.removeItem("analyzedPassword");
+    localStorage.removeItem("comparisonResult");
+    localStorage.removeItem("originalAnalysisResult");
+}
+
+function resetAnalyzeForm() {
+    if (passwordInput) {
+        passwordInput.value = "";
     }
 
+    if (scanButton) {
+        scanButton.disabled = false;
+        scanButton.textContent = "ANALYZE PASSWORD";
+    }
+}
 
-    function initializeTutorialSlider() {
 
-        if (!infoContent) {
+if (passwordInput && scanButton) {
+
+    passwordInput.addEventListener("keydown", event => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            scanButton.click();
+        }
+    });
+
+    scanButton.addEventListener("click", async () => {
+
+        const password = passwordInput.value.trim();
+
+        if (password === "") {
+
+            passwordInput.focus();
+
+            passwordInput.style.boxShadow =
+                "0 0 25px rgba(239,68,68,.8)";
+
+            setTimeout(() => {
+                passwordInput.style.boxShadow = "";
+            }, 1000);
+
             return;
         }
 
-        const slides =
-            infoContent.querySelectorAll(".tutorial-slide");
+        scanButton.disabled = true;
+        scanButton.textContent = "ANALYZING...";
 
-        const dots =
-            infoContent.querySelectorAll(".tutorial-dot");
+        try {
 
-        if (!slides.length) {
-            return;
-        }
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    password: password
+                })
+            });
 
-        currentSlide = 0;
+            if (!response.ok) {
+                throw new Error(`Server error: ${response.status}`);
+            }
 
-        slides.forEach(slide => {
+            const result = await response.json();
 
-            slide.onclick = event => {
+            sessionStorage.setItem(
+                "analysisResult",
+                JSON.stringify(result)
+            );
 
-                const target = event.target;
+            localStorage.setItem(
+                "analyzedPassword",
+                password
+            );
 
-                if (target && target.tagName === "IMG") {
-                    return;
-                }
+            sessionStorage.setItem(
+                "showResultTutorial",
+                "true"
+            );
 
-                const rect = slide.getBoundingClientRect();
-                const clickX = event.clientX - rect.left;
+            window.location.href = "result.html";
 
-                if (clickX < rect.width / 2) {
+        } catch (error) {
 
-                    if (currentSlide > 0) {
-                        showTutorialSlide(currentSlide - 1);
-                    }
+            console.error("Analysis error:", error);
 
-                } else if (currentSlide < slides.length - 1) {
-                    showTutorialSlide(currentSlide + 1);
-                }
-            };
-        });
+            alert("Unable to connect to the analysis server. Please try again.");
 
-        dots.forEach(dot => {
-
-            dot.onclick = event => {
-
-                event.stopPropagation();
-
-                showTutorialSlide(Number(dot.dataset.slide));
-
-                scrollToInfo();
-            };
-        });
-
-        showTutorialSlide(0);
-    }
-
-
-    function clearAnalysisData() {
-
-        sessionStorage.removeItem("analysisResult");
-        localStorage.removeItem("analyzedPassword");
-        localStorage.removeItem("comparisonResult");
-        localStorage.removeItem("originalAnalysisResult");
-    }
-
-
-    function resetAnalyzeForm() {
-
-        if (passwordInput) {
-            passwordInput.value = "";
-        }
-
-        if (scanButton) {
             scanButton.disabled = false;
             scanButton.textContent = "ANALYZE PASSWORD";
         }
-    }
+    });
+}
 
 
-    if (passwordInput && scanButton) {
+clearAnalysisData();
+resetAnalyzeForm();
 
-        passwordInput.addEventListener("keydown", event => {
+history.replaceState(null, "", window.location.href);
+history.pushState(null, "", window.location.href);
 
-            if (event.key === "Enter") {
-                event.preventDefault();
-                scanButton.click();
-            }
-        });
-    }
-
-
-    if (scanButton && passwordInput) {
-
-        scanButton.addEventListener("click", async () => {
-
-            const password = passwordInput.value.trim();
-
-            if (password === "") {
-
-                passwordInput.focus();
-
-                passwordInput.style.boxShadow =
-                    "0 0 25px rgba(239,68,68,.8)";
-
-                setTimeout(() => {
-                    passwordInput.style.boxShadow = "";
-                }, 1000);
-
-                return;
-            }
-
-            const originalText = scanButton.textContent;
-
-            scanButton.disabled = true;
-            scanButton.textContent = "ANALYZING...";
-
-            try {
-
-                const response = await fetch(API_URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        password: password
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Server error: ${response.status}`);
-                }
-
-                const analysisResult = await response.json();
-
-                sessionStorage.setItem(
-                    "analysisResult",
-                    JSON.stringify(analysisResult)
-                );
-
-                localStorage.setItem(
-                    "analyzedPassword",
-                    password
-                );
-
-                sessionStorage.setItem(
-                    "showResultTutorial",
-                    "true"
-                );
-
-                window.location.href = "result.html";
-
-            } catch (error) {
-
-                console.error("Analysis error:", error);
-
-                alert(
-                    "Unable to connect to the analysis server. Please try again."
-                );
-
-                scanButton.disabled = false;
-                scanButton.textContent = originalText;
-            }
-        });
-    }
-
-
+window.addEventListener("popstate", () => {
     clearAnalysisData();
     resetAnalyzeForm();
-
-
-    history.replaceState(null, "", window.location.href);
     history.pushState(null, "", window.location.href);
+});
 
-
-    window.addEventListener("popstate", () => {
-
+window.addEventListener("pageshow", event => {
+    if (event.persisted) {
         clearAnalysisData();
         resetAnalyzeForm();
-
-        history.pushState(null, "", window.location.href);
-    });
-
-
-    window.addEventListener("pageshow", event => {
-
-        if (event.persisted) {
-            clearAnalysisData();
-            resetAnalyzeForm();
-        }
-    });
+    }
+});
 
 
-    initializeInfoMenuScroll();
-
-    window.addEventListener("resize", updateInfoMenuArrow);
 
 
-    let secretSequence = [];
+let secretSequence = [];
 
-    const secretCode = [
-        "blue",
-        "Enter",
-        "red",
-        "Enter",
-        "red",
-        "Enter"
-    ];
+const secretCode = ["blue", "Enter", "red", "Enter", "red", "Enter"];
 
-    document.addEventListener("keydown", event => {
+document.addEventListener("keydown", event => {
 
-        secretSequence.push(event.key);
+    secretSequence.push(event.key);
 
-        if (secretSequence.length > secretCode.length) {
-            secretSequence.shift();
-        }
+    if (secretSequence.length > secretCode.length) {
+        secretSequence.shift();
+    }
 
-        const matches =
-            secretSequence.length === secretCode.length &&
-            secretSequence.every(
-                (key, index) => key === secretCode[index]
-            );
+    const matches =
+        secretSequence.length === secretCode.length &&
+        secretSequence.every((key, index) => key === secretCode[index]);
 
-        if (matches) {
-
-            window.location.href =
-                "../secrett/secretInitial.html";
-
-            secretSequence = [];
-        }
-    });
-
+    if (matches) {
+        window.location.href = "../secrett/secretInitial.html";
+        secretSequence = [];
+    }
 });

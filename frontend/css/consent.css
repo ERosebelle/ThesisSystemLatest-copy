@@ -563,7 +563,9 @@ button:hover::before {
     color: white;
 }
 
-
+/* =========================
+   RESPONSIVE
+========================= */
 @media(max-width: 1100px) {
     .section-booklet,
     .energy-scroll {
@@ -641,800 +643,213 @@ body.page-exit {
         transform: scale(1.08);
     }
 }
-
-/* =========================================================
-   FULL DYNAMIC RESPONSIVE FIX
-   Focus: MAIN CARD + INNER CONTENT
-========================================================= */
-
-/* =========================================================
-   1. VIEWPORT
-========================================================= */
-
-html,
-body {
-    width: 100%;
-    min-width: 0;
-    min-height: 100%;
+.modal{
+    padding:16px;
+    box-sizing:border-box;
+    overflow-y:auto;
 }
 
-body {
-    min-height: 100vh;
-    min-height: 100dvh;
-    overflow: hidden;
+.modal-card{
+    width:min(400px,100%);
+    max-height:100%;
+    overflow-y:auto;
 }
 
-
-/* =========================================================
-   2. PAGE TITLE
-========================================================= */
-
-.system-name {
-    width: min(92%, 1100px);
-    flex-shrink: 0;
-}
-
-.system-name h1 {
-    width: 100%;
-    max-width: 900px;
-    font-size: clamp(18px, 2.2vw, 30px);
-    line-height: 1.25;
-}
-
-.system-name p {
-    font-size: clamp(12px, 1.2vw, 16px);
-}
-
-
-/* =========================================================
-   3. MAIN CONTAINER
-========================================================= */
-
-.consent-container {
-    width: min(1100px, 100%);
-    max-width: 1100px;
-
-    padding-left: clamp(10px, 2vw, 24px);
-    padding-right: clamp(10px, 2vw, 24px);
-
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-
-    gap: clamp(8px, 2vw, 20px);
-
-    min-width: 0;
-    min-height: 0;
-
-    flex: 0 1 auto;
-}
-
-
-/* =========================================================
-   4. SIDE BOOKLET
-========================================================= */
-
-.section-booklet {
-    width: clamp(135px, 15vw, 170px);
-
-    height: auto;
-    max-height: 65dvh;
-
-    min-width: 0;
-    min-height: 0;
-
-    flex: 0 1 170px;
-}
-
-
-/* =========================================================
-   5. ENERGY BAR
-========================================================= */
-
-.energy-scroll {
-    width: clamp(32px, 4vw, 45px);
-
-    height: auto;
-    max-height: 65dvh;
-
-    min-width: 0;
-    min-height: 0;
-
-    flex: 0 0 auto;
-}
-
-
-/* =========================================================
-   6. MAIN CARD
-========================================================= */
-
-.consent-card {
-
-    /*
-       IMPORTANT:
-       The card itself is now a grid.
-
-       Row 1 = title
-       Row 2 = everything else
-    */
-
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
-
-    width: min(680px, 100%);
-
-    /*
-       Never exceed the available viewport.
-    */
-    height: min(65dvh, 650px);
-
-    min-width: 0;
-    min-height: 0;
-
-    flex: 1 1 680px;
-
-    overflow: hidden;
-}
-
-
-/* =========================================================
-   7. CARD TITLE
-========================================================= */
-
-.consent-card h2 {
-    width: 100%;
-
-    min-width: 0;
-
-    margin: 0 0 15px;
-
-    font-size: clamp(17px, 2vw, 22px);
-
-    line-height: 1.25;
-
-    overflow-wrap: anywhere;
-}
-
-
-/* =========================================================
-   8. INNER CONTENT AREA
-========================================================= */
-
-.content-area {
-
-    /*
-       REMOVE THE OLD FIXED HEIGHT.
-
-       Grid automatically gives this area
-       whatever space remains inside the card.
-    */
-
-    height: auto;
-
-    min-height: 0;
-    min-width: 0;
-
-    width: 100%;
-
-    overflow-y: auto;
-    overflow-x: hidden;
-
-    padding-right: clamp(4px, 1vw, 12px);
-
-    /*
-       Prevent flex/grid children from
-       forcing the parent larger.
-    */
-    contain: layout;
-}
-
-
-/* =========================================================
-   9. CONTENT SECTIONS
-========================================================= */
-
-.content-area section {
-
-    /*
-       VERY IMPORTANT:
-
-       Remove the old:
-       min-height: 200px;
-
-       That was one of the things making
-       the inner layout behave badly.
-    */
-
-    min-height: unset;
-    height: auto;
-
-    width: 100%;
-    max-width: 100%;
-
-    margin: 0 0 clamp(8px, 1.5vw, 12px);
-
-    padding: clamp(12px, 2vw, 18px);
-
-    display: block;
-
-    box-sizing: border-box;
-
-    overflow-wrap: anywhere;
-    word-break: normal;
-}
-
-
-/* =========================================================
-   10. SECTION HEADINGS
-========================================================= */
-
-.content-area h3 {
-
-    width: 100%;
-    max-width: 100%;
-
-    margin: 0 0 clamp(8px, 1vw, 12px);
-
-    font-size: clamp(15px, 1.5vw, 18px);
-
-    line-height: 1.3;
-
-    overflow-wrap: anywhere;
-}
-
-
-/* =========================================================
-   11. SECTION PARAGRAPHS
-========================================================= */
-
-.content-area p {
-
-    width: 100%;
-    max-width: 100%;
-
-    margin: 0 0 10px;
-
-    font-size: clamp(12px, 1.15vw, 14.5px);
-
-    line-height: 1.55;
-
-    overflow-wrap: anywhere;
-}
-
-
-/* =========================================================
-   12. AGREEMENT
-========================================================= */
-
-.agreement {
-
-    width: 100%;
-    max-width: 100%;
-
-    min-width: 0;
-
-    margin-top: clamp(12px, 2vw, 18px);
-
-    padding: clamp(12px, 2vw, 16px);
-
-    display: flex;
-
-    align-items: flex-start;
-
-    gap: clamp(8px, 1.5vw, 14px);
-
-    box-sizing: border-box;
-
-    overflow: hidden;
-}
-
-
-/* Checkbox */
-
-.agreement input {
-
-    width: 22px;
-    height: 22px;
-
-    min-width: 22px;
-    min-height: 22px;
-
-    flex: 0 0 22px;
-}
-
-
-/* Agreement text */
-
-.agreement label {
-
-    min-width: 0;
-    max-width: 100%;
-
-    overflow-wrap: anywhere;
-    word-break: normal;
-
-    line-height: 1.5;
-}
-
-
-/* =========================================================
-   13. BUTTON AREA
-========================================================= */
-
-.buttons {
-
-    width: 100%;
-    max-width: 100%;
-
-    min-width: 0;
-
-    margin-top: clamp(12px, 2vw, 18px);
-
-    padding-bottom: 10px;
-
-    display: flex;
-
-    gap: clamp(8px, 1.5vw, 14px);
-}
-
-
-/* =========================================================
-   14. BUTTONS
-========================================================= */
-
-.buttons button {
-
-    min-width: 0;
-    width: 100%;
-
-    flex: 1 1 0;
-
-    height: clamp(42px, 5vw, 48px);
-
-    padding: 10px clamp(8px, 2vw, 20px);
-
-    font-size: clamp(10px, 1.2vw, 14px);
-
-    white-space: normal;
-
-    overflow-wrap: anywhere;
-}
-
-
-/* =========================================================
-   15. TABLET
-========================================================= */
-
-@media (max-width: 1100px) {
-
-    .section-booklet,
-    .energy-scroll {
-        display: none;
+@media (max-width:800px),(max-height:560px){
+    body{
+        height:100vh;
+        height:100dvh;
+        justify-content:flex-start;
     }
 
-    .consent-container {
-        width: 100%;
-        max-width: 760px;
+    .system-name{
+        flex:0 0 auto;
+        width:100%;
+        margin-bottom:12px;
+        padding:16px 16px 0;
     }
 
-    .consent-card {
-        width: 100%;
-        max-width: 680px;
+    .system-name h1{
+        font-size:22px;
+    }
 
-        flex: 1 1 auto;
+    .system-name h1::after{
+        width:120px;
+        margin-top:10px;
+    }
 
-        height: min(68dvh, 650px);
+    .consent-container{
+        flex:1 1 auto;
+        min-height:0;
+        align-items:stretch;
+        padding:0 12px 14px;
+    }
+
+    .consent-card{
+        display:flex;
+        flex-direction:column;
+        width:100%;
+        max-width:680px;
+        height:auto;
+        min-height:0;
+        padding:18px 16px;
+    }
+
+    .consent-card h2{
+        flex:0 0 auto;
+        margin-bottom:12px;
+        font-size:19px;
+        line-height:1.3;
+    }
+
+    .content-area{
+        flex:1 1 auto;
+        height:auto;
+        min-height:0;
+        padding-right:4px;
+        overscroll-behavior:contain;
+        -webkit-overflow-scrolling:touch;
+    }
+
+    .content-area section{
+        min-height:0;
+        padding:16px 14px 18px;
+    }
+
+    .content-area h3{
+        font-size:16.5px;
+    }
+
+    .content-area p{
+        font-size:14px;
+        line-height:1.6;
+    }
+
+    .agreement{
+        padding:14px;
+        font-size:13.5px;
+    }
+
+    .agreement label{
+        flex:1;
+    }
+
+    .buttons{
+        margin-top:14px;
     }
 }
 
-
-/* =========================================================
-   16. SMALL TABLET
-========================================================= */
-
-@media (max-width: 800px) {
-
-    .system-name {
-        width: 94%;
+@media (max-width:480px){
+    .system-name h1{
+        font-size:19px;
     }
 
-    .consent-container {
-        width: 100%;
-        max-width: 100%;
-
-        padding-left: 16px;
-        padding-right: 16px;
+    .consent-container{
+        padding:0 8px 10px;
     }
 
-    .consent-card {
-
-        width: 100%;
-
-        height: min(
-            70dvh,
-            650px
-        );
-
-        padding: clamp(14px, 3vw, 22px);
-
-        border-radius: 16px;
+    .consent-card{
+        padding:16px 12px;
+        border-radius:16px;
     }
 
-    .content-area {
-
-        padding-right: 6px;
+    .consent-card h2{
+        font-size:17px;
     }
 
-    .content-area section {
-
-        padding: clamp(12px, 2.5vw, 17px);
-    }
-}
-
-
-/* =========================================================
-   17. PHONE
-========================================================= */
-
-@media (max-width: 600px) {
-
-    body {
-        padding: 8px 0;
+    .content-area section{
+        padding:14px 12px 16px;
     }
 
-    .system-name {
-
-        width: 94%;
-
-        margin-bottom: 8px;
+    .content-area h3{
+        font-size:15.5px;
     }
 
-    .system-name h1 {
-
-        font-size: clamp(
-            18px,
-            5.5vw,
-            23px
-        );
-
-        line-height: 1.2;
+    .content-area p{
+        font-size:13.5px;
     }
 
-    .system-name p {
-
-        margin-top: 7px;
-
-        font-size: 12px;
+    .buttons{
+        flex-direction:column-reverse;
+        gap:10px;
     }
 
-    .system-name h1::after {
-
-        width: clamp(
-            90px,
-            30vw,
-            150px
-        );
-
-        height: 2px;
-
-        margin-top: 7px;
+    button{
+        flex:0 0 auto;
+        width:100%;
+        height:46px;
+        font-size:13px;
     }
 
-
-    /* Main container */
-
-    .consent-container {
-
-        width: 100%;
-
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
-
-    /* Main card */
-
-    .consent-card {
-
-        width: 100%;
-
-        /*
-           The card gets almost all available
-           vertical space.
-        */
-
-        height: calc(
-            100dvh - 120px
-        );
-
-        min-height: 0;
-
-        padding: 14px;
-
-        border-radius: 15px;
-    }
-
-
-    /* Card title */
-
-    .consent-card h2 {
-
-        font-size: clamp(
-            16px,
-            4.5vw,
-            19px
-        );
-
-        margin-bottom: 10px;
-    }
-
-
-    /* Inner scrolling */
-
-    .content-area {
-
-        height: auto;
-
-        min-height: 0;
-
-        padding-right: 3px;
-    }
-
-
-    /* Sections */
-
-    .content-area section {
-
-        width: 100%;
-
-        padding: 13px;
-
-        margin-bottom: 9px;
-
-        border-radius: 11px;
-    }
-
-
-    /* Section title */
-
-    .content-area h3 {
-
-        font-size: clamp(
-            14px,
-            4vw,
-            16px
-        );
-
-        line-height: 1.3;
-
-        margin-bottom: 8px;
-    }
-
-
-    /* Paragraph */
-
-    .content-area p {
-
-        font-size: clamp(
-            12px,
-            3.4vw,
-            13.5px
-        );
-
-        line-height: 1.55;
-    }
-
-
-    /* Agreement */
-
-    .agreement {
-
-        width: 100%;
-
-        padding: 12px;
-
-        gap: 9px;
-
-        font-size: 12px;
-
-        line-height: 1.5;
-    }
-
-
-    .agreement input {
-
-        width: 20px;
-        height: 20px;
-
-        min-width: 20px;
-        min-height: 20px;
-
-        flex-basis: 20px;
-    }
-
-
-    /* Buttons */
-
-    .buttons {
-
-        width: 100%;
-
-        gap: 8px;
-
-        margin-top: 12px;
-
-        padding-bottom: 8px;
-    }
-
-    .buttons button {
-
-        height: 43px;
-
-        padding: 8px 6px;
-
-        font-size: 10px;
-
-        letter-spacing: .4px;
+    .modal-card{
+        padding:22px 18px;
     }
 }
 
-
-/* =========================================================
-   18. SMALL PHONE
-========================================================= */
-
-@media (max-width: 380px) {
-
-    .consent-card {
-
-        height: calc(
-            100dvh - 110px
-        );
-
-        padding: 11px;
+@media (max-width:360px){
+    .system-name h1{
+        font-size:17px;
     }
 
-    .consent-card h2 {
-
-        font-size: 16px;
-
-        margin-bottom: 8px;
-    }
-
-    .content-area section {
-
-        padding: 11px;
-    }
-
-    .content-area h3 {
-
-        font-size: 14px;
-    }
-
-    .content-area p {
-
-        font-size: 12px;
-
-        line-height: 1.5;
-    }
-
-    .agreement {
-
-        padding: 10px;
-
-        font-size: 11.5px;
-    }
-
-    .buttons {
-
-        gap: 6px;
-    }
-
-    .buttons button {
-
-        height: 40px;
-
-        font-size: 9px;
-
-        padding: 7px 4px;
+    .agreement{
+        gap:10px;
+        font-size:13px;
     }
 }
 
-
-/* =========================================================
-   19. LANDSCAPE PHONE
-========================================================= */
-
-@media (
-    max-height: 600px
-) and (
-    orientation: landscape
-) {
-
-    .system-name {
-
-        margin-bottom: 3px;
+@media (max-height:560px){
+    .system-name{
+        margin-bottom:6px;
+        padding-top:8px;
     }
 
-    .system-name h1 {
-
-        font-size: clamp(
-            16px,
-            3vw,
-            21px
-        );
+    .system-name h1{
+        font-size:17px;
     }
 
-    .system-name p {
-
-        display: none;
+    .system-name h1::after{
+        display:none;
     }
 
-    .consent-card {
-
-        height: calc(
-            100dvh - 55px
-        );
+    .consent-container{
+        padding-bottom:8px;
     }
 
-    .consent-card h2 {
-
-        margin-bottom: 7px;
+    .consent-card{
+        padding:12px 16px;
     }
 
-    .content-area section {
-
-        padding: 10px 12px;
+    .consent-card h2{
+        margin-bottom:8px;
+        font-size:16px;
     }
 
-    .agreement {
-
-        margin-top: 8px;
-        padding: 9px 11px;
+    .agreement{
+        margin-top:10px;
+        padding:10px 14px;
     }
 
-    .buttons {
-
-        margin-top: 8px;
+    .buttons{
+        flex-direction:row;
+        margin-top:10px;
     }
 
-    .buttons button {
-
-        height: 38px;
+    button{
+        flex:1;
+        width:auto;
+        height:40px;
     }
 }
 
-
-/* =========================================================
-   20. TOUCH DEVICES
-========================================================= */
-
-@media (hover: none) {
-
-    .content-area section:hover {
-
-        transform: none;
+@media (hover:none){
+    .content-area section:hover{
+        transform:none;
+        border-left-color:#0284c7;
+        box-shadow:0 5px 15px rgba(15,23,42,.08);
     }
 
     #declineBtn:hover,
-    #acceptBtn:hover {
-
-        transform: none;
+    #acceptBtn:hover:not(:disabled){
+        transform:none;
     }
-}
-
-
-/* =========================================================
-   21. PREVENT HORIZONTAL OVERFLOW
-========================================================= */
-
-.consent-card,
-.content-area,
-.content-area section,
-.agreement,
-.buttons,
-.buttons button {
-
-    max-width: 100%;
-    box-sizing: border-box;
 }

@@ -1282,3 +1282,273 @@
         right: 14px;
     }
 }
+
+.decision-traversal-card{
+    height:100vh !important;
+    height:100dvh !important;
+}
+
+.decision-traversal-scroll-content{
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+}
+
+.decision-traversal-tree-canvas{
+    overscroll-behavior-x:contain;
+    -webkit-overflow-scrolling:touch;
+}
+
+@media (max-width:900px){
+    .decision-traversal-card-content{
+        width:calc(100vw - 24px);
+        height:calc(100vh - 24px);
+        height:calc(100dvh - 24px);
+        max-height:850px;
+    }
+}
+
+@media (max-width:700px){
+    :root{
+        --dtc-node-width:112px;
+        --dtc-branch-width:132px;
+    }
+
+    .decision-traversal-card{
+        padding:8px;
+    }
+
+    .decision-traversal-card-content{
+        width:calc(100vw - 16px);
+        height:calc(100vh - 16px);
+        height:calc(100dvh - 16px);
+        border-radius:16px;
+    }
+
+    .decision-traversal-scroll-content{
+        padding:20px 14px 24px;
+    }
+
+    .decision-traversal-card-content h2{
+        margin:2px 48px 16px 0;
+        padding-bottom:12px;
+        font-size:17px;
+    }
+
+    .decision-traversal-close{
+        width:40px;
+        height:40px;
+        font-size:22px;
+    }
+
+    .decision-traversal-content{
+        font-size:13.5px;
+    }
+
+    .decision-traversal-content > p{
+        font-size:13px;
+        margin-bottom:16px;
+    }
+
+    .decision-traversal-instruction{
+        display:block;
+        margin-top:8px;
+        font-size:13px;
+    }
+
+    #decisionTraversalTree{
+        margin-top:8px;
+    }
+
+    .decision-traversal-tree-canvas{
+        justify-content:flex-start;
+        padding:20px 10px 32px;
+    }
+
+    .decision-traversal-tree-canvas > .decision-traversal-node-wrapper:first-child{
+        min-width:max(100%, calc(var(--dtc-branch-width) * 3 + 40px));
+    }
+
+    .decision-traversal-node{
+        width:var(--dtc-node-width);
+        min-width:var(--dtc-node-width);
+        max-width:var(--dtc-node-width);
+        min-height:46px;
+        padding:8px 8px;
+        font-size:11px;
+    }
+
+    .decision-traversal-root > .decision-traversal-node{
+        width:calc(var(--dtc-node-width) + 16px);
+        min-width:calc(var(--dtc-node-width) + 16px);
+        max-width:calc(var(--dtc-node-width) + 16px);
+        font-size:11.5px;
+    }
+
+    .decision-traversal-node.decision-result-node{
+        width:calc(var(--dtc-node-width) - 6px);
+        min-width:calc(var(--dtc-node-width) - 6px);
+        max-width:calc(var(--dtc-node-width) - 6px);
+        font-size:10.5px;
+    }
+
+    .decision-traversal-children{
+        padding-top:48px;
+    }
+
+    .decision-traversal-children::before{
+        height:48px;
+    }
+
+    .decision-traversal-branch{
+        width:var(--dtc-branch-width);
+        min-width:var(--dtc-branch-width);
+        max-width:var(--dtc-branch-width);
+        padding:24px 8px 0;
+    }
+
+    .decision-traversal-branch::after{
+        height:24px;
+    }
+
+    .decision-traversal-branch:first-child::before,
+    .decision-traversal-branch:last-child::before{
+        width:var(--dtc-branch-width);
+    }
+
+    .decision-traversal-branch:only-child{
+        width:var(--dtc-node-width);
+        min-width:var(--dtc-node-width);
+        max-width:var(--dtc-node-width);
+        padding-top:0;
+    }
+
+    .decision-traversal-branch:not([data-taken="true"]):not(:only-child){
+        margin-top:-72px;
+    }
+
+    .decision-traversal-branch-line{
+        padding:6px 11px;
+        font-size:10px;
+    }
+
+    .decision-traversal-info-slot,
+    .decision-traversal-info-slot.left,
+    .decision-traversal-info-slot.right{
+        position:fixed !important;
+        top:auto !important;
+        left:10px !important;
+        right:10px !important;
+        bottom:10px;
+        bottom:max(10px, env(safe-area-inset-bottom));
+        width:auto;
+        max-width:none;
+        max-height:42vh;
+        max-height:42dvh;
+        transform:none !important;
+        z-index:30;
+        transition:none;
+    }
+
+    .decision-traversal-info-card{
+        padding:14px 16px 16px;
+        border-radius:14px;
+        box-shadow:0 -6px 30px rgba(0,0,0,.5), 0 12px 30px rgba(0,0,0,.35);
+    }
+
+    .decision-traversal-info-card.left,
+    .decision-traversal-info-card.right{
+        border:1px solid rgba(148,163,184,.2);
+        border-top:3px solid var(--dtc-line-taken);
+    }
+
+    .decision-traversal-info-card strong{
+        font-size:14px;
+    }
+
+    .decision-traversal-info-card p{
+        font-size:13.5px;
+    }
+
+    .decision-traversal-breakdown-label{
+        font-size:13px;
+    }
+
+    .decision-traversal-breakdown-detail{
+        font-size:12.5px;
+    }
+
+    .decision-traversal-card:has(.decision-traversal-info-slot:not(:empty)) .decision-traversal-scroll-content{
+        padding-bottom:46vh;
+        padding-bottom:46dvh;
+    }
+}
+
+@media (max-width:400px){
+    :root{
+        --dtc-node-width:104px;
+        --dtc-branch-width:122px;
+    }
+
+    .decision-traversal-scroll-content{
+        padding:18px 10px 22px;
+    }
+
+    .decision-traversal-card-content h2{
+        font-size:16px;
+    }
+
+    .decision-traversal-node{
+        font-size:10.5px;
+    }
+
+    .decision-traversal-branch{
+        padding-left:6px;
+        padding-right:6px;
+    }
+}
+
+@media (max-height:500px) and (orientation:landscape){
+    .decision-traversal-card{
+        padding:6px;
+    }
+
+    .decision-traversal-card-content{
+        width:calc(100vw - 12px);
+        height:calc(100vh - 12px);
+        height:calc(100dvh - 12px);
+    }
+
+    .decision-traversal-scroll-content{
+        padding:14px 18px 18px;
+    }
+
+    .decision-traversal-card-content h2{
+        margin-bottom:10px;
+        padding-bottom:8px;
+        font-size:16px;
+    }
+
+    .decision-traversal-info-slot,
+    .decision-traversal-info-slot.left,
+    .decision-traversal-info-slot.right{
+        max-height:55vh;
+        max-height:55dvh;
+    }
+
+    .decision-traversal-card:has(.decision-traversal-info-slot:not(:empty)) .decision-traversal-scroll-content{
+        padding-bottom:58vh;
+        padding-bottom:58dvh;
+    }
+}
+
+@media (hover:none){
+    .decision-traversal-node:hover{
+        transform:none;
+        border-color:rgba(148,163,184,.28);
+        box-shadow:0 5px 14px rgba(0,0,0,.25);
+    }
+
+    .decision-traversal-branch:not([data-taken="true"]):not(:only-child):hover{
+        opacity:.75;
+    }
+}
